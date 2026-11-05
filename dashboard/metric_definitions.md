@@ -20,14 +20,16 @@ cash.
 | Unique invoices | Rows in `invoices`. One per canonical supplier invoice number, however many times it arrived. | `v_processing_overview` |
 | Eligible invoices | Unique invoices whose state is not `duplicate` or `unsupported`. The denominator for both rates below. | `v_processing_overview` |
 | Validated / needs review / unsupported / rejected invoices | Unique invoices in each business state. | `v_processing_overview` |
-| Validated without edit | Validated invoices with no reviewer correction in their revision history. | `v_processing_overview` |
+| Validated without edit | Validated invoices with no reviewer correction **and** no accepted exception. The numerator of the straight-through rate. | `v_processing_overview` |
+| Accepted with exception | Invoices a reviewer accepted into the register despite a failed check. Counted separately because this is **not** the rules passing, and the failed check stays visible on the current revision. | `v_processing_overview` |
+| Corrected invoices | Invoices with at least one reviewer correction in their revision history. | `v_processing_overview` |
 
 ## Rates
 
 | Measure | Definition | Note |
 |---|---|---|
 | Review rate | Invoices in `needs_review` ÷ eligible invoices | `NULL` when there are no eligible invoices, not zero |
-| Straight-through rate | Invoices validated with no reviewer edit ÷ eligible invoices | An invoice a reviewer corrected is not straight-through even once it validates |
+| Straight-through rate | Invoices validated with no reviewer correction **and** no accepted exception ÷ eligible invoices | An invoice a person had to decide about is not straight-through, however it ends up |
 
 Duplicate and unsupported invoices are excluded from the denominator because
 this version cannot process them; including them would flatter both rates.

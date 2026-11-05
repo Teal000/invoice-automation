@@ -143,6 +143,15 @@ class InvoiceSummary(ViewModel):
     failed_rule_codes: int = 0
     failed_checks: int = 0
     has_reviewer_edit: bool = False
+    accepted_with_exception: bool = Field(
+        default=False,
+        description=(
+            "A reviewer accepted this invoice despite a failed check. Not the "
+            "same as the checks passing, and excluded from the "
+            "straight-through rate."
+        ),
+    )
+    review_action_count: int = 0
     first_recorded_at: datetime | None = None
     last_changed_at: datetime | None = None
 
@@ -194,6 +203,7 @@ class InvoiceDetail(InvoiceSummary):
     lines: list[InvoiceLine] = Field(default_factory=list)
     checks: list[CheckResult] = Field(default_factory=list)
     revisions: list[RevisionSummary] = Field(default_factory=list)
+    review_actions: list["ReviewActionSummary"] = Field(default_factory=list)
     events: list[EventSummary] = Field(default_factory=list)
 
 
@@ -279,3 +289,65 @@ class NotificationList(ApiModel):
         "This service delivers nothing. A status of 'sent' records what a "
         "caller reported after delivering the notification itself."
     )
+
+
+class CorrectionRequest(ApiModel):
+    """A reviewer submitting corrected values.
+
+    The corrected values use the same shape extraction produces, so they run
+    through the same normalisation and the same rules. A reviewer cannot
+    produce an invoice that was never checked.
+    """
+
+    expected_revision_number: int = Field(
+        ge=1,
+        description=(
+            "The revision the reviewer was looking at. The edit is refused if "
+            "the invoice has moved on since, rather than overwriting whatever "
+            "changed in between."
+        ),
+    )
+    reason: str = Field(
+        min_length=1,
+        description="Why the correction was made. Required, and recorded.",
+    )
+    invoice: dict[str, Any] = Field(
+        description="Corrected values, in the extraction payload shape."
+    )
+
+
+class ReviewActionRequest(ApiModel):
+    action: str = Field(description="reject or accept_exception.")
+    expected_revision_number: int = Field(ge=1)
+    reason: str = Field(min_length=1)
+
+
+class ReviewActionSummary(ViewModel):
+    review_action_id: UUID
+    actor: str
+    action: str
+    reason: str
+    created_at: datetime
+    from_revision_number: int | None = None
+    to_revision_number: int | None = None
+
+
+class ReviewOutcomeOut(ApiModel):
+    invoice_id: UUID
+    action: str
+    actor: str
+    reason: str
+    state: str
+    revision_number: int | None = None
+    failed_codes: list[str] = Field(default_factory=list)
+    review_action_id: UUID | None = None
+    note: str | None = Field(
+        default=None,
+        description=(
+            "Present when the outcome needs qualifying, for instance that an "
+            "accepted exception is not the same as the checks passing."
+        ),
+    )
+
+
+InvoiceDetail.model_rebuild()

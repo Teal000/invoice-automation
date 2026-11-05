@@ -445,3 +445,67 @@ answer must stay "PostgreSQL, not the execution history".
 been built or run, and both say so in their headers. Everything the project
 does today still runs without Docker, so the container path is an addition
 rather than a dependency.
+
+## ADR-026 — A correction is submitted as values, and re-checked like any other
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+A reviewer submits a complete set of corrected values in the same shape
+extraction produces, and those values go through the same normalisation and
+the same rules.
+
+The alternative — patching individual fields and trusting them because a
+person typed them — would let a reviewer produce an invoice that was never
+checked. It is tested directly: a correction that fixes the stated total but
+mistypes a line amount comes back as `LINE_TOTAL_MISMATCH` and
+`SUBTOTAL_MISMATCH` rather than validating. A rule added later applies to
+corrections without anybody remembering to wire it up.
+
+Revalidation excludes the invoice being revalidated from the business-duplicate
+lookup. Without that, an invoice finds its own supplier and number in the
+register and reports itself as a duplicate, which would make every correction
+fail.
+
+## ADR-027 — Edits name the revision they were made against
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+Every reviewer action carries `expected_revision_number`. If the invoice has
+moved on, the action is refused with a conflict naming the current revision
+rather than applied.
+
+Two reviewers looking at the same exception is the normal case for a review
+queue, and the second one's edit would otherwise silently discard the first
+one's. Refusing is noisy and recoverable; overwriting is quiet and is not.
+
+A stated reason is required for every action and the database enforces it,
+including rejecting whitespace. An override with no reason is the one thing an
+audit trail cannot reconstruct later: "someone approved it" does not answer
+"why was this approved".
+
+## ADR-028 — An accepted exception is not a passed check
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+A reviewer can accept an invoice into the register despite a failed check. It
+ends in the same business state as one the rules validated, because that is
+what acceptance means — but the reporting keeps them apart:
+
+- `v_invoice_register.accepted_with_exception` marks it, derived from
+  `review_actions` so there is no second copy of the fact to drift.
+- The failed check stays on the current revision. Nothing is rewritten to
+  make the invoice look clean.
+- `straight_through_rate` counts only invoices validated with **no** reviewer
+  correction and **no** accepted exception.
+
+This is the easiest number in the project to get quietly wrong. A
+straight-through rate that counted invoices a person had to decide about would
+overstate how much the rules actually handle, and that overstatement is
+exactly what a portfolio project is tempted into. The API response says so in
+words too, so a reader of the JSON cannot miss it.
+
+Acceptance is refused for an invoice that is not in review: accepting one that
+passed everything would record a decision nobody made.

@@ -5,6 +5,85 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-05 (week 3, part 1) — Reviewer corrections, rejection, accepted exceptions
+
+### Built
+
+- Migration `0005_review_actions`. A stated reason is `NOT NULL` and a check
+  rejects whitespace; a check also ties the action to its revisions (a
+  correction must produce one, the other actions must not).
+- `review.py`: `apply_correction`, `reject_invoice`, `accept_exception`.
+- A correction is submitted as a **complete set of values** in the same shape
+  extraction produces, so it runs through the same normalisation and the same
+  rules. Tested directly: a correction that fixes the total but mistypes a
+  line amount comes back failing, rather than being trusted.
+- Revalidation excludes the invoice from its own duplicate lookup — without
+  that, every correction would report `BUSINESS_DUPLICATE` against itself.
+- Optimistic concurrency: every action names the revision it was made
+  against, and a stale edit is refused with a conflict naming the current one.
+- Rejection releases the supplier and invoice number (the partial unique index
+  excludes rejected invoices), so a reissued document can be accepted later.
+  Tested.
+- `POST /invoices/{id}/revisions`, `POST /invoices/{id}/review-actions`, and
+  review history in the invoice detail.
+- The register exposes `accepted_with_exception`, derived from
+  `review_actions`, and `straight_through_rate` now excludes both corrected
+  invoices and accepted exceptions.
+
+### Checked
+
+- `pytest -q` → **315 passed, 0 skipped** (207 without a database, 108 with).
+- 25 new tests, including: a correction validating the invoice; a correction
+  that cannot bypass a check; still-failing corrections announcing again; not
+  flagging itself as a duplicate while still catching a real one; a stale
+  revision refused; an empty reason refused by the database; rejection
+  releasing the number for a reissue; accepting an exception leaving the
+  failed check visible and excluded from straight-through; accepting an
+  already-validated invoice refused.
+
+### A mistake worth recording
+
+Two earlier edits to `docs/business_requirements.md` **silently did nothing**.
+The replacement text used ASCII hyphens (`Items 1-3`) where the file has
+en-dashes (`Items 1–3`), and those particular calls did not assert that the
+text was found, so the script reported success while changing nothing. The
+file still carried its week-1 status line claiming requirements 4 and 8 were
+unimplemented, two sessions after that stopped being true.
+
+Found by accident, while a later edit to the same paragraph failed loudly
+because that one did assert. `docs/architecture.md` also still claimed 143
+unit tests. Both fixed, and the requirement status is now a table rather than
+a sentence, so a stale claim is more visible.
+
+The lesson is narrow and worth keeping: a scripted documentation edit must
+assert that it matched, or it will quietly leave the old text in place and
+report success.
+
+### Still not done
+
+No review interface — corrections work through the API and the CLI only. No
+n8n: Docker Desktop is installed (CLI 29.9.2, Compose v5.6.1) but the engine
+is not running, so the compose stack and the workflows are both unverified.
+No OCR, no dashboard, no notification delivery.
+
+**Actor identity is a known gap.** Reviewer actions record an actor from an
+`X-Actor` header, which is a label the caller picks, not an authenticated
+identity. The trail answers "what was done and why" but not "who really did
+it". That needs fixing before these records are relied on.
+
+### Next, in order
+
+1. Start Docker Desktop (first run needs its terms accepted), then verify the
+   compose stack and build the three n8n workflows.
+2. Streamlit review queue over the review endpoints.
+3. Power BI over the reporting views, with the metric definitions.
+4. Week 4: expand the dataset, freeze a split with an unseen layout, run the
+   benchmark, write the business case from measured results only.
+
+Nothing pushed. Nothing on the résumé.
+
+---
+
 ## 2026-11-05 (week 2, part 3) — Recovery sweep and the notification outbox
 
 ### Built

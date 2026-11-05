@@ -34,8 +34,20 @@ repository are invented.
 8. Produce evaluation results reproducible from a documented dataset and
    configuration.
 
-Items 1–3 and 5–7 are implemented for structured input in the current
-version; item 4 and item 8 are not. The README states what is built.
+Where each stands today:
+
+| # | Requirement | State |
+|---|---|---|
+| 1 | A document reaches a recorded outcome | Met, for PDFs and structured payloads, through the CLI and over HTTP |
+| 2 | Extracted values stay connected to their source | Met: the document is stored under its hash, and each value records the page, source line and bounding box it came from |
+| 3 | Deterministic detection of the listed problems | Met: 13 rules, each with an isolated test case |
+| 4 | A reviewer can correct, explain and revalidate | Met in the API and CLI; there is no review *interface* yet |
+| 5 | Repeats and retries create no duplicate records or notifications | Met: idempotency keys, duplicate guards and a de-duplicated outbox, all enforced by database constraints |
+| 6 | Interrupted processing recovers without losing the document or history | Met for processing: a failure leaves the stored document, the event trail and a retryable job, and a sweep finishes stalled work |
+| 7 | SQL reports and a dashboard reconcile with the records | Half met: the reporting views reconcile and a test proves it; there is no dashboard |
+| 8 | Reproducible evaluation | Half met: the extraction baseline runs from a documented command; the wider benchmark the plan describes does not exist |
+
+The README states what is built and how it was checked.
 
 ## Validation rules
 

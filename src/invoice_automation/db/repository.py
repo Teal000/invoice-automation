@@ -187,9 +187,18 @@ def find_file_duplicate(
 
 
 def find_business_duplicate(
-    conn: psycopg.Connection, key: str, invoice_number_normalized: str | None
+    conn: psycopg.Connection,
+    key: str,
+    invoice_number_normalized: str | None,
+    *,
+    exclude_invoice_id: UUID | None = None,
 ) -> DuplicateMatch | None:
-    """An existing canonical invoice for this supplier and invoice number."""
+    """An existing canonical invoice for this supplier and invoice number.
+
+    ``exclude_invoice_id`` is needed when revalidating an invoice that already
+    exists: without it, the invoice would find its own number in the register
+    and be reported as a duplicate of itself.
+    """
     if not invoice_number_normalized:
         return None
     row = conn.execute(
@@ -199,9 +208,15 @@ def find_business_duplicate(
         WHERE supplier_key = %s
           AND invoice_number_normalized = %s
           AND business_state <> 'rejected'
+          AND (%s::uuid IS NULL OR invoice_id <> %s::uuid)
         LIMIT 1
         """,
-        (key, invoice_number_normalized),
+        (
+            key,
+            invoice_number_normalized,
+            exclude_invoice_id,
+            exclude_invoice_id,
+        ),
     ).fetchone()
     if row is None:
         return None
@@ -675,6 +690,7 @@ def get_invoice_detail(conn: psycopg.Connection, invoice_id: UUID) -> dict[str, 
         """,
         (invoice_id,),
     ).fetchall()
+    invoice["review_actions"] = list_review_actions(conn, invoice_id)
     invoice["events"] = conn.execute(
         """
         SELECT occurred_at, event_type, entity_type, actor, details
@@ -898,4 +914,97 @@ def list_invoices(
             "limit": limit,
             "offset": offset,
         },
+    ).fetchall()
+
+
+# ---------------------------------------------------------------------------
+# Reviewer actions
+# ---------------------------------------------------------------------------
+
+
+def get_invoice_for_review(
+    conn: psycopg.Connection, invoice_id: UUID
+) -> dict[str, Any] | None:
+    """Everything a reviewer action needs, in one read.
+
+    Includes the current revision number, which the caller must name so that
+    an edit made against stale values is refused rather than applied over
+    whatever changed in between.
+    """
+    return conn.execute(
+        """
+        SELECT i.invoice_id, i.business_state, i.current_revision_id,
+               i.supplier_key, i.invoice_number, i.first_submission_id,
+               r.revision_number AS current_revision_number,
+               r.document_id,
+               d.original_file_name, d.content_sha256, d.storage_path,
+               s.source
+        FROM invoices i
+        LEFT JOIN invoice_revisions r ON r.revision_id = i.current_revision_id
+        LEFT JOIN documents d ON d.document_id = r.document_id
+        LEFT JOIN submissions s ON s.submission_id = i.first_submission_id
+        WHERE i.invoice_id = %s
+        """,
+        (invoice_id,),
+    ).fetchone()
+
+
+def set_business_state(
+    conn: psycopg.Connection, invoice_id: UUID, business_state: str
+) -> None:
+    """Change the business state without touching the current revision.
+
+    Used by rejection and by accepting an exception, neither of which produces
+    new values: the revision stays as it was, because nothing about the
+    invoice changed except the decision taken about it.
+    """
+    conn.execute(
+        """
+        UPDATE invoices
+           SET business_state = %s,
+               updated_at = now()
+         WHERE invoice_id = %s
+        """,
+        (business_state, invoice_id),
+    )
+
+
+def insert_review_action(
+    conn: psycopg.Connection,
+    *,
+    invoice_id: UUID,
+    actor: str,
+    action: str,
+    reason: str,
+    from_revision_id: UUID | None,
+    to_revision_id: UUID | None,
+) -> UUID:
+    row = conn.execute(
+        """
+        INSERT INTO review_actions (invoice_id, actor, action, reason,
+                                    from_revision_id, to_revision_id)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        RETURNING review_action_id
+        """,
+        (invoice_id, actor, action, reason, from_revision_id, to_revision_id),
+    ).fetchone()
+    return row["review_action_id"]
+
+
+def list_review_actions(
+    conn: psycopg.Connection, invoice_id: UUID
+) -> list[dict[str, Any]]:
+    return conn.execute(
+        """
+        SELECT ra.review_action_id, ra.actor, ra.action, ra.reason,
+               ra.created_at,
+               rf.revision_number AS from_revision_number,
+               rt.revision_number AS to_revision_number
+        FROM review_actions ra
+        LEFT JOIN invoice_revisions rf ON rf.revision_id = ra.from_revision_id
+        LEFT JOIN invoice_revisions rt ON rt.revision_id = ra.to_revision_id
+        WHERE ra.invoice_id = %s
+        ORDER BY ra.created_at, ra.review_action_id
+        """,
+        (invoice_id,),
     ).fetchall()

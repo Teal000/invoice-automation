@@ -48,9 +48,22 @@ from ..pipeline import (
     process_submission,
     record_arrival,
 )
+from ..models import RawInvoice
 from ..recovery import recover_jobs
+from ..review import (
+    ACCEPT_EXCEPTION,
+    REJECT,
+    InvoiceNotFound,
+    ReviewNotApplicable,
+    ReviewOutcome,
+    RevisionConflict,
+    accept_exception,
+    apply_correction,
+    reject_invoice,
+)
 from ..storage import UnsupportedMediaType
 from .schemas import (
+    CorrectionRequest,
     ErrorBody,
     ErrorResponse,
     HealthResponse,
@@ -60,6 +73,8 @@ from .schemas import (
     NotificationOut,
     ProcessingOutcome,
     RecoveryReport,
+    ReviewActionRequest,
+    ReviewOutcomeOut,
     SubmissionCreated,
     SubmissionDetail,
     SummaryReport,
@@ -177,6 +192,28 @@ def _register_error_handlers(app: FastAPI) -> None:
             status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, "unsupported_media_type", str(exc)
         )
 
+    @app.exception_handler(InvoiceNotFound)
+    def _invoice_missing(_: Request, exc: InvoiceNotFound) -> JSONResponse:
+        return _error(status.HTTP_404_NOT_FOUND, "invoice_not_found", str(exc))
+
+    @app.exception_handler(RevisionConflict)
+    def _revision_conflict(_: Request, exc: RevisionConflict) -> JSONResponse:
+        # 409, not 200: the reviewer is looking at values that are no longer
+        # current, and applying the edit would discard what changed.
+        return _error(
+            status.HTTP_409_CONFLICT,
+            "revision_conflict",
+            str(exc),
+            {
+                "expected_revision_number": exc.expected,
+                "current_revision_number": exc.actual,
+            },
+        )
+
+    @app.exception_handler(ReviewNotApplicable)
+    def _review_not_applicable(_: Request, exc: ReviewNotApplicable) -> JSONResponse:
+        return _error(status.HTTP_409_CONFLICT, "review_not_applicable", str(exc))
+
     @app.exception_handler(ProcessingError)
     def _processing_failed(_: Request, exc: ProcessingError) -> JSONResponse:
         # A technical failure, recorded against a retryable job. The caller is
@@ -220,6 +257,41 @@ def _outcome(result: ProcessingResult) -> ProcessingOutcome:
             if check.failed
         ],
         job_attempt=result.job_attempt,
+    )
+
+
+def _actor(request: Request) -> str:
+    """Who took the action, as far as the service can tell.
+
+    There is one service credential and no users, so this cannot name a
+    person. It records the caller, and the limitation is stated rather than
+    dressed up: before reviewer actions are used in earnest, "who overrode
+    this check" needs a real identity.
+    """
+    caller = request.headers.get("X-Actor")
+    return f"api:{caller}" if caller else "api:service-credential"
+
+
+def _review_outcome(outcome: ReviewOutcome) -> ReviewOutcomeOut:
+    note = None
+    if outcome.action == ACCEPT_EXCEPTION:
+        note = (
+            "Accepted into the register despite a failed check. This is not "
+            "recorded as the checks having passed: the register marks it and "
+            "the straight-through rate excludes it."
+        )
+    elif outcome.action == "correct" and outcome.failed_codes:
+        note = "The correction did not resolve every check; the invoice is still in review."
+    return ReviewOutcomeOut(
+        invoice_id=outcome.invoice_id,
+        action=outcome.action,
+        actor=outcome.actor,
+        reason=outcome.reason,
+        state=str(outcome.state),
+        revision_number=outcome.revision_number,
+        failed_codes=list(outcome.failed_codes),
+        review_action_id=outcome.review_action_id,
+        note=note,
     )
 
 
@@ -564,6 +636,73 @@ def _register_routes(app: FastAPI) -> None:
                 },
             )
         return InvoiceDetail(**detail)
+
+    @app.post(
+        "/invoices/{invoice_id}/revisions",
+        response_model=ReviewOutcomeOut,
+        status_code=status.HTTP_201_CREATED,
+        dependencies=[Authenticated],
+        tags=["review"],
+    )
+    def create_revision(
+        conn: Db,
+        request: Request,
+        invoice_id: UUID,
+        body: CorrectionRequest,
+    ) -> ReviewOutcomeOut:
+        """Record corrected values as a new revision and re-run every check.
+
+        The corrected values go through the same rules as extracted ones, so
+        the outcome is whatever the checks now say: a correction that fixes
+        the problem validates the invoice, one that does not leaves it in
+        review with the remaining failures. Nothing is accepted because a
+        person typed it.
+        """
+        raw = RawInvoice.model_validate(body.invoice)
+        outcome = apply_correction(
+            conn,
+            invoice_id,
+            expected_revision_number=body.expected_revision_number,
+            raw=raw,
+            actor=_actor(request),
+            reason=body.reason,
+            settings=request.app.state.settings,
+        )
+        return _review_outcome(outcome)
+
+    @app.post(
+        "/invoices/{invoice_id}/review-actions",
+        response_model=ReviewOutcomeOut,
+        dependencies=[Authenticated],
+        tags=["review"],
+    )
+    def create_review_action(
+        conn: Db, request: Request, invoice_id: UUID, body: ReviewActionRequest
+    ) -> ReviewOutcomeOut:
+        """Reject an invoice, or accept it despite a failed check.
+
+        Both require a reason, which is stored. Accepting an exception puts
+        the invoice in the register but is **not** recorded as the checks
+        having passed: the register marks it and the straight-through rate
+        excludes it.
+        """
+        if body.action not in (REJECT, ACCEPT_EXCEPTION):
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                detail={
+                    "code": "unknown_review_action",
+                    "message": f"action must be {REJECT!r} or {ACCEPT_EXCEPTION!r}.",
+                },
+            )
+        handler = reject_invoice if body.action == REJECT else accept_exception
+        outcome = handler(
+            conn,
+            invoice_id,
+            expected_revision_number=body.expected_revision_number,
+            actor=_actor(request),
+            reason=body.reason,
+        )
+        return _review_outcome(outcome)
 
     @app.get(
         "/reports/summary",

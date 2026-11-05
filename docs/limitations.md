@@ -56,10 +56,14 @@ reported next to it rather than on its own.
   that is tested, but there is no mail transport, webhook or chat
   integration. `status = 'sent'` records what a caller claims. Nobody is
   actually told anything.
-- No review interface and no dashboard.
-- **The API has one service credential, not users.** There are no roles,
-  sessions or per-person identity, so "who overrode this check" cannot yet be
-  answered, and reviewer actions will need that before they are built.
+- **No review interface.** Reviewer corrections, rejections and accepted
+  exceptions work through the API and the CLI; there is no screen a reviewer
+  could sit in front of. No dashboard either.
+- **The API has one service credential, not users.** Reviewer actions record
+  an actor taken from an `X-Actor` header, which is a label the caller
+  chooses, not an authenticated identity. The audit trail therefore answers
+  "what was done and why" but **not** "who really did it". That is the first
+  thing to fix before anyone relies on these records.
 - No reviewer corrections. The revision table and the audit trail support
   them; the action that creates a correction does not exist yet, so the
   "reviewer can correct and revalidate" requirement is unmet.
@@ -87,7 +91,7 @@ all.
 
 ## Verification status
 
-290 tests pass, none skipped: 207 that need no database and 83 that do. The
+315 tests pass, none skipped: 207 that need no database and 108 that do. The
 schema has been applied to a live server, the 16 labelled cases produce their
 labelled outcomes through the full pipeline as payloads **and** as PDFs, and
 the reporting views reconcile with direct SQL queries.
