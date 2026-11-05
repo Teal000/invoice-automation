@@ -172,6 +172,49 @@ Uploaded files are stored under `INVAUT_STORAGE_ROOT` (default `data/storage`,
 git-ignored) at a path derived from the file's SHA-256, so identical bytes are
 stored once however many times they arrive.
 
+## 9. Everything in containers (not yet run)
+
+`compose.yaml` and `Dockerfile` describe the database, the API and n8n.
+**Neither has been built or executed**: Docker is not installed on the
+development machine, so expect the first run to need corrections. Everything
+above works without Docker.
+
+```powershell
+winget install --id Docker.DockerDesktop --accept-package-agreements --accept-source-agreements
+```
+
+Then, with `INVAUT_DB_PASSWORD` and `INVAUT_API_KEY` set in `.env`:
+
+```powershell
+docker compose up -d
+```
+
+```powershell
+docker compose run --rm api python -m invoice_automation.cli init-db
+```
+
+```powershell
+docker compose run --rm api python -m invoice_automation.cli seed
+```
+
+The API is then on http://localhost:8000/docs and n8n on
+http://localhost:5678.
+
+Notes worth knowing before the first run:
+
+- Inside the network, services reach each other by **service name**: the API
+  connects to `db`, and n8n calls `http://api:8000`. Inside a container,
+  `localhost` is that container.
+- n8n keeps its own data, credentials included, in its own volume (SQLite by
+  default). It deliberately does not share this project's database: mixing an
+  orchestrator's tables into the invoice schema would blur what is
+  authoritative about an invoice.
+- The n8n image is pinned to the version that was current in the n8n
+  documentation on 5 November 2026, for reproducibility. Check the current
+  release before raising it.
+- Uploaded documents live in a named volume, so they survive the API
+  container being replaced.
+
 ## Regenerating the fixtures
 
 ```powershell

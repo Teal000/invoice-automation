@@ -37,7 +37,8 @@ reported anywhere here, because none has been measured.
 | Reporting views reconcile with direct SQL | Implemented | Integration test compares every count and rate against direct queries |
 | CLI: init-db, seed, ingest, serve, recover, notifications, both manifests, register, overview, exceptions, show | Implemented | All run against a live database |
 | 16 labelled synthetic cases as payloads **and** as PDFs, with ground truth | Implemented | Every case produces its labelled state and codes three ways: in-memory replay, payloads against the database, PDFs against the database |
-| Notification *delivery*, OCR, n8n orchestration, review UI, Power BI | Not built | — |
+| Container setup (Dockerfile, compose with db + api + n8n) | Written | **Never built or run**: Docker is not installed yet |
+| Notification *delivery*, OCR, n8n workflows, review UI, Power BI | Not built | — |
 
 **290 tests pass, none skipped**: 207 that need no database and 83 that do.
 

@@ -412,3 +412,36 @@ is excluded: it is `failed` and wants a person, not another automatic attempt.
 One job failing never stops the sweep. Each is handled on its own and its
 error reported, because one poison document must not block everything queued
 behind it.
+
+## ADR-025 — Docker, and n8n in a container rather than via npm
+
+**Date:** 5 November 2026
+**Status:** accepted, superseding ADR-001 for the orchestrator
+
+ADR-001 chose a local PostgreSQL over Docker because Docker was not installed.
+That decision is now reversed for the orchestrator, after checking the current
+n8n documentation rather than assuming:
+
+- n8n supports Node 20.19 to 24.x inclusive, so the installed Node 24.14.0
+  would qualify for an npm install.
+- **But npm installs are deprecated from n8n 3.0**, and 3.1.0 already exists
+  as a pre-release. Building a portfolio project on a method the vendor is
+  retiring would mean the setup instructions aged out before anyone read them.
+
+So n8n runs in a container, which also gives `compose.yaml` a reason to exist
+after being written-but-unexecuted since week 1, and makes the reproducible
+setup the plan asked for real rather than aspirational.
+
+The n8n image is pinned to the stable release current on this date. The docs
+do not require pinning, but an orchestrator that changes under its own
+workflows is not reproducible, which is the whole point of the exercise.
+
+n8n keeps its own data, credentials included, in its own volume rather than
+sharing this project's database. Mixing an orchestrator's tables into the
+invoice schema would blur what is authoritative about an invoice, and the
+answer must stay "PostgreSQL, not the execution history".
+
+**Consequence:** the Dockerfile and compose file are written but have never
+been built or run, and both say so in their headers. Everything the project
+does today still runs without Docker, so the container path is an addition
+rather than a dependency.

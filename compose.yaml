@@ -1,13 +1,23 @@
-# Docker Compose definition for the services this project will use.
+# The services this project runs: database, API, orchestrator.
 #
-# NOT VERIFIED. Docker is not installed on the development machine, so this
-# file has never been executed. The project currently runs against a local
-# PostgreSQL 18 install; see docs/setup.md and docs/decisions.md (ADR-001).
-# Treat this as a starting point to be tested, not as a working setup.
+# NOT YET RUN. Docker is not installed on the development machine, so nothing
+# here has been executed and the first `docker compose up` should be expected
+# to need corrections. Everything the project does today runs without it
+# (see docs/setup.md); this file is the reproducible setup the plan asked
+# for, written ready rather than claimed working.
 #
-# Only the database is defined. The API, the review interface and n8n are not
-# built yet, and a compose file listing services that do not exist would be
-# misleading.
+# The review interface is absent because it does not exist yet. A compose
+# file listing services that have not been built would be misleading.
+#
+# Start it:
+#   docker compose up -d
+#   docker compose run --rm api python -m invoice_automation.cli init-db
+#   docker compose run --rm api python -m invoice_automation.cli seed
+#
+# Then the API is on http://localhost:8000/docs and n8n on
+# http://localhost:5678.
+
+name: invoice-automation
 
 services:
   db:
@@ -17,14 +27,90 @@ services:
       POSTGRES_USER: ${INVAUT_DB_USER:-invoice_app}
       POSTGRES_PASSWORD: ${INVAUT_DB_PASSWORD:?set INVAUT_DB_PASSWORD in .env}
     ports:
-      - "${INVAUT_DB_PORT:-5432}:5432"
+      # Published so psql and the local CLI can reach the same database.
+      - "${INVAUT_DB_PORT_PUBLISHED:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${INVAUT_DB_USER:-invoice_app}"]
+      test: ["CMD-SHELL", "pg_isready -U ${INVAUT_DB_USER:-invoice_app} -d ${INVAUT_DB_NAME:-invoice_automation}"]
       interval: 5s
       timeout: 3s
       retries: 10
+    restart: unless-stopped
+
+  api:
+    build: .
+    environment:
+      # Inside the network the database is reachable by service name, on its
+      # own port, whatever port is published to the host.
+      INVAUT_DB_HOST: db
+      INVAUT_DB_PORT: 5432
+      INVAUT_DB_NAME: ${INVAUT_DB_NAME:-invoice_automation}
+      INVAUT_DB_USER: ${INVAUT_DB_USER:-invoice_app}
+      INVAUT_DB_PASSWORD: ${INVAUT_DB_PASSWORD:?set INVAUT_DB_PASSWORD in .env}
+      INVAUT_API_KEY: ${INVAUT_API_KEY:?set INVAUT_API_KEY in .env}
+      INVAUT_STORAGE_ROOT: /app/data/storage
+      INVAUT_JOB_LEASE_SECONDS: ${INVAUT_JOB_LEASE_SECONDS:-300}
+      INVAUT_QUEUED_JOB_GRACE_SECONDS: ${INVAUT_QUEUED_JOB_GRACE_SECONDS:-300}
+    ports:
+      - "${INVAUT_API_PORT:-8000}:8000"
+    volumes:
+      # Uploaded documents outlive the container.
+      - documents:/app/data/storage
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      # /health is the one endpoint that needs no credential, which is part of
+      # why it exists.
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health').status == 200 else 1)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
+    restart: unless-stopped
+
+  n8n:
+    # Pinned rather than tracking the stable tag: an orchestrator that changes
+    # under its own workflows is not reproducible. 2.46.6 was the current
+    # stable release per the n8n documentation and GitHub releases on
+    # 5 November 2026; it has not been pulled from here, because Docker is not
+    # installed yet. The image name is n8nio/n8n, which is what the n8n docs
+    # use (there is no docker.n8n.io registry prefix in their instructions).
+    image: n8nio/n8n:2.46.6
+    environment:
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      # Both documented by n8n: TZ sets the system timezone, GENERIC_TIMEZONE
+      # the one schedule nodes use. A recovery sweep that runs at the wrong
+      # hour is a real failure, so these are set rather than defaulted.
+      GENERIC_TIMEZONE: Africa/Tunis
+      TZ: Africa/Tunis
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
+      # Workflows reach the API by service name, not localhost: inside a
+      # container, localhost is the container.
+      INVOICE_API_BASE_URL: http://api:8000
+      # n8n reads this into an HTTP Header credential; it is not sent
+      # anywhere else. n8n keeps its own data, credentials included, in the
+      # n8n_data volume (SQLite by default) rather than in this project's
+      # database: mixing an orchestrator's tables into the invoice schema
+      # would confuse what is authoritative about an invoice.
+      INVOICE_API_KEY: ${INVAUT_API_KEY:?set INVAUT_API_KEY in .env}
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+      # Workflow exports, so a reviewer can import them.
+      - ./workflows/n8n:/workflows:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   pgdata:
+  documents:
+  n8n_data:
