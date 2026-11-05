@@ -74,6 +74,14 @@ class Settings(BaseSettings):
 
     storage_root: Path = Path("data/storage")
 
+    #: Single internal service credential for the API. Not a user auth
+    #: system: it exists so that processing and review actions are not open
+    #: to anything that can reach the port, and so n8n can authenticate to
+    #: the API. The service refuses to start when it is empty, which is
+    #: deliberate: an API that quietly runs without a credential is worse
+    #: than one that will not start.
+    api_key: str = ""
+
     @field_validator("money_rounding")
     @classmethod
     def _check_rounding(cls, value: str) -> str:

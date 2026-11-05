@@ -28,7 +28,9 @@ except ModuleNotFoundError:  # pragma: no cover
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 #: Methods whose first string argument is SQL.
 SQL_CALLS = {"execute", "executemany"}
-PLACEHOLDER = re.compile(r"%s")
+#: Both psycopg placeholder styles: positional %s and named %(name)s. Replaced
+#: with NULL before parsing, since the grammar does not know them.
+PLACEHOLDER = re.compile(r"%\([A-Za-z_][A-Za-z0-9_]*\)s|%s")
 
 
 def sql_literals(path: Path) -> list[tuple[int, str]]:

@@ -687,3 +687,215 @@ def get_invoice_detail(conn: psycopg.Connection, invoice_id: UUID) -> dict[str, 
         (invoice_id, invoice_id),
     ).fetchall()
     return invoice
+
+
+# ---------------------------------------------------------------------------
+# Reads and writes for the split arrival/processing path
+# ---------------------------------------------------------------------------
+
+
+def get_submission_with_document(
+    conn: psycopg.Connection, submission_id: UUID
+) -> dict[str, Any] | None:
+    """Everything processing needs about one arrival, in a single read."""
+    return conn.execute(
+        """
+        SELECT s.submission_id, s.source, s.idempotency_key, s.received_at,
+               s.outcome, s.invoice_id, s.duplicate_of_submission_id, s.notes,
+               d.document_id, d.original_file_name, d.storage_path,
+               d.content_sha256, d.media_type, d.byte_size
+        FROM submissions s
+        JOIN documents d ON d.document_id = s.document_id
+        WHERE s.submission_id = %s
+        """,
+        (submission_id,),
+    ).fetchone()
+
+
+def update_document_extraction(
+    conn: psycopg.Connection,
+    document_id: UUID,
+    *,
+    raw_payload: RawInvoice | dict[str, Any] | None,
+    raw_text: str | None,
+    extraction_method: str | None,
+) -> None:
+    """Record what extraction produced, which is unknown when a file arrives."""
+    payload = (
+        raw_payload.model_dump(mode="json")
+        if isinstance(raw_payload, RawInvoice)
+        else raw_payload
+    )
+    conn.execute(
+        """
+        UPDATE documents
+           SET raw_payload = %s,
+               raw_text = %s,
+               extraction_method = %s
+         WHERE document_id = %s
+        """,
+        (
+            Jsonb(payload) if payload is not None else None,
+            raw_text,
+            extraction_method,
+            document_id,
+        ),
+    )
+
+
+def enqueue_job(
+    conn: psycopg.Connection,
+    submission_id: UUID,
+    *,
+    job_type: str = "process_submission",
+    max_attempts: int = 3,
+) -> dict[str, Any]:
+    """Open a queued job for a new arrival, or return the existing one.
+
+    Queued, not running: an arrival has not been processed yet, and the
+    distinction is what lets a recovery sweep find work that was never
+    started as well as work that stalled.
+    """
+    row = conn.execute(
+        """
+        INSERT INTO processing_jobs (submission_id, job_type, status, max_attempts)
+        VALUES (%s, %s, 'queued', %s)
+        ON CONFLICT (submission_id, job_type) DO NOTHING
+        RETURNING job_id, status, attempt_count, max_attempts
+        """,
+        (submission_id, job_type, max_attempts),
+    ).fetchone()
+    if row is not None:
+        return row
+    existing = conn.execute(
+        """
+        SELECT job_id, status, attempt_count, max_attempts
+        FROM processing_jobs WHERE submission_id = %s AND job_type = %s
+        """,
+        (submission_id, job_type),
+    ).fetchone()
+    if existing is None:  # pragma: no cover - the conflict implies a row
+        raise RuntimeError("job conflicted but could not be read back")
+    return existing
+
+
+def get_job_for_submission(
+    conn: psycopg.Connection,
+    submission_id: UUID,
+    *,
+    job_type: str = "process_submission",
+) -> dict[str, Any] | None:
+    return conn.execute(
+        """
+        SELECT job_id, submission_id, job_type, status, attempt_count,
+               max_attempts, lease_expires_at, last_error,
+               created_at, started_at, finished_at
+        FROM processing_jobs
+        WHERE submission_id = %s AND job_type = %s
+        """,
+        (submission_id, job_type),
+    ).fetchone()
+
+
+def get_job(conn: psycopg.Connection, job_id: UUID) -> dict[str, Any] | None:
+    return conn.execute(
+        """
+        SELECT job_id, submission_id, job_type, status, attempt_count,
+               max_attempts, lease_expires_at, last_error,
+               created_at, started_at, finished_at
+        FROM processing_jobs WHERE job_id = %s
+        """,
+        (job_id,),
+    ).fetchone()
+
+
+def fail_job(
+    conn: psycopg.Connection, job_id: UUID, *, error: str
+) -> dict[str, Any]:
+    """Record a failed attempt, and say whether another one is allowed.
+
+    ``retry_pending`` while attempts remain, ``failed`` once they are spent.
+    The decision is made in SQL against the row's own counters, so two
+    concurrent workers cannot disagree about how many attempts have happened.
+    """
+    row = conn.execute(
+        """
+        UPDATE processing_jobs
+           SET status = CASE
+                   WHEN attempt_count < max_attempts THEN 'retry_pending'
+                   ELSE 'failed'
+               END,
+               last_error = %s,
+               finished_at = now(),
+               updated_at = now()
+         WHERE job_id = %s
+        RETURNING job_id, status, attempt_count, max_attempts
+        """,
+        (error, job_id),
+    ).fetchone()
+    if row is None:  # pragma: no cover
+        raise RuntimeError(f"no job {job_id}")
+    return row
+
+
+def get_submission_summary(
+    conn: psycopg.Connection, submission_id: UUID
+) -> dict[str, Any] | None:
+    """A submission with its job state, for the API to report."""
+    return conn.execute(
+        """
+        SELECT s.submission_id, s.source, s.idempotency_key, s.received_at,
+               s.outcome, s.invoice_id, s.duplicate_of_submission_id, s.notes,
+               d.original_file_name, d.media_type, d.byte_size,
+               d.content_sha256, d.storage_path, d.extraction_method,
+               j.job_id, j.status AS job_status, j.attempt_count,
+               j.max_attempts, j.last_error
+        FROM submissions s
+        JOIN documents d ON d.document_id = s.document_id
+        LEFT JOIN processing_jobs j ON j.submission_id = s.submission_id
+        WHERE s.submission_id = %s
+        """,
+        (submission_id,),
+    ).fetchone()
+
+
+def list_invoices(
+    conn: psycopg.Connection,
+    *,
+    state: str | None = None,
+    supplier_reference: str | None = None,
+    exception_code: str | None = None,
+    invoice_date_from: Any = None,
+    invoice_date_to: Any = None,
+    limit: int = 50,
+    offset: int = 0,
+) -> list[dict[str, Any]]:
+    """The invoice register, filtered. Reads the view, not the tables."""
+    return conn.execute(
+        """
+        SELECT r.*
+        FROM v_invoice_register r
+        WHERE (%(state)s::text IS NULL OR r.business_state = %(state)s::text)
+          AND (%(supplier)s::text IS NULL
+               OR upper(r.supplier_reference) = upper(%(supplier)s::text))
+          AND (%(date_from)s::date IS NULL OR r.invoice_date >= %(date_from)s::date)
+          AND (%(date_to)s::date IS NULL OR r.invoice_date <= %(date_to)s::date)
+          -- v_rule_failures already restricts to failures on the current
+          -- revision, so a corrected invoice stops matching its old code.
+          AND (%(code)s::text IS NULL OR EXISTS (
+                  SELECT 1 FROM v_rule_failures f
+                  WHERE f.invoice_id = r.invoice_id
+                    AND f.code = %(code)s::text))
+        ORDER BY r.first_recorded_at DESC
+        LIMIT %(limit)s OFFSET %(offset)s
+        """,
+        {
+            "state": state,
+            "supplier": supplier_reference,
+            "code": exception_code,
+            "date_from": invoice_date_from,
+            "date_to": invoice_date_to,
+            "limit": limit,
+            "offset": offset,
+        },
+    ).fetchall()

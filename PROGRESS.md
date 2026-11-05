@@ -5,6 +5,92 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-05 (week 2, part 2) — HTTP API; arrival split from processing
+
+### Built
+
+- **The pipeline split in two.** `record_arrival` stores the file, records the
+  submission and opens a *queued* job; `process_submission` reads the stored
+  file, extracts, validates and persists. `process_structured_submission` is
+  now a wrapper over the shared core for callers that hold values rather than
+  a file, so all 241 earlier tests kept passing unchanged.
+- `storage.py`: content-addressed storage. A file lives at
+  `storage/<2 chars>/<sha256>.<ext>`, so identical bytes occupy one path and
+  two arrivals of the same invoice reference one blob. `resolve` refuses a
+  path that escapes the root.
+- `src/invoice_automation/api/`: FastAPI service. `POST /submissions`
+  (multipart upload, `Idempotency-Key`), `POST /submissions/{id}/process`,
+  `GET /submissions/{id}`, `POST /jobs/{id}/retry`, `GET /invoices` with
+  filters and paging, `GET /invoices/{id}`, `GET /reports/summary`,
+  `GET /health`. Typed schemas, one error envelope, `/docs` published.
+- Auth: one service credential in `X-API-Key`, compared with
+  `secrets.compare_digest`, required everywhere except `/health`. **The
+  service refuses to start without one.**
+- `fail_job` decides `retry_pending` versus `failed` in SQL against the row's
+  own counters, so concurrent workers cannot disagree about attempts.
+- CLI: `ingest` now handles PDFs *and* payloads through the real path
+  (storage + split processing), replacing `ingest-pdf`. Added `serve`.
+
+### Checked
+
+- `pytest -q` → **271 passed, 0 skipped** (207 without a database, 64 with).
+- 30 new API integration tests, including:
+  - **a recoverable technical failure**: the stored file is hidden
+    mid-workflow, processing returns 500 with `retryable: true`, the job goes
+    `retry_pending`, the arrival and event history survive and no half-written
+    invoice exists; the file is restored and `POST /jobs/{id}/retry` reaches
+    `validated` on attempt 2, with one invoice from one submission.
+  - processing twice does not process twice; the same idempotency key returns
+    200 rather than 201 and records nothing new.
+  - an identical file reuses the stored bytes and is linked when processed.
+  - 401 without a credential, 415 for an unaccepted file type, 400 for an
+    empty one, one error shape throughout.
+  - the summary endpoint reconciles with the register.
+- CLI end to end: a PDF stored once, two submissions, one invoice, duplicate
+  linked.
+
+### What the work turned up
+
+- Response models built from view rows had `extra="forbid"`, so a view column
+  the API does not publish (`duplicate_invoices`, internal ids) raised a
+  validation error at response time. View-backed models now ignore extras
+  while request schemas still forbid them — a new view column should not
+  break the service, but a typo in a caller's payload should still be an
+  error.
+- `list_invoices` had a nonsense `WHERE` clause from an edit
+  (`v.revision_id = r.current_revision_number IS NOT NULL`). Replaced by an
+  `EXISTS` over `v_rule_failures`, which already restricts to current
+  revisions, so a corrected invoice stops matching its old code.
+- `tools/check_sql.py` only understood positional `%s` placeholders, so it
+  could not parse the named-parameter query that contained that bug. It now
+  handles `%(name)s` too — the checker had a blind spot exactly where the
+  defect was.
+
+### Still not done
+
+No n8n. No OCR. No review interface, so reviewer corrections (requirement 4)
+remain unimplemented. No recovery *sweep*: a job can be retried through the
+API, but nothing yet finds overdue jobs on its own, and
+`notification_outbox` does not exist.
+
+### Next, in order
+
+1. Migration 0004: `notification_outbox` with a deduplication key, plus
+   `review_actions` for week 3.
+2. A recovery command/endpoint that finds `retry_pending` jobs and stalled
+   leases and resumes them, with a bounded attempt count.
+3. n8n: decide container versus npm (Node 24.14.0 present, Docker not), check
+   the current n8n docs for supported Node versions first. Workflow: receive a
+   submission id, fetch state, skip settled work, call `/process`, route the
+   outcome, create one notification when review is needed, retry with backoff
+   on a transient failure.
+4. Week 3: reviewer corrections and revalidation, Streamlit review queue,
+   Power BI.
+
+Nothing pushed. Nothing on the résumé.
+
+---
+
 ## 2026-11-05 (week 2, part 1) — PDF extraction; a measured baseline
 
 ### Built

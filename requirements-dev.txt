@@ -16,3 +16,8 @@ pgserver==0.1.4
 # reportlab draws the synthetic invoice PDFs in data/generate_pdf_fixtures.py.
 # Generation only: the application never needs it at runtime.
 reportlab==5.1.0
+
+# httpx backs fastapi.testclient. Starlette now prefers httpx2 and emits a
+# deprecation warning with httpx; the client works either way, and moving to
+# httpx2 is a small change for a later pass.
+httpx==0.28.1

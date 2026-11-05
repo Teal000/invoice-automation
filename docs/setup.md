@@ -130,6 +130,48 @@ parses the schema and every hand-written query with the PostgreSQL grammar
 itself (via `libpg_query`), which catches syntax errors without a server but
 proves nothing about column names or types.
 
+## 8. The HTTP service
+
+The service needs a credential. Put a long random value in `.env`:
+
+```
+INVAUT_API_KEY=<a long random value>
+```
+
+It refuses to start without one, on purpose: a service running open to
+anything that can reach the port is a worse failure than one that will not
+boot. Then:
+
+```powershell
+.\.venv\Scripts\python.exe -m invoice_automation.cli serve
+```
+
+Interactive documentation at http://127.0.0.1:8000/docs. Every endpoint except
+`/health` requires the `X-API-Key` header.
+
+A full pass with `curl` — upload, process, read:
+
+```powershell
+curl -s -H "X-API-Key: $env:INVAUT_API_KEY" -F "file=@data/fixtures/pdf/valid_001.pdf" http://127.0.0.1:8000/submissions
+```
+
+```powershell
+curl -s -X POST -H "X-API-Key: $env:INVAUT_API_KEY" http://127.0.0.1:8000/submissions/<submission-id>/process
+```
+
+```powershell
+curl -s -H "X-API-Key: $env:INVAUT_API_KEY" "http://127.0.0.1:8000/invoices?state=needs_review"
+```
+
+Uploading is separate from processing so that an orchestrator can decide when
+to process and can retry without the document passing through it again. Pass
+`?process=true` on the upload to do both in one call, which is convenient for
+a demonstration.
+
+Uploaded files are stored under `INVAUT_STORAGE_ROOT` (default `data/storage`,
+git-ignored) at a path derived from the file's SHA-256, so identical bytes are
+stored once however many times they arrive.
+
 ## Regenerating the fixtures
 
 ```powershell

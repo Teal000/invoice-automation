@@ -4,6 +4,10 @@
 
 ```text
 src/invoice_automation/
+  api/
+    main.py          FastAPI app: routes, auth, error envelope
+    schemas.py       Typed request and response models
+  storage.py         Content-addressed document storage
   config.py          Settings (environment) and RuleConfig (plain dataclass)
   money.py           Decimal parsing, quantisation, tolerance
   models.py          RawInvoice -> NormalizedInvoice, field problems
@@ -37,17 +41,33 @@ tests/integration/   Skipped when no server is reachable
 
 ## The flow, as implemented
 
+Two steps, which is what makes orchestration and retries possible:
+
 ```text
-structured payload (JSON file)
+STEP 1 - arrival (POST /submissions, or `cli ingest`)
         |
         v
-CLI reads the bytes, hashes them (SHA-256)
+bytes hashed (SHA-256) and stored at storage/<2 chars>/<hash>.<ext>
         |
         v
-documents row (raw payload kept) + submissions row
+documents row + submissions row (outcome 'pending')
         |
         v
-processing_jobs row: queued -> running
+processing_jobs row: 'queued'            -> a receipt is returned here
+        |
+        |   an orchestrator decides when to continue, and can retry
+        v
+STEP 2 - processing (POST /submissions/{id}/process)
+        |
+        v
+already settled? -> report the recorded outcome, do nothing else
+        |
+        v
+job claimed: 'running', attempt_count + 1   (outside the work transaction,
+                                             so a failed attempt survives)
+        |
+        v
+read the stored file -> extract (PDF) or parse (JSON)
         |
         v
 normalize_invoice()  raw strings -> typed values + field problems
@@ -124,12 +144,31 @@ arithmetic check.
 There is no OCR. A scanned document has no text layer, so this path yields
 nothing and the document goes to review.
 
-**Orchestration.** `process_structured_submission(conn, raw, submission)` is
-one call that is safe to repeat: an idempotency key short-circuits a replay,
-and the job row is unique per submission, so a retry increments an attempt
-count instead of creating a second invoice. n8n will call an API endpoint that
-wraps this same function; the authoritative state stays in PostgreSQL rather
-than in n8n's execution history.
+**Orchestration.** The arrival/processing split *is* the seam. An orchestrator
+holds a submission id and nothing else: it decides when to call
+`/submissions/{id}/process`, and `/jobs/{id}/retry` to try again. Both are
+safe to repeat — a settled submission is reported rather than reprocessed, and
+the job row is unique per submission, so a retry increments an attempt count
+instead of creating a second invoice.
+
+The authoritative state is in PostgreSQL, not in the orchestrator's run
+history: `submissions.outcome`, `processing_jobs.status` and `audit_events`
+say what happened, and they are what a recovery sweep will read.
+
+When a technical failure happens mid-processing, the work transaction rolls
+back but the job does not: `fail_job` marks it `retry_pending` while attempts
+remain and `failed` once they are spent, decided in SQL against the row's own
+counters so two workers cannot disagree. The stored document and the event
+history survive, which is what lets the retry skip the upload entirely.
+
+### The HTTP service
+
+`src/invoice_automation/api/` — FastAPI, typed request and response schemas,
+one error envelope, interactive documentation at `/docs`. Endpoints contain no
+business rules: they record an arrival, trigger processing, or read a
+reporting view. Authentication is a single service credential in `X-API-Key`,
+required everywhere except `/health`, and the service refuses to start without
+one.
 
 ## Why the rules are pure functions
 

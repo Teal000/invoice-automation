@@ -5,10 +5,10 @@ way to demonstrate the system before the API and the review interface exist:
 
     init-db           create the database if absent and apply migrations
     seed              load the synthetic supplier and purchase-order registry
-    ingest            process one structured payload
-    ingest-pdf        extract one PDF, then process it
+    ingest            store one PDF or payload, record it, process it
     ingest-manifest   process the labelled structured set and check it
     ingest-pdf-manifest  extract and process the labelled PDF set and check it
+    serve             run the HTTP service
     register          print the invoice register
     overview          print the processing overview with its denominators
     exceptions        print failure counts per rule code
@@ -32,7 +32,11 @@ from .config import PROJECT_ROOT, get_settings
 from .db import apply_all, connect, create_database, repository as repo
 from .extraction import ExtractionResult, extract_invoice
 from .models import RawInvoice, SubmissionInput, normalize_identifier
-from .pipeline import process_structured_submission
+from .pipeline import (
+    process_structured_submission,
+    process_submission,
+    record_arrival,
+)
 
 app = typer.Typer(
     add_completion=False,
@@ -196,20 +200,74 @@ def seed(
 
 @app.command()
 def ingest(
-    path: Path = typer.Argument(..., help="Structured payload (JSON)."),
+    path: Path = typer.Argument(..., help="Invoice PDF or structured JSON payload."),
     idempotency_key: str = typer.Option(
         None, help="Replaying the same key returns the earlier outcome."
     ),
+    process: bool = typer.Option(
+        True, help="Process immediately. Pass --no-process to leave the job queued."
+    ),
 ) -> None:
-    """Process one structured payload and print the outcome."""
-    invoice, submission = _load_payload(path)
-    if idempotency_key:
-        submission = submission.model_copy(update={"idempotency_key": idempotency_key})
+    """Record one document and process it, exactly as the API does.
 
+    This takes the real path: the file is copied into the storage root under
+    its own hash, the arrival and a job are recorded, and processing then
+    reads the stored file. The manifest commands below deliberately bypass
+    storage, because they are bulk acceptance checks rather than a
+    demonstration of how a document actually travels.
+    """
+    content = path.read_bytes()
     with connect() as conn:
-        result = process_structured_submission(conn, invoice, submission)
+        arrival = record_arrival(
+            conn,
+            content=content,
+            original_file_name=path.name,
+            source="cli",
+            idempotency_key=idempotency_key,
+            actor="cli",
+        )
+        console.print(
+            f"[bold]{path.name}[/] stored at {arrival.storage_path}"
+            + ("  (bytes already present)" if arrival.bytes_already_stored else "")
+        )
+        if arrival.replayed:
+            console.print(
+                f"  this idempotency key was already used: submission "
+                f"{arrival.submission_id}, outcome {arrival.outcome}"
+            )
+            return
+        console.print(f"  submission {arrival.submission_id}, job queued")
+        if not process:
+            return
+
+        result = process_submission(conn, arrival.submission_id, actor="cli")
 
     _print_result(path, result)
+
+
+@app.command()
+def serve(
+    host: str = typer.Option("127.0.0.1", help="Interface to bind."),
+    port: int = typer.Option(8000),
+    reload: bool = typer.Option(False, help="Reload on code changes."),
+) -> None:
+    """Run the HTTP service. Documentation at /docs once it is up."""
+    import uvicorn
+
+    settings = get_settings()
+    if not settings.api_key:
+        console.print(
+            "[red]INVAUT_API_KEY is not set.[/] The service will not start "
+            "without a credential; add one to .env."
+        )
+        raise typer.Exit(code=1)
+    console.print(
+        f"serving on http://{host}:{port}  (docs at /docs, "
+        f"send the X-API-Key header)"
+    )
+    uvicorn.run(
+        "invoice_automation.api.main:app", host=host, port=port, reload=reload
+    )
 
 
 def _print_result(path: Path, result) -> None:
@@ -217,11 +275,15 @@ def _print_result(path: Path, result) -> None:
     console.print(f"[bold]{path.name}[/] -> {label}")
     console.print(f"  submission {result.submission_id}")
     if result.invoice_id:
-        console.print(
-            f"  invoice    {result.invoice_id}"
-            f" (revision {result.revision_number}, "
-            f"{'new' if result.invoice_created else 'existing'})"
-        )
+        if result.revision_number is None:
+            # A linked duplicate: no new revision was created.
+            console.print(f"  invoice    {result.invoice_id} (linked, no new revision)")
+        else:
+            console.print(
+                f"  invoice    {result.invoice_id}"
+                f" (revision {result.revision_number}, "
+                f"{'new' if result.invoice_created else 'existing'})"
+            )
     if result.duplicate_of_submission_id:
         console.print(f"  duplicate of submission {result.duplicate_of_submission_id}")
     if result.failed_codes:
@@ -234,28 +296,6 @@ def _print_result(path: Path, result) -> None:
                 )
     elif not result.replayed:
         console.print("  all applicable checks passed")
-
-
-@app.command("ingest-pdf")
-def ingest_pdf(
-    path: Path = typer.Argument(..., help="Invoice PDF."),
-    idempotency_key: str = typer.Option(
-        None, help="Replaying the same key returns the earlier outcome."
-    ),
-) -> None:
-    """Extract one PDF, then process it exactly as a structured payload."""
-    extraction, invoice, submission = _load_pdf(path)
-    if idempotency_key:
-        submission = submission.model_copy(update={"idempotency_key": idempotency_key})
-
-    with connect() as conn:
-        result = _process_pdf(conn, extraction, invoice, submission)
-
-    console.print(
-        f"  layout     {extraction.layout or '[red]not recognised[/]'}"
-        f"  ({len(extraction.evidence)} fields with evidence)"
-    )
-    _print_result(path, result)
 
 
 def _run_manifest(

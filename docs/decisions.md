@@ -274,3 +274,80 @@ that matters is how many values were invented, not how many were read.
 
 Adding `sousse` labels to `extraction/layouts.py` would destroy that
 measurement. The manifest and the methodology both say so.
+
+## ADR-018 — Arrival and processing are separate steps
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+`record_arrival` stores the file, records the submission and opens a **queued**
+job. `process_submission` reads the stored file, extracts, validates and
+persists. The API exposes both: `POST /submissions` and
+`POST /submissions/{id}/process`.
+
+Three things follow, none of which work if the two are one call:
+
+- An orchestrator has something to orchestrate. It can be told that a
+  submission arrived, decide when to process it, and retry processing without
+  the document passing through it again.
+- A retry needs no re-upload. The bytes are already stored and the job row
+  carries the attempt count, so a failed attempt is resumable.
+- An unreadable upload still gets a receipt. Deciding what a document is
+  belongs to processing, not to the door.
+
+`process_submission` is safe to call repeatedly: a submission that already
+reached an outcome is reported rather than processed again, so a duplicated
+trigger cannot produce a second invoice.
+
+## ADR-019 — Documents are stored under their own hash
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+A stored file's path is its SHA-256: `data/storage/40/4044...c252.pdf`.
+Identical bytes therefore occupy one path however many times they arrive, and
+two arrivals of the same invoice produce two submissions and two document rows
+pointing at one blob — which is exactly the relationship the duplicate
+handling describes.
+
+It also means re-storing is a no-op that cannot corrupt anything: the name is
+derived from the content, so writing the same content again produces the same
+file. The size is still verified rather than assumed, so a truncated earlier
+write is repaired instead of trusted.
+
+`storage.resolve` refuses a path that escapes the storage root, because the
+path is read from the database and a database value is not automatically a
+safe filename.
+
+## ADR-020 — One service credential, and no start without it
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+The API authenticates with a single internal credential in the `X-API-Key`
+header, compared with `secrets.compare_digest`, required on every endpoint
+except `/health`. The plan allows exactly this for n8n-to-API calls in a local
+deployment.
+
+It is **not** a user authentication system, and the API documentation says so
+rather than letting a reader assume otherwise. There are no users, roles or
+sessions; when reviewer actions arrive they will need a real identity, since
+"who overrode this check" is part of the audit trail.
+
+The service **refuses to start** when the credential is empty. A service that
+quietly runs open to anything that can reach the port is a worse failure than
+one that will not boot, and the failure is silent while the other is loud.
+
+## ADR-021 — `/health` is the only endpoint that reports rather than fails
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+`/health` catches a database error and returns `status: degraded` with the
+exception class, rather than raising. Everywhere else a database error is a
+500 with the standard error envelope.
+
+A health endpoint that returns 500 when the database is down tells a monitor
+only that something is wrong; one that answers with *what* is wrong is the
+point of having it. It deliberately does not report the connection string,
+the credential, or the error text, which can carry both.

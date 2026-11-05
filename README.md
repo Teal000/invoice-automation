@@ -8,17 +8,21 @@ its purchase orders and every invoice are invented. The French labels and TND
 amounts reflect a Tunisian business setting; the 19% tax rate is a fictional
 test configuration, not tax guidance.
 
-**Status: in progress.** A synthetic invoice PDF goes in and comes out as a
-recorded, validated or flagged invoice with its rule outcomes, revision
-history and event trail. The HTTP API, n8n orchestration, the review
-interface and the dashboard are not built yet. There is no OCR: scanned
-documents are not handled. No time-saving or human-effort figure is reported
-anywhere here, because none has been measured.
+**Status: in progress.** A synthetic invoice PDF can be uploaded over HTTP
+and comes out as a recorded, validated or flagged invoice with its rule
+outcomes, revision history and event trail — and a technical failure part way
+through leaves a retryable job rather than a mess. n8n orchestration, the
+review interface and the dashboard are not built yet. There is no OCR:
+scanned documents are not handled. No time-saving or human-effort figure is
+reported anywhere here, because none has been measured.
 
 ## What exists today
 
 | Capability | State | How it was checked |
 |---|---|---|
+| HTTP API: upload, process, retry, register, reports | Implemented | 30 integration tests against a live database |
+| Arrival and processing are separate steps, so a retry needs no re-upload | Implemented | A test hides the stored file mid-workflow, gets a retryable job, restores it and retries to success |
+| Documents stored under their own SHA-256, in one place per content | Implemented | Integration test: an identical file reuses the stored bytes |
 | PDF text extraction across 3 layout families, with field evidence | Implemented | 64 unit tests on the committed documents; measured, see below |
 | An unrecognised layout invents nothing and routes to review | Implemented | Held-out 4th layout the extractor was never taught |
 | 13 deterministic validation rules | Implemented | 207 unit tests, no database needed |
@@ -29,11 +33,11 @@ anywhere here, because none has been measured.
 | Submission/invoice separation, revisions, rule outcomes, append-only events | Implemented | Integration tests, including that `UPDATE` and `DELETE` on the event log are refused |
 | Idempotency key, duplicate guards enforced by database constraints | Implemented | Integration tests, including two threads submitting the same invoice number at once |
 | Reporting views reconcile with direct SQL | Implemented | Integration test compares every count and rate against direct queries |
-| CLI: init-db, seed, ingest, ingest-pdf, both manifests, register, overview, exceptions, show | Implemented | All run against a live database |
+| CLI: init-db, seed, ingest, serve, both manifests, register, overview, exceptions, show | Implemented | All run against a live database |
 | 16 labelled synthetic cases as payloads **and** as PDFs, with ground truth | Implemented | Every case produces its labelled state and codes three ways: in-memory replay, payloads against the database, PDFs against the database |
-| OCR for scanned documents, API, n8n, review UI, Power BI | Not built | — |
+| OCR for scanned documents, n8n orchestration, review UI, Power BI | Not built | — |
 
-**241 tests pass, none skipped**: 207 that need no database and 34 that do.
+**271 tests pass, none skipped**: 207 that need no database and 64 that do.
 
 ## Measured so far
 
@@ -101,9 +105,29 @@ no-install option if you have no PostgreSQL service. In short:
 ```powershell
 .\.venv\Scripts\python.exe -m invoice_automation.cli init-db
 .\.venv\Scripts\python.exe -m invoice_automation.cli seed
-.\.venv\Scripts\python.exe -m invoice_automation.cli ingest-manifest
+.\.venv\Scripts\python.exe -m invoice_automation.cli ingest data\fixtures\pdf\valid_001.pdf
 .\.venv\Scripts\python.exe -m invoice_automation.cli overview
 ```
+
+Or over HTTP, with interactive documentation at `/docs`:
+
+```powershell
+.\.venv\Scripts\python.exe -m invoice_automation.cli serve
+```
+
+| Endpoint | Purpose |
+|---|---|
+| `POST /submissions` | Upload a PDF or payload; honours `Idempotency-Key` |
+| `POST /submissions/{id}/process` | Extract, validate, record; safe to repeat |
+| `GET /submissions/{id}` | Arrival status, stored document, job state |
+| `POST /jobs/{id}/retry` | Retry a failed job without re-uploading |
+| `GET /invoices` | Register, filtered by state, supplier, exception code, dates |
+| `GET /invoices/{id}` | One invoice with checks, revisions and events |
+| `GET /reports/summary` | Documented aggregates from the reporting views |
+| `GET /health` | Liveness and whether the database answers |
+
+Every endpoint except `/health` needs the `X-API-Key` header, and the service
+refuses to start without a credential configured.
 
 `ingest-manifest` processes the 16 labelled cases in order and compares every
 outcome with its ground truth, exiting non-zero on any mismatch.

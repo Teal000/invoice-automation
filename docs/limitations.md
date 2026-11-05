@@ -48,14 +48,20 @@ reported next to it rather than on its own.
   unfamiliar template is not read at all, which is safe but is not the same
   as handling it. Real suppliers would each need their labels added, or a
   different approach.
-- No HTTP API, no orchestration, no review interface, no dashboard.
+- No orchestration. The API exposes arrival, processing and retry, but
+  nothing drives them on a schedule and no sweep finds overdue jobs: a
+  `retry_pending` job waits for someone to retry it. Notifications do not
+  exist, so notification de-duplication is untested.
+- No review interface and no dashboard.
+- **The API has one service credential, not users.** There are no roles,
+  sessions or per-person identity, so "who overrode this check" cannot yet be
+  answered, and reviewer actions will need that before they are built.
 - No reviewer corrections. The revision table and the audit trail support
   them; the action that creates a correction does not exist yet, so the
   "reviewer can correct and revalidate" requirement is unmet.
-- No retry or recovery path. The job table records attempts and leases; the
-  retry and recovery workflows are not written, so interruption recovery is
-  untested.
-- No notifications, so notification de-duplication is untested.
+- No recovery sweep. A failed job is retryable through the API and that path
+  is tested, but nothing finds stalled work by itself, and the lease column
+  is recorded and not yet used.
 
 ## Scope the rules deliberately refuse
 
@@ -77,7 +83,7 @@ all.
 
 ## Verification status
 
-241 tests pass, none skipped: 207 that need no database and 34 that do. The
+271 tests pass, none skipped: 207 that need no database and 64 that do. The
 schema has been applied to a live server, the 16 labelled cases produce their
 labelled outcomes through the full pipeline as payloads **and** as PDFs, and
 the reporting views reconcile with direct SQL queries.
@@ -94,10 +100,13 @@ Two caveats on that, both real:
   and says nothing about behaviour under real contention or volume.
 
 What the passing suite does *not* show: that values can be read off a **real**
-invoice, that the workflow survives a service failure (no retry or recovery
-path exists yet), or that any of this is faster than a person. The first needs
-real documents, the second needs the orchestration, and the third needs a
-timed comparison that has not been attempted.
+invoice, or that any of this is faster than a person. The first needs real
+documents; the second needs a timed comparison that has not been attempted.
+
+One failure mode *is* now shown: processing that dies part way through leaves
+the stored document, the event history and a retryable job, and the retry
+reaches a correct outcome without the document being uploaded again. That is
+one tested failure, not a general claim of robustness.
 
 ## Not a product
 
