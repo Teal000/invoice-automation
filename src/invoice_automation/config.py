@@ -82,6 +82,15 @@ class Settings(BaseSettings):
     #: than one that will not start.
     api_key: str = ""
 
+    #: How long a claimed job is considered alive. A job still marked running
+    #: after this has elapsed is treated as stalled and may be recovered. It
+    #: is a timeout, not a promise: a worker that is merely slow can have its
+    #: job taken, which is safe here only because processing is idempotent.
+    job_lease_seconds: int = 300
+    #: How long a queued job may sit before a recovery sweep picks it up, so
+    #: an arrival whose processing was never triggered is not lost.
+    queued_job_grace_seconds: int = 300
+
     @field_validator("money_rounding")
     @classmethod
     def _check_rounding(cls, value: str) -> str:

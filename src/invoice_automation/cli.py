@@ -9,6 +9,8 @@ way to demonstrate the system before the API and the review interface exist:
     ingest-manifest   process the labelled structured set and check it
     ingest-pdf-manifest  extract and process the labelled PDF set and check it
     serve             run the HTTP service
+    recover           find stalled jobs and finish them
+    notifications     show the outbox (nothing is delivered)
     register          print the invoice register
     overview          print the processing overview with its denominators
     exceptions        print failure counts per rule code
@@ -29,7 +31,9 @@ from rich.console import Console
 from rich.table import Table
 
 from .config import PROJECT_ROOT, get_settings
-from .db import apply_all, connect, create_database, repository as repo
+from .db import apply_all, connect, create_database
+from .db import jobs as job_repo
+from .db import repository as repo
 from .extraction import ExtractionResult, extract_invoice
 from .models import RawInvoice, SubmissionInput, normalize_identifier
 from .pipeline import (
@@ -37,6 +41,7 @@ from .pipeline import (
     process_submission,
     record_arrival,
 )
+from .recovery import recover_jobs
 
 app = typer.Typer(
     add_completion=False,
@@ -52,6 +57,7 @@ DEFAULT_REFERENCE = PROJECT_ROOT / "data" / "fixtures" / "reference"
 
 #: Tables emptied by `reset`, in dependency order. Reference data is kept.
 _TRANSACTIONAL_TABLES = (
+    "notification_outbox",
     "validation_results",
     "invoice_lines",
     "processing_jobs",
@@ -386,6 +392,71 @@ def ingest_pdf_manifest(
         return result, extraction.layout
 
     _run_manifest(manifest=manifest, source_dir=pdfs, file_key="pdf", loader=load)
+
+
+@app.command()
+def recover(
+    limit: int = typer.Option(20, help="Most jobs to pick up in one sweep."),
+) -> None:
+    """Find work that stalled and finish it.
+
+    Picks up jobs that failed with attempts remaining, jobs still marked
+    running after their lease expired, and jobs that were queued and never
+    triggered. A job whose attempts are spent is left for a person.
+    """
+    with connect() as conn:
+        recovered = recover_jobs(conn, limit=limit, actor="cli:recovery")
+
+    if not recovered:
+        console.print("nothing to recover")
+        return
+
+    table = Table(title="Recovery sweep")
+    for column in ("submission", "reason", "attempt", "result"):
+        table.add_column(column)
+    for job in recovered:
+        if job.already_settled:
+            result = "[yellow]already settled[/]"
+        elif job.succeeded:
+            result = f"[green]{job.state}[/]"
+        else:
+            result = f"[red]{job.job_status or 'failed'}[/]: {job.error or ''}"[:60]
+        table.add_row(
+            str(job.submission_id)[:8],
+            job.reason,
+            str(job.attempt_before),
+            result,
+        )
+    console.print(table)
+
+
+@app.command()
+def notifications(
+    status_filter: str = typer.Option(
+        None, "--status", help="pending, sent, suppressed or failed."
+    ),
+    limit: int = typer.Option(50),
+) -> None:
+    """Show the notification outbox.
+
+    Nothing here has been delivered: this project has no mail transport,
+    webhook or chat integration. A status of 'sent' records what a caller
+    reported after delivering it themselves.
+    """
+    with connect() as conn:
+        rows = job_repo.list_notifications(conn, status=status_filter, limit=limit)
+
+    table = Table(title="Notification outbox (nothing is delivered by this project)")
+    for column in ("type", "status", "dedupe key", "created"):
+        table.add_column(column)
+    for row in rows:
+        table.add_row(
+            row["notification_type"],
+            row["status"],
+            row["dedupe_key"][:52],
+            row["created_at"].isoformat(timespec="seconds"),
+        )
+    console.print(table)
 
 
 @app.command()

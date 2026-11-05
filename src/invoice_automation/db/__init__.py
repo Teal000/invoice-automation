@@ -1,6 +1,6 @@
 """Database access: connections, migrations and SQL."""
 
-from . import repository
+from . import jobs, repository
 from .connection import connect, create_database, database_exists, drop_database
 from .migrations import MIGRATIONS_DIR, MigrationError, apply_all, discover
 
@@ -13,5 +13,6 @@ __all__ = [
     "database_exists",
     "discover",
     "drop_database",
+    "jobs",
     "repository",
 ]

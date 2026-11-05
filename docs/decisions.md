@@ -351,3 +351,64 @@ A health endpoint that returns 500 when the database is down tells a monitor
 only that something is wrong; one that answers with *what* is wrong is the
 point of having it. It deliberately does not report the connection string,
 the credential, or the error text, which can carry both.
+
+## ADR-022 — Notifications go to an outbox, not straight out
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+A notification is written into `notification_outbox` inside the same
+transaction as the work that caused it. Delivery is a separate step.
+
+Sending cannot be rolled back. If processing announced a review case and then
+failed, the reviewer would have been told about an invoice that does not
+exist. Writing the intent with the work and delivering afterwards makes the
+announcement exactly as durable as the thing it announces.
+
+Nothing in this version delivers anything: there is no mail transport, no
+webhook, no chat integration. `status = 'sent'` records what a caller
+reported, which is why the channel is stored next to it, and the API and CLI
+both say so where a reader would otherwise assume messages are going out.
+
+## ADR-023 — The deduplication key is derived from the subject, never the time
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+`review_required:<invoice id>:<revision id>`,
+`duplicate_received:<submission id>`,
+`processing_failed:<submission id>:attempt-<n>`. The column is `UNIQUE`, so
+the database refuses the second one.
+
+Processing can legitimately run more than once for the same submission — a
+repeated trigger, a retry after a timeout, a recovery sweep — and a reviewer
+must not hear about it three times. Keying on the subject rather than the
+moment means a repeat is a collision, while something genuinely new gets
+through: a second document claiming an invoice number creates a new revision,
+so it notifies, and a second failed attempt notifies because a retry failing
+again is news.
+
+## ADR-024 — Leases, and what makes taking a job safe
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+Claiming a job sets `lease_expires_at = now() + INVAUT_JOB_LEASE_SECONDS`. A
+job still marked `running` after that is treated as stalled and may be taken
+by a recovery sweep.
+
+A lease is a timeout, not a promise: a worker that is merely slow can have its
+job taken. That is only safe because processing is idempotent — a submission
+that already reached an outcome is reported rather than processed again, so
+two workers on one job cannot produce two invoices. The safety comes from
+that property, not from the timeout being generous.
+
+A recovery sweep picks up three cases and reports which: `retry_pending` (an
+attempt failed, attempts remain), `lease_expired` (claimed and abandoned), and
+`queued_too_long` (recorded but never triggered — without this an arrival
+nobody processed would sit unnoticed for ever). A job whose attempts are spent
+is excluded: it is `failed` and wants a person, not another automatic attempt.
+
+One job failing never stops the sweep. Each is handled on its own and its
+error reported, because one poison document must not block everything queued
+behind it.

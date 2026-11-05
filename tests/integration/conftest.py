@@ -28,6 +28,7 @@ FIXTURES_DIR = PROJECT_ROOT / "data" / "fixtures" / "structured"
 MANIFEST = PROJECT_ROOT / "data" / "ground_truth" / "structured_cases.json"
 
 _TRANSACTIONAL_TABLES = (
+    "notification_outbox",
     "validation_results",
     "invoice_lines",
     "processing_jobs",

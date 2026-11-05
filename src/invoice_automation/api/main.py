@@ -39,6 +39,7 @@ from fastapi.responses import JSONResponse
 from .. import __version__
 from ..config import Settings, get_settings
 from ..db import connect
+from ..db import jobs as job_repo
 from ..db import repository as repo
 from ..pipeline import (
     ProcessingError,
@@ -47,6 +48,7 @@ from ..pipeline import (
     process_submission,
     record_arrival,
 )
+from ..recovery import recover_jobs
 from ..storage import UnsupportedMediaType
 from .schemas import (
     ErrorBody,
@@ -54,7 +56,10 @@ from .schemas import (
     HealthResponse,
     InvoiceDetail,
     InvoiceList,
+    NotificationList,
+    NotificationOut,
     ProcessingOutcome,
+    RecoveryReport,
     SubmissionCreated,
     SubmissionDetail,
     SummaryReport,
@@ -410,6 +415,101 @@ def _register_routes(app: FastAPI) -> None:
                 actor="api:retry",
                 settings=request.app.state.settings,
             )
+        )
+
+    @app.post(
+        "/jobs/recover",
+        response_model=RecoveryReport,
+        dependencies=[Authenticated],
+        tags=["jobs"],
+    )
+    def recover(
+        conn: Db,
+        request: Request,
+        limit: Annotated[int, Query(ge=1, le=200)] = 20,
+    ) -> RecoveryReport:
+        """Find and finish work that stalled.
+
+        Picks up jobs that failed with attempts remaining, jobs whose lease
+        expired while marked running, and jobs that were queued and never
+        triggered. A job whose attempts are spent is left alone: that needs a
+        person, not another automatic attempt.
+
+        Intended to be called on a schedule by an orchestrator.
+        """
+        recovered = recover_jobs(
+            conn, limit=limit, settings=request.app.state.settings, actor="api:recovery"
+        )
+        return RecoveryReport(
+            examined=len(recovered),
+            recovered=sum(
+                1 for job in recovered if job.succeeded and not job.already_settled
+            ),
+            already_settled=sum(1 for job in recovered if job.already_settled),
+            still_failing=sum(1 for job in recovered if not job.succeeded),
+            jobs=[job.__dict__ for job in recovered],
+        )
+
+    @app.get(
+        "/notifications",
+        response_model=NotificationList,
+        dependencies=[Authenticated],
+        tags=["notifications"],
+    )
+    def list_notifications_endpoint(
+        conn: Db,
+        status_filter: Annotated[
+            str | None, Query(alias="status", description="pending, sent, suppressed or failed.")
+        ] = None,
+        limit: Annotated[int, Query(ge=1, le=500)] = 50,
+    ) -> NotificationList:
+        """The outbox. Nothing here has been delivered by this service."""
+        rows = job_repo.list_notifications(conn, status=status_filter, limit=limit)
+        return NotificationList(count=len(rows), notifications=rows)
+
+    @app.post(
+        "/notifications/{notification_id}/sent",
+        response_model=NotificationOut,
+        dependencies=[Authenticated],
+        tags=["notifications"],
+    )
+    def mark_sent(
+        conn: Db,
+        notification_id: UUID,
+        channel: Annotated[
+            str, Query(description="Where the caller delivered it, for the record.")
+        ],
+    ) -> NotificationOut:
+        """Record that the caller delivered a pending notification.
+
+        The service sends nothing itself, so this records a claim rather than
+        an observation. Marking an already-sent notification is a conflict
+        rather than a silent success, because that usually means two senders.
+        """
+        updated = job_repo.mark_notification_sent(
+            conn, notification_id, channel=channel
+        )
+        if updated is None:
+            existing = job_repo.list_notifications(conn, limit=500)
+            known = {row["notification_id"] for row in existing}
+            if notification_id not in known:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail={
+                        "code": "notification_not_found",
+                        "message": f"No notification {notification_id}.",
+                    },
+                )
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail={
+                    "code": "notification_not_pending",
+                    "message": "Only a pending notification can be marked sent.",
+                },
+            )
+        rows = job_repo.list_notifications(conn, limit=500)
+        return next(
+            row for row in rows if row["notification_id"] == notification_id
         )
 
     @app.get(

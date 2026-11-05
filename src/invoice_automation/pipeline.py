@@ -263,6 +263,7 @@ def process_submission(
     that outcome without being processed a second time, so a repeated trigger
     or a retry after a timeout cannot create a second invoice.
     """
+    from .db import jobs as job_repo
     from .db import repository as repo
 
     settings = settings or get_settings()
@@ -285,9 +286,12 @@ def process_submission(
             replayed=True,
         )
 
-    # Claim the job. Outside the work transaction on purpose: a failed attempt
-    # has to survive the rollback of the work it attempted.
-    job = repo.start_job(conn, submission_id)
+    # Claim the job, with a lease. Outside the work transaction on purpose: a
+    # failed attempt has to survive the rollback of the work it attempted, or
+    # there would be nothing left to retry.
+    job = job_repo.claim_job(
+        conn, submission_id, lease_seconds=settings.job_lease_seconds
+    )
 
     submission = SubmissionInput(
         source=row["source"],
@@ -338,6 +342,21 @@ def process_submission(
                 "max_attempts": status["max_attempts"],
             },
         )
+        # One notification per failed attempt: a retry that fails again is new
+        # information, but the same attempt reported twice is not.
+        job_repo.enqueue_notification(
+            conn,
+            notification_type="processing_failed",
+            dedupe_key=(
+                f"processing_failed:{submission_id}:attempt-{status['attempt_count']}"
+            ),
+            submission_id=submission_id,
+            payload={
+                "error": f"{type(exc).__name__}: {exc}",
+                "job_status": status["status"],
+                "attempt": status["attempt_count"],
+            },
+        )
         raise ProcessingError(
             f"processing submission {submission_id} failed: {exc}",
             submission_id=submission_id,
@@ -363,9 +382,11 @@ def process_structured_submission(
     and processes it in one go. ``record_arrival`` plus
     :func:`process_submission` is the path for a document.
     """
+    from .db import jobs as job_repo
     from .db import repository as repo
 
-    config = config or get_settings().rule_config()
+    settings = get_settings()
+    config = config or settings.rule_config()
 
     existing = repo.find_submission_by_idempotency_key(conn, submission.idempotency_key)
     _ensure_idle(conn)
@@ -416,7 +437,9 @@ def process_structured_submission(
                 "original_file_name": submission.original_file_name,
             },
         )
-        job = repo.start_job(conn, submission_id)
+        job = job_repo.claim_job(
+            conn, submission_id, lease_seconds=settings.job_lease_seconds
+        )
 
         return _validate_and_persist(
             conn,
@@ -453,6 +476,7 @@ def _validate_and_persist(
     Must be called inside a transaction. Identical for a document and for a
     structured payload, which is the property the integration tests assert.
     """
+    from .db import jobs as job_repo
     from .db import repository as repo
 
     normalisation = normalize_invoice(raw, config)
@@ -510,6 +534,19 @@ def _validate_and_persist(
             details={
                 "earlier_submission_id": str(file_duplicate.submission_id),
                 "file_sha256": submission.file_sha256,
+            },
+        )
+        # One notification per repeat arrival, keyed to the arrival, so a
+        # reprocessed submission cannot announce the same duplicate twice.
+        job_repo.enqueue_notification(
+            conn,
+            notification_type="duplicate_received",
+            dedupe_key=f"duplicate_received:{submission_id}",
+            invoice_id=file_duplicate.invoice_id,
+            submission_id=submission_id,
+            payload={
+                "file_sha256": submission.file_sha256,
+                "earlier_submission_id": str(file_duplicate.submission_id),
             },
         )
         repo.finish_job(conn, job["job_id"], status="succeeded")
@@ -598,6 +635,27 @@ def _validate_and_persist(
             "checks_run": len(outcome.results),
         },
     )
+
+    if outcome.state is BusinessState.NEEDS_REVIEW:
+        # Keyed to the revision, not the clock: processing the same revision
+        # again announces nothing new, while a genuinely new revision (a
+        # second document claiming this invoice number, say) is new
+        # information and does notify. Written in this transaction with the
+        # work, so a rolled-back invoice cannot have told anybody about
+        # itself; delivery happens separately from the outbox.
+        job_repo.enqueue_notification(
+            conn,
+            notification_type="review_required",
+            dedupe_key=f"review_required:{invoice_id}:{revision_id}",
+            invoice_id=invoice_id,
+            submission_id=submission_id,
+            payload={
+                "invoice_number": number,
+                "revision_number": revision_number,
+                "failed_codes": list(outcome.failed_codes),
+            },
+        )
+
     repo.finish_job(conn, job["job_id"], status="succeeded")
 
     return ProcessingResult(

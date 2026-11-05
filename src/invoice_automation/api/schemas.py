@@ -230,3 +230,52 @@ class SummaryReport(ViewModel):
 
 
 SubmissionCreated.model_rebuild()
+
+
+class RecoveredJobOut(ViewModel):
+    job_id: UUID
+    submission_id: UUID
+    reason: str = Field(
+        description="retry_pending, lease_expired, or queued_too_long."
+    )
+    attempt_before: int
+    state: str | None = None
+    already_settled: bool = False
+    error: str | None = None
+    job_status: str | None = None
+
+
+class RecoveryReport(ApiModel):
+    """What a recovery sweep found and what it did about each item."""
+
+    examined: int
+    recovered: int = Field(description="Jobs that reached a business outcome.")
+    already_settled: int = Field(
+        description="Jobs whose submission had been settled before the sweep reached it."
+    )
+    still_failing: int
+    jobs: list[RecoveredJobOut] = Field(default_factory=list)
+
+
+class NotificationOut(ViewModel):
+    notification_id: UUID
+    notification_type: str
+    dedupe_key: str
+    status: str
+    channel: str
+    invoice_id: UUID | None = None
+    submission_id: UUID | None = None
+    payload: dict[str, Any] = Field(default_factory=dict)
+    attempt_count: int = 0
+    last_error: str | None = None
+    created_at: datetime
+    sent_at: datetime | None = None
+
+
+class NotificationList(ApiModel):
+    count: int
+    notifications: list[NotificationOut]
+    delivery_note: str = (
+        "This service delivers nothing. A status of 'sent' records what a "
+        "caller reported after delivering the notification itself."
+    )

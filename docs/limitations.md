@@ -48,10 +48,14 @@ reported next to it rather than on its own.
   unfamiliar template is not read at all, which is safe but is not the same
   as handling it. Real suppliers would each need their labels added, or a
   different approach.
-- No orchestration. The API exposes arrival, processing and retry, but
-  nothing drives them on a schedule and no sweep finds overdue jobs: a
-  `retry_pending` job waits for someone to retry it. Notifications do not
-  exist, so notification de-duplication is untested.
+- **No orchestration.** The API exposes arrival, processing, retry and a
+  recovery sweep, and the sweep is tested — but nothing calls it on a
+  schedule. Until something does, stalled work waits for a person to run
+  `recover`.
+- **Nothing is delivered.** Notifications are queued and de-duplicated, and
+  that is tested, but there is no mail transport, webhook or chat
+  integration. `status = 'sent'` records what a caller claims. Nobody is
+  actually told anything.
 - No review interface and no dashboard.
 - **The API has one service credential, not users.** There are no roles,
   sessions or per-person identity, so "who overrode this check" cannot yet be
@@ -59,9 +63,9 @@ reported next to it rather than on its own.
 - No reviewer corrections. The revision table and the audit trail support
   them; the action that creates a correction does not exist yet, so the
   "reviewer can correct and revalidate" requirement is unmet.
-- No recovery sweep. A failed job is retryable through the API and that path
-  is tested, but nothing finds stalled work by itself, and the lease column
-  is recorded and not yet used.
+- A lease is a timeout, not a guarantee. A slow worker can have its job
+  taken; that is safe only because processing is idempotent, and the safety
+  comes from that property rather than from the timeout being long enough.
 
 ## Scope the rules deliberately refuse
 
@@ -83,7 +87,7 @@ all.
 
 ## Verification status
 
-271 tests pass, none skipped: 207 that need no database and 64 that do. The
+290 tests pass, none skipped: 207 that need no database and 83 that do. The
 schema has been applied to a live server, the 16 labelled cases produce their
 labelled outcomes through the full pipeline as payloads **and** as PDFs, and
 the reporting views reconcile with direct SQL queries.
@@ -103,10 +107,13 @@ What the passing suite does *not* show: that values can be read off a **real**
 invoice, or that any of this is faster than a person. The first needs real
 documents; the second needs a timed comparison that has not been attempted.
 
-One failure mode *is* now shown: processing that dies part way through leaves
-the stored document, the event history and a retryable job, and the retry
-reaches a correct outcome without the document being uploaded again. That is
-one tested failure, not a general claim of robustness.
+Some failure modes *are* now shown: processing that dies part way through
+leaves the stored document, the event history and a retryable job; a sweep
+finishes a failed attempt, a job whose worker vanished, and a job nobody
+triggered; one poison document does not block the queue; and a reprocessed
+submission does not notify twice. Those are tested failures, not a general
+claim of robustness — all of them are injected faults on one machine with
+synthetic data.
 
 ## Not a product
 

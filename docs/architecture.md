@@ -8,6 +8,7 @@ src/invoice_automation/
     main.py          FastAPI app: routes, auth, error envelope
     schemas.py       Typed request and response models
   storage.py         Content-addressed document storage
+  recovery.py        The sweep that finishes stalled work
   config.py          Settings (environment) and RuleConfig (plain dataclass)
   money.py           Decimal parsing, quantisation, tolerance
   models.py          RawInvoice -> NormalizedInvoice, field problems
@@ -28,10 +29,11 @@ src/invoice_automation/
     connection.py    psycopg connections, database creation
     migrations.py    Migration runner with checksums
     repository.py    Every SQL statement the pipeline uses
+    jobs.py          Job leases, recovery candidates, notification outbox
   pipeline.py        One arrival from input to recorded outcome
   cli.py             The visible end of the slice
 
-db/migrations/       0001 schema, 0002 reporting views, 0003 field evidence
+db/migrations/       0001 schema, 0002 views, 0003 evidence, 0004 outbox
 data/                Generators, payloads, PDFs, synthetic registry, ground truth
 evaluation/          Extraction baseline, methodology, results
 tools/check_sql.py   Parses all SQL with the PostgreSQL grammar
@@ -192,9 +194,30 @@ applied, linked record ids). That is what makes the review queue possible in
 the next increment, and what lets a borderline tolerance case be explained
 afterwards.
 
+## Recovery, and why taking a job is safe
+
+Claiming a job sets a lease. A job still marked `running` after the lease has
+elapsed is treated as abandoned and a sweep may take it. That is safe only
+because processing is idempotent: a settled submission is reported rather
+than reprocessed, so two workers on one job cannot produce two invoices. The
+safety is in that property, not in the timeout being generous.
+
+The sweep picks up three cases and names which: an attempt that failed with
+attempts remaining, a lease that expired, and a job that was queued and never
+triggered. Attempts-spent jobs are left for a person. One failing job never
+stops the others.
+
+Notifications are written into an outbox **in the same transaction as the
+work**, because sending cannot be rolled back: announcing a review case and
+then failing would tell a reviewer about an invoice that does not exist. The
+deduplication key is derived from the subject — the invoice and revision, the
+arrival, the attempt number — so a repeat is a collision while genuinely new
+information still gets through. Nothing in this version delivers anything.
+
 ## Not built yet
 
-OCR for scanned documents, the FastAPI service, n8n workflows, the Streamlit
-review interface, and the Power BI dashboard. The README lists what exists
+OCR for scanned documents, n8n workflows, the Streamlit review interface, and
+the Power BI dashboard. Nothing drives the recovery sweep on a schedule, and
+no notification is actually delivered. The README lists what exists
 today and how it was checked; `evaluation/methodology.md` says what has been
 measured and what has not.

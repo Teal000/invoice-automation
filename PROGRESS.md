@@ -5,6 +5,69 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-05 (week 2, part 3) — Recovery sweep and the notification outbox
+
+### Built
+
+- Migration `0004_notification_outbox`. `dedupe_key` is `UNIQUE`; a check
+  constraint keeps `status = 'sent'` and `sent_at` consistent, so the schema
+  refuses an inconsistent pair rather than trusting the code.
+- `db/jobs.py`: `claim_job` (sets a lease), `find_recoverable_jobs`,
+  `enqueue_notification`, `list_notifications`, `mark_notification_sent`.
+- `recovery.py`: a sweep over three cases, each reported with its reason —
+  `retry_pending`, `lease_expired`, `queued_too_long`. Jobs whose attempts are
+  spent are excluded; one job failing never stops the sweep.
+- Notifications are enqueued **inside the work transaction**: a review case, a
+  repeat arrival, and each failed attempt. Keys are derived from the subject,
+  never the clock.
+- `POST /jobs/recover`, `GET /notifications`,
+  `POST /notifications/{id}/sent`; CLI `recover` and `notifications`.
+- `INVAUT_JOB_LEASE_SECONDS` and `INVAUT_QUEUED_JOB_GRACE_SECONDS`.
+
+### Checked
+
+- `pytest -q` → **290 passed, 0 skipped** (207 without a database, 83 with).
+- 19 new tests, including: a failed attempt recovered once its cause clears; a
+  job whose worker vanished (lease backdated) picked up as `lease_expired`; a
+  job nobody triggered picked up as `queued_too_long`; a *fresh* queued job
+  left alone; attempts-spent left for a person; a settled submission never
+  swept up however its job row looks; two sweeps producing one invoice; and
+  **one poison document not blocking a healthy one behind it**.
+- Notifications: one per review case, none for a validated invoice, one per
+  repeat arrival, one per *failed attempt* (a retry failing again is news),
+  and the unique key enforced by the database.
+- Live CLI check: a review case queues one pending notification; a validated
+  invoice queues none.
+
+### Decided from the docs, not from memory
+
+Checked the current n8n npm install page before choosing how to run it. Two
+facts that change the decision: n8n supports **Node 20.19–24.x inclusive**, so
+the installed Node 24.14.0 qualifies — but **npm installs are deprecated from
+n8n 3.0**, and the npm method has no n8n Assistant. So the npm route works
+today and is on the way out, while the supported route needs Docker. That is a
+decision for Nidhal, not a default to pick quietly.
+
+### Still not done
+
+No orchestration driving any of this on a schedule — `recover` exists and is
+tested, but something has to call it. No delivery: notifications are queued
+and de-duplicated and nobody is actually told. No OCR, no review interface, no
+reviewer corrections (requirement 4), no dashboard.
+
+### Next, in order
+
+1. n8n, once the container-versus-npm question is answered: receive a
+   submission id, fetch state, skip settled work, call `/process`, route the
+   outcome, create one notification when review is needed, retry with backoff,
+   and a scheduled workflow that calls `/jobs/recover`.
+2. Week 3: `review_actions` (migration 0005), reviewer corrections with
+   revalidation of the new revision, Streamlit review queue, Power BI.
+
+Nothing pushed. Nothing on the résumé.
+
+---
+
 ## 2026-11-05 (week 2, part 2) — HTTP API; arrival split from processing
 
 ### Built

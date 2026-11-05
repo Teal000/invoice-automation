@@ -22,6 +22,8 @@ reported anywhere here, because none has been measured.
 |---|---|---|
 | HTTP API: upload, process, retry, register, reports | Implemented | 30 integration tests against a live database |
 | Arrival and processing are separate steps, so a retry needs no re-upload | Implemented | A test hides the stored file mid-workflow, gets a retryable job, restores it and retries to success |
+| Recovery sweep: failed attempts, expired leases, jobs nobody triggered | Implemented | 19 integration tests, including that one poison document does not block the queue |
+| De-duplicated notifications in an outbox, written with the work | Implemented | Reprocessing announces nothing new; a new revision does; the key is unique in the database |
 | Documents stored under their own SHA-256, in one place per content | Implemented | Integration test: an identical file reuses the stored bytes |
 | PDF text extraction across 3 layout families, with field evidence | Implemented | 64 unit tests on the committed documents; measured, see below |
 | An unrecognised layout invents nothing and routes to review | Implemented | Held-out 4th layout the extractor was never taught |
@@ -33,11 +35,11 @@ reported anywhere here, because none has been measured.
 | Submission/invoice separation, revisions, rule outcomes, append-only events | Implemented | Integration tests, including that `UPDATE` and `DELETE` on the event log are refused |
 | Idempotency key, duplicate guards enforced by database constraints | Implemented | Integration tests, including two threads submitting the same invoice number at once |
 | Reporting views reconcile with direct SQL | Implemented | Integration test compares every count and rate against direct queries |
-| CLI: init-db, seed, ingest, serve, both manifests, register, overview, exceptions, show | Implemented | All run against a live database |
+| CLI: init-db, seed, ingest, serve, recover, notifications, both manifests, register, overview, exceptions, show | Implemented | All run against a live database |
 | 16 labelled synthetic cases as payloads **and** as PDFs, with ground truth | Implemented | Every case produces its labelled state and codes three ways: in-memory replay, payloads against the database, PDFs against the database |
-| OCR for scanned documents, n8n orchestration, review UI, Power BI | Not built | — |
+| Notification *delivery*, OCR, n8n orchestration, review UI, Power BI | Not built | — |
 
-**271 tests pass, none skipped**: 207 that need no database and 64 that do.
+**290 tests pass, none skipped**: 207 that need no database and 83 that do.
 
 ## Measured so far
 
@@ -121,6 +123,8 @@ Or over HTTP, with interactive documentation at `/docs`:
 | `POST /submissions/{id}/process` | Extract, validate, record; safe to repeat |
 | `GET /submissions/{id}` | Arrival status, stored document, job state |
 | `POST /jobs/{id}/retry` | Retry a failed job without re-uploading |
+| `POST /jobs/recover` | Sweep: finish work that stalled |
+| `GET /notifications` | The outbox. Nothing is delivered by this service |
 | `GET /invoices` | Register, filtered by state, supplier, exception code, dates |
 | `GET /invoices/{id}` | One invoice with checks, revisions and events |
 | `GET /reports/summary` | Documented aggregates from the reporting views |
