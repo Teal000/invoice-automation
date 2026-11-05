@@ -18,7 +18,7 @@ been measured.
 
 | Capability | State | How it was checked |
 |---|---|---|
-| 13 deterministic validation rules | Implemented | 138 unit tests, no database needed |
+| 13 deterministic validation rules | Implemented | 143 unit tests, no database needed |
 | Each rule fires on its own case and nothing else | Implemented | One isolated case per code; a test asserts every code is covered |
 | Decimal money handling, explicit precision and rounding | Implemented | Unit tests including tolerance boundaries |
 | Normalisation that records missing and unparseable fields instead of guessing | Implemented | Unit tests |
@@ -26,7 +26,7 @@ been measured.
 | Submission/invoice separation, revisions, rule outcomes, append-only events | Written | Integration tests written, **not yet run** |
 | Idempotency key, duplicate guards enforced by database constraints | Written | Integration tests written, **not yet run** |
 | CLI: init-db, seed, ingest, ingest-manifest, register, overview, exceptions, show | Written | `--help` verified; command runs need a database |
-| 16 labelled synthetic cases with ground truth, deterministic generator | Implemented | Generator runs; manifest covers all 13 codes |
+| 16 labelled synthetic cases with ground truth, deterministic generator | Implemented | Every case replayed in memory produces its labelled state and codes; manifest covers all 13 codes |
 | PDF/OCR extraction, API, n8n, review UI, Power BI, benchmark | Not built | — |
 
 The database was not installed on the development machine when this was

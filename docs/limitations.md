@@ -62,14 +62,19 @@ all.
 
 ## Verification status
 
-Unit tests run on every change and pass. The integration tests, which cover
-persistence, the duplicate guards, idempotency, the append-only event log and
-reconciliation between the reporting views and direct SQL, were written before
-a PostgreSQL server was available on the development machine. Until they have
-been run, the schema is syntax-checked (with the PostgreSQL parser, via
-`tools/check_sql.py`) but not executed, and nothing about the database
-behaviour should be taken as demonstrated. The README records which state the
-project is in.
+Unit tests run on every change and pass. They include a replay of the whole
+labelled fixture set in memory, so the rules, the fixtures and the ground
+truth are known to agree with each other without a database.
+
+The integration tests, which cover persistence, the duplicate guards,
+idempotency, the append-only event log and reconciliation between the
+reporting views and direct SQL, were written before a PostgreSQL server was
+available on the development machine. Until they have been run, the schema is
+syntax-checked (with the PostgreSQL parser, via `tools/check_sql.py`) but
+never executed, and nothing about the database behaviour should be taken as
+demonstrated: not the column names, not the `ON CONFLICT` inference on the
+partial index, not the trigger, not the four views. The README records which
+state the project is in.
 
 ## Not a product
 

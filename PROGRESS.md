@@ -49,9 +49,18 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ### Checked
 
-- `pytest tests/unit -q` → 138 passed, no database required.
+- `pytest tests/unit -q` → 143 passed, no database required.
 - Each of the 13 rule codes has an isolated case that fails that code **and no
   other**; a test asserts the case table covers every code the engine can emit.
+- The whole labelled set is replayed in memory against the real fixture files
+  and the real synthetic registry, in manifest order, with the duplicate
+  lookups served by a stand-in that records what has been seen. All 16 cases
+  produce their labelled state and codes. This found a defect in the generated
+  reference data: one purchase order was written with an empty expected amount,
+  taken from a case whose stated total is deliberately absent. `seed` would
+  have failed against PostgreSQL. Fixed by falling back to the amount computed
+  from the line items, since the buyer's order amount exists regardless of what
+  the supplier document says.
 - `tools/check_sql.py` → 66 statements parsed, 0 problems (syntax only).
 - `data/generate_structured_fixtures.py` runs; the two duplicate fixtures hash
   identically (`353be437…`). The generator pins LF output and `.gitattributes`

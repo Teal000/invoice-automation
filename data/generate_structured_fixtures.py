@@ -176,7 +176,20 @@ def main() -> None:
             }
         )
         if create_po and payload["purchase_order_number"]:
-            amount = po_expected_amount or payload["total"]
+            # The order amount must always be a usable number, including for a
+            # case whose stated total is deliberately absent or unreadable:
+            # the order exists in the buyer's system regardless of what the
+            # supplier's document says. Fall back to the amount computed from
+            # the line items.
+            amount = po_expected_amount
+            if amount is None:
+                try:
+                    amount = money(Decimal(payload["total"]))
+                except InvalidOperation:
+                    lines_total = sum(
+                        Decimal(item["line_amount"]) for item in payload["line_items"]
+                    )
+                    amount = money(lines_total * (Decimal(1) + TAX_RATE))
             purchase_orders.append(
                 {
                     "po_number": payload["purchase_order_number"],

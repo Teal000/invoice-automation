@@ -90,7 +90,7 @@ Each rule takes a `ValidationContext` holding data that has already been
 fetched, and returns results. No rule opens a connection or queries anything.
 Consequences:
 
-- every rule is unit tested without a database (138 unit tests, no server);
+- every rule is unit tested without a database (143 unit tests, no server);
 - the lookups happen once per submission rather than once per rule;
 - a rule cannot accidentally depend on the order the others ran in.
 
