@@ -1,4 +1,5 @@
 {
+  "id": "invoiceRecoverStalled",
   "name": "Recover stalled work",
   "nodes": [
     {

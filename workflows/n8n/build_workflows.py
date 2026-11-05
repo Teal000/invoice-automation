@@ -2,6 +2,10 @@
 
     .venv/Scripts/python.exe workflows/n8n/build_workflows.py
 
+Each workflow carries a fixed id, so re-importing updates it in place rather
+than leaving another copy behind: importing three times without one left nine
+workflows in n8n, which is its own small lesson about idempotency.
+
 Written as a generator rather than by hand so the node type versions live in
 one place. They are not guessed: they were read from the running n8n instance
 (`n8n-nodes-base/dist/types/nodes.json` inside the container) for the version
@@ -200,6 +204,7 @@ def process_submission() -> dict:
         connect("Needs review?", "No action needed", output=1),
     )
     return {
+        "id": "invoiceProcessSubmission",
         "name": "Process a submission",
         "nodes": nodes,
         "connections": connections,
@@ -247,6 +252,7 @@ def recover_stalled_work() -> dict:
         connect("Anything still failing?", "Nothing outstanding", output=1),
     )
     return {
+        "id": "invoiceRecoverStalled",
         "name": "Recover stalled work",
         "nodes": nodes,
         "connections": connections,
@@ -298,6 +304,7 @@ def pending_notifications() -> dict:
         connect("Any waiting?", "Outbox empty", output=1),
     )
     return {
+        "id": "invoicePendingNotifications",
         "name": "Read pending notifications",
         "nodes": nodes,
         "connections": connections,

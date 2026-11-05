@@ -1,4 +1,5 @@
 {
+  "id": "invoiceProcessSubmission",
   "name": "Process a submission",
   "nodes": [
     {
