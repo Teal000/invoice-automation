@@ -105,6 +105,33 @@ class TestValidInvoice:
         assert counts.get("fail", 0) == 0
         assert counts["pass"] >= 13
 
+    def test_the_outcome_is_durable_from_another_connection(
+        self, seeded, settings: Settings, test_database, fixtures_dir
+    ):
+        """Regression test: the pipeline must actually commit.
+
+        The first run of this suite found that it did not. The idempotency
+        read opened an implicit transaction, which turned the pipeline's
+        `conn.transaction()` block into a savepoint that committed nothing, so
+        every submission was discarded when the connection closed and no error
+        was raised anywhere. Asserting from the same connection cannot see
+        that; only a second connection can.
+        """
+        invoice, submission = load(fixtures_dir / "valid_001.json")
+        result = process_structured_submission(seeded, invoice, submission)
+
+        with connect(settings, database=test_database) as other:
+            assert scalar(other, "SELECT count(*) AS n FROM invoices") == 1
+            assert scalar(other, "SELECT count(*) AS n FROM submissions") == 1
+            assert scalar(other, "SELECT count(*) AS n FROM invoice_revisions") == 1
+            assert scalar(other, "SELECT count(*) AS n FROM audit_events") >= 2
+            state = scalar(
+                other,
+                "SELECT business_state AS s FROM invoices WHERE invoice_id = %s",
+                (result.invoice_id,),
+            )
+            assert state == "validated"
+
     def test_a_job_is_recorded_for_the_submission(self, seeded, fixtures_dir):
         invoice, submission = load(fixtures_dir / "valid_001.json")
         result = process_structured_submission(seeded, invoice, submission)

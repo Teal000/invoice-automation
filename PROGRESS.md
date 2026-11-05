@@ -5,6 +5,72 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-05 (later) — Database verified; week 1 exit condition met
+
+### What ran
+
+Against a live PostgreSQL **16.2**, started as a project-local server from the
+`pgserver` wheel because no system PostgreSQL was installed (ADR-012). The
+documented target is still 18 and is still untested.
+
+- `init-db` → database created, both migrations applied: 12 tables, 4 views.
+- `seed` → 3 synthetic suppliers, 13 purchase orders.
+- `ingest-manifest` → **all 16 labelled cases matched their ground truth**,
+  state and failed codes, through the full pipeline.
+- `pytest -q` → **167 passed, 0 skipped** (143 without a database, 24 with).
+- `overview` reconciles by hand: 16 submissions, 1 duplicate arrival, 14
+  unique invoices, 12 eligible (2 unsupported excluded), review rate 11/12 =
+  0.9167. These are counts on a synthetic fixture set, not a performance claim.
+
+### What the live run found
+
+**A silent data-loss bug, and it affected everything.** `connect()` returned
+non-autocommit connections. Both the migration runner and the pipeline read
+before writing, and in psycopg that first read opens an implicit transaction —
+so the following `with conn.transaction():` block was no longer the outermost
+transaction, psycopg implemented it as a savepoint, and leaving the block
+committed nothing. Both reported success and persisted nothing; the work was
+rolled back when the connection closed, with no error raised anywhere.
+
+Symptom: `init-db` printed "applied migrations" and the next command said
+`relation "suppliers" does not exist`. Inside the connection the schema
+existed; from a second connection it did not.
+
+Fixed by making `connect()` autocommit by default, so `conn.transaction()` is
+always a real transaction, plus a defensive rollback in both places for a
+caller that passes a non-autocommit connection (ADR-013). Two regression tests
+assert durability **from a second connection** — an assertion on the same
+connection sees uncommitted work and passes either way, which is exactly why
+143 green unit tests said nothing about this.
+
+Smaller things the run surfaced:
+
+- `seed` was not atomic; it is now one transaction, so a failure cannot leave
+  a half-loaded registry.
+- `show` listed checks from every revision with no indication of which
+  revision each belonged to, making a historical failure look current. The
+  detail query now labels each result with its revision number, marks the
+  current one, and marks arrival-level results (`EXACT_FILE_DUPLICATE`, which
+  has no revision because the file was not reprocessed).
+- Documented that `EXACT_FILE_DUPLICATE` never appears in
+  `v_exception_summary`, since counting it there and as a duplicate arrival
+  would let one arrival inflate two figures.
+
+### Next, in order
+
+1. Week 2: PDF generation for the same 16 cases, then text extraction mapped
+   to `RawInvoice`. The rules and persistence do not change.
+2. The FastAPI endpoints wrapping `process_structured_submission`.
+3. n8n: container versus npm is still open (Node 24.14.0 present, Docker not).
+   Needs migration 0003 for `notification_outbox`.
+4. Week 3: reviewer corrections and revalidation (`review_actions`, also 0003),
+   Streamlit review queue, Power BI.
+5. Week 4: freeze a test split, run a benchmark, report measured results.
+
+Still nothing on the résumé, and nothing pushed to GitHub.
+
+---
+
 ## 2026-11-05 — Week 1 slice: deterministic core
 
 ### Built
@@ -68,7 +134,11 @@ Keep it factual: what was built, how it was checked, what is unverified.
   duplicate check hashes.
 - CLI loads and lists its commands.
 
-### Not verified
+### Not verified at the time of this entry
+
+(Superseded by the entry above, which records the live database run and what
+it found. Kept as written, because what was unverified at the time is part of
+the record.)
 
 - **No database run.** PostgreSQL was not installed on this machine during
   this session, so `init-db`, `seed`, `ingest-manifest` and the whole

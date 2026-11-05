@@ -55,6 +55,11 @@ def applied_versions(conn: psycopg.Connection) -> dict[str, str]:
     conn.execute(_BOOTSTRAP)
     conn.commit()
     rows = conn.execute("SELECT version, checksum FROM schema_migrations").fetchall()
+    # Leave the connection idle. On a connection that is not in autocommit
+    # mode this read would otherwise hold an implicit transaction open, which
+    # would turn the per-migration transaction block below into a savepoint
+    # that commits nothing. See connect() for the full story.
+    conn.rollback()
     return {row["version"]: row["checksum"] for row in rows}
 
 

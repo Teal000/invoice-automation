@@ -167,3 +167,44 @@ models, pipeline and database access live in `src/invoice_automation/` instead,
 because the API, the CLI, the review interface and the benchmark all need them.
 `apps/api/` and `apps/review_ui/` will hold the service entry points that
 import this package.
+
+## ADR-012 — A project-local PostgreSQL for development, alongside the documented install
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+ADR-001 chose a local PostgreSQL 18 service. That install did not happen, and
+the schema sat unexecuted. Rather than leave the database layer unverified,
+`tools/pg_dev_server.py` starts a server from the `pgserver` wheel, which
+bundles PostgreSQL binaries: `initdb` into the git-ignored `pgdata/`, no
+administrator rights, no Windows service, removed by deleting one folder.
+
+On Windows that server binds a free port chosen at start time, so the tool
+writes the discovered host and port into `.env`. The application and the tests
+read `.env` and neither knows which kind of server is behind it.
+
+**Consequence:** the version tested against is the bundled one, PostgreSQL
+16.2, not the documented 18. The README says so. Everything the schema uses
+exists in 13 and later, so the gap is small, but it is a real gap and is
+reported rather than glossed over. When PostgreSQL 18 is installed, stopping
+this server and correcting the port in `.env` is the whole migration.
+
+## ADR-013 — Connections are autocommit; transactions are explicit blocks
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+`connect()` returns connections in autocommit mode, and atomic work is wrapped
+in `with conn.transaction():`.
+
+This is not a style preference. With autocommit off, psycopg opens an implicit
+transaction on the first statement, so a read performed before a
+`conn.transaction()` block means the block is no longer the outermost
+transaction; psycopg then implements it as a savepoint, and leaving the block
+commits nothing. Both the migration runner and the pipeline read before
+writing, so on the first run against a real server both reported success and
+persisted nothing — no error anywhere, and the work vanished when the
+connection closed.
+
+The regression tests for it assert from a *second* connection, because an
+assertion on the same connection sees uncommitted work and passes either way.

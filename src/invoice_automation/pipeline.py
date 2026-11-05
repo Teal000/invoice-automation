@@ -68,6 +68,12 @@ def process_structured_submission(
     ``raw`` is the extracted payload. In this version it comes from a
     structured fixture; the PDF extractor will produce the same type, which is
     why validation can be developed and tested without OCR.
+
+    The connection should be in autocommit mode, as the ones from
+    :func:`~invoice_automation.db.connection.connect` are. The transaction
+    block below must be the outermost transaction or it commits nothing; see
+    that function for why. If you pass a connection that is not in autocommit
+    mode, this function leaves it idle before opening its own transaction.
     """
     from .db import repository as repo
 
@@ -75,6 +81,13 @@ def process_structured_submission(
 
     # --- Idempotency: the same key never does the work twice. --------------
     existing = repo.find_submission_by_idempotency_key(conn, submission.idempotency_key)
+
+    if not conn.autocommit:
+        # The read above opened an implicit transaction on a non-autocommit
+        # connection. Close it so the block below is a real transaction. The
+        # read changed nothing, so there is nothing to lose.
+        conn.rollback()
+
     if existing is not None:
         repo.record_event(
             conn,

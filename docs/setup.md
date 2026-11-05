@@ -49,6 +49,28 @@ configuration for synthetic documents, not tax guidance.
 
 `.env` is git-ignored. Do not commit it.
 
+### Alternative: no install, no administrator rights
+
+If you have no PostgreSQL service and do not want one, a project-local server
+can be started instead. It uses the `pgserver` package, which bundles
+PostgreSQL binaries, puts its data in the git-ignored `pgdata/`, and is
+removed by deleting that folder.
+
+```powershell
+.\.venv\Scripts\python.exe tools\pg_dev_server.py start
+.\.venv\Scripts\python.exe tools\pg_dev_server.py status
+.\.venv\Scripts\python.exe tools\pg_dev_server.py stop
+```
+
+`start` also creates the application role from `.env` and writes the server's
+host and port back into `.env`, because on Windows the port is chosen at start
+time. Then skip to step 5; the role step below is not needed.
+
+**The bundled PostgreSQL version is not necessarily the one named above.**
+`status` prints the version actually running. Anything verified this way
+should be reported with that version — see [decisions.md](decisions.md)
+ADR-012.
+
 ## 4. The application role
 
 ```powershell

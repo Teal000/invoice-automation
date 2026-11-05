@@ -21,13 +21,26 @@ from ..config import Settings, get_settings
 def connect(
     settings: Settings | None = None,
     database: str | None = None,
-    autocommit: bool = False,
+    autocommit: bool = True,
 ) -> Iterator[psycopg.Connection]:
     """Open a connection as a context manager.
 
     Transactions are explicit at the call site: the pipeline wraps its work in
     ``with conn.transaction():`` so that a failure cannot leave a submission
     recorded without its events.
+
+    ``autocommit`` defaults to **True**, which is what makes that work. With
+    autocommit off, psycopg opens an implicit transaction on the first
+    statement; a read performed before a ``conn.transaction()`` block means
+    the block is no longer the outermost transaction, so psycopg implements it
+    as a savepoint and exiting it commits nothing. The work then disappears
+    when the connection closes, with no error raised anywhere.
+
+    That is not a hypothetical: it is what happened the first time this schema
+    met a real server. Both the migration runner and the pipeline read before
+    writing, so both lost everything they did. With autocommit on, a read
+    leaves the connection idle and ``conn.transaction()`` is always a real
+    transaction that commits on exit.
     """
     settings = settings or get_settings()
     conn = psycopg.connect(

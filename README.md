@@ -22,17 +22,24 @@ been measured.
 | Each rule fires on its own case and nothing else | Implemented | One isolated case per code; a test asserts every code is covered |
 | Decimal money handling, explicit precision and rounding | Implemented | Unit tests including tolerance boundaries |
 | Normalisation that records missing and unparseable fields instead of guessing | Implemented | Unit tests |
-| PostgreSQL schema, migrations with checksums, reporting views | Written | Parsed with the PostgreSQL grammar; **not yet executed against a server** |
-| Submission/invoice separation, revisions, rule outcomes, append-only events | Written | Integration tests written, **not yet run** |
-| Idempotency key, duplicate guards enforced by database constraints | Written | Integration tests written, **not yet run** |
-| CLI: init-db, seed, ingest, ingest-manifest, register, overview, exceptions, show | Written | `--help` verified; command runs need a database |
-| 16 labelled synthetic cases with ground truth, deterministic generator | Implemented | Every case replayed in memory produces its labelled state and codes; manifest covers all 13 codes |
+| PostgreSQL schema, migrations with checksums, reporting views | Implemented | Applied to a live server; 12 tables and 4 views created |
+| Submission/invoice separation, revisions, rule outcomes, append-only events | Implemented | Integration tests, including that `UPDATE` and `DELETE` on the event log are refused |
+| Idempotency key, duplicate guards enforced by database constraints | Implemented | Integration tests, including two threads submitting the same invoice number at once |
+| Reporting views reconcile with direct SQL | Implemented | Integration test compares every count and rate against direct queries |
+| CLI: init-db, seed, ingest, ingest-manifest, register, overview, exceptions, show | Implemented | All run against a live database |
+| 16 labelled synthetic cases with ground truth, deterministic generator | Implemented | Every case produces its labelled state and codes, both in an in-memory replay and against the database |
 | PDF/OCR extraction, API, n8n, review UI, Power BI, benchmark | Not built | — |
 
-The database was not installed on the development machine when this was
-written, so every row above that says "not yet run" means exactly that. This
-table is updated when the integration suite has actually been executed, and
-not before.
+**167 tests pass, none skipped**: 143 that need no database and 24 that do.
+
+The version actually tested against is **PostgreSQL 16.2**, run as a
+project-local server (`tools/pg_dev_server.py`, see
+[decisions.md](docs/decisions.md) ADR-012) because no system PostgreSQL was
+installed on the development machine. The documented setup targets PostgreSQL
+18 and has **not** been exercised. Every feature the schema uses — identity
+columns, partial-index `ON CONFLICT` inference, `FILTER`, `jsonb`,
+`gen_random_uuid()` — exists in both, but that is an argument, not a test
+result.
 
 ## The idea in one pass
 
@@ -54,7 +61,8 @@ goes to review, with both files kept.
 
 ## Quick start
 
-See [docs/setup.md](docs/setup.md) for the full sequence. In short:
+See [docs/setup.md](docs/setup.md) for the full sequence, including the
+no-install option if you have no PostgreSQL service. In short:
 
 ```powershell
 .\.venv\Scripts\python.exe -m invoice_automation.cli init-db

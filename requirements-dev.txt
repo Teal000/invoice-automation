@@ -5,3 +5,10 @@
 # tools/check_sql.py to syntax-check the schema and the hand-written queries
 # without a running database.
 pglast==8.7
+
+# pgserver bundles PostgreSQL binaries as a wheel and is used by
+# tools/pg_dev_server.py to run a project-local server with no system install
+# and no administrator rights. The bundled major version is not necessarily
+# the version named in docs/setup.md; `pg_dev_server.py status` prints the
+# version actually running.
+pgserver==0.1.4

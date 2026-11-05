@@ -639,12 +639,29 @@ def get_invoice_detail(conn: psycopg.Connection, invoice_id: UUID) -> dict[str, 
         """,
         (invoice_id,),
     ).fetchall()
+    # Checks from every revision, labelled with the revision they belong to.
+    # Without that label a historical failure is indistinguishable from a
+    # current one, which is exactly the confusion a review screen must avoid.
+    # A result with no revision is attached to an arrival rather than to
+    # extracted values: EXACT_FILE_DUPLICATE is the case.
     invoice["checks"] = conn.execute(
         """
-        SELECT code, status, severity, field_name, expected_value, observed_value, message
-        FROM validation_results
-        WHERE invoice_id = %s
-        ORDER BY evaluated_at, code
+        SELECT v.code,
+               v.status,
+               v.severity,
+               v.field_name,
+               v.expected_value,
+               v.observed_value,
+               v.message,
+               r.revision_number,
+               (v.revision_id IS NOT NULL AND v.revision_id = i.current_revision_id)
+                   AS is_current,
+               v.revision_id IS NULL AS submission_level
+        FROM validation_results v
+        JOIN invoices i ON i.invoice_id = v.invoice_id
+        LEFT JOIN invoice_revisions r ON r.revision_id = v.revision_id
+        WHERE v.invoice_id = %s
+        ORDER BY r.revision_number NULLS LAST, v.code
         """,
         (invoice_id,),
     ).fetchall()

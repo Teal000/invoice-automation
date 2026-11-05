@@ -121,7 +121,9 @@ def seed(
         (reference_dir / "purchase_orders.json").read_text("utf-8")
     )
 
-    with connect() as conn:
+    # One transaction: a half-loaded registry would make every later run
+    # behave differently depending on where the load stopped.
+    with connect() as conn, conn.transaction():
         supplier_ids: dict[str, UUID] = {}
         for supplier in suppliers["suppliers"]:
             supplier_ids[supplier["reference_normalized"]] = repo.upsert_supplier(
@@ -149,7 +151,6 @@ def seed(
                 expected_amount=order["expected_amount"],
                 state=order.get("state", "open"),
             )
-        conn.commit()
     console.print(
         f"seeded {len(suppliers['suppliers'])} synthetic suppliers and "
         f"{len(purchase_orders['purchase_orders'])} purchase orders"
@@ -344,12 +345,19 @@ def show(invoice_id: str = typer.Argument(..., help="Invoice UUID.")) -> None:
         )
     console.print(lines)
 
-    checks = Table(title="Checks")
-    for column in ("code", "status", "field", "expected", "observed"):
+    checks = Table(title="Checks (current revision marked *)")
+    for column in ("rev", "code", "status", "field", "expected", "observed"):
         checks.add_column(column)
     for check in detail["checks"]:
         colour = {"fail": "red", "pass": "green", "skipped": "yellow"}[check["status"]]
+        if check["submission_level"]:
+            revision = "arrival"
+        else:
+            revision = str(check["revision_number"])
+            if check["is_current"]:
+                revision += " *"
         checks.add_row(
+            revision,
             check["code"],
             f"[{colour}]{check['status']}[/]",
             check["field_name"] or "-",

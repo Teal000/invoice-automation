@@ -15,6 +15,41 @@ def test_applying_twice_is_a_no_op(conn):
     assert apply_all(conn) == []
 
 
+def test_the_schema_is_durable_from_another_connection(conn, settings, test_database):
+    """Regression test: the runner must commit what it applies.
+
+    It did not, at first: reading the applied versions left an implicit
+    transaction open, so each per-migration transaction block became a
+    savepoint and committed nothing. The runner still reported success.
+    """
+    from invoice_automation.db import connect
+
+    with connect(settings, database=test_database) as other:
+        tables = {
+            row["table_name"]
+            for row in other.execute(
+                """
+                SELECT table_name FROM information_schema.tables
+                WHERE table_schema = 'public' AND table_type = 'BASE TABLE'
+                """
+            )
+        }
+    assert {
+        "suppliers",
+        "purchase_orders",
+        "submissions",
+        "documents",
+        "invoices",
+        "invoice_revisions",
+        "invoice_lines",
+        "validation_results",
+        "processing_jobs",
+        "audit_events",
+        "schema_migrations",
+    } <= tables
+    assert len(tables) >= 11
+
+
 def test_every_migration_is_recorded_with_its_checksum(conn):
     recorded = {
         row["version"]: row["checksum"]

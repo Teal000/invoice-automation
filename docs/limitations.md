@@ -62,19 +62,26 @@ all.
 
 ## Verification status
 
-Unit tests run on every change and pass. They include a replay of the whole
-labelled fixture set in memory, so the rules, the fixtures and the ground
-truth are known to agree with each other without a database.
+167 tests pass, none skipped: 143 that need no database and 24 that do. The
+schema has been applied to a live server, the 16 labelled cases produce their
+labelled outcomes through the full pipeline, and the reporting views reconcile
+with direct SQL queries.
 
-The integration tests, which cover persistence, the duplicate guards,
-idempotency, the append-only event log and reconciliation between the
-reporting views and direct SQL, were written before a PostgreSQL server was
-available on the development machine. Until they have been run, the schema is
-syntax-checked (with the PostgreSQL parser, via `tools/check_sql.py`) but
-never executed, and nothing about the database behaviour should be taken as
-demonstrated: not the column names, not the `ON CONFLICT` inference on the
-partial index, not the trigger, not the four views. The README records which
-state the project is in.
+Two caveats on that, both real:
+
+- **The version tested is PostgreSQL 16.2, not the documented 18.** The tests
+  ran against a project-local server bundled as a Python wheel, because no
+  system PostgreSQL was installed (see decisions.md ADR-012). Every feature
+  the schema uses exists in both versions, so the risk is low, but PostgreSQL
+  18 remains untested.
+- **Testing happened on one machine, with one user, on synthetic data of a
+  known shape.** The concurrency test runs two threads; it is not a load test
+  and says nothing about behaviour under real contention or volume.
+
+What the passing suite does *not* show: that values can be read off a real
+invoice, that the workflow survives a service failure (no retry or recovery
+path exists yet), or that any of this is faster than a person. Those need the
+extractor, the orchestration and a measured benchmark.
 
 ## Not a product
 

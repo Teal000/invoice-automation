@@ -52,3 +52,14 @@ No extraction accuracy, no processing latency, no cost per document, no human
 handling time, no recovery success rate. Those require the extractor, the
 orchestration and a frozen benchmark, none of which exist yet. They will be
 defined here when they are measured, with the dataset and date stated.
+
+## One count that is deliberately not in the exception summary
+
+`EXACT_FILE_DUPLICATE` never appears in `v_exception_summary`. That view
+reports failures on an invoice's current revision, and an identical-file
+arrival produces no revision: it is attached to the submission, because the
+file was not reprocessed. Repeat arrivals are counted as "duplicate arrivals"
+in `v_processing_overview` instead.
+
+This is a reporting choice, not a gap. Counting the same failure in both
+places would let one arrival inflate two different figures.
