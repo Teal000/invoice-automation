@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "PM-2026-0552",
+  "supplier_reference": "SUP-002",
+  "supplier_name": "Papeterie Medina SA (synthetic)",
+  "invoice_date": "2026-03-12",
+  "due_date": "2026-04-11",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-0032",
+  "subtotal": "1534.600",
+  "tax_total": "291.574",
+  "total": "1826.174",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Chaises de bureau",
+      "quantity": "4",
+      "unit_price": "289.900",
+      "line_amount": "1159.600"
+    },
+    {
+      "line_number": 2,
+      "description": "Lampes de bureau LED",
+      "quantity": "6",
+      "unit_price": "62.500",
+      "line_amount": "375.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

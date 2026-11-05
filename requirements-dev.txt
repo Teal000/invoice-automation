@@ -1,0 +1,7 @@
+# Development and verification tools, pinned 5 November 2026.
+-r requirements.txt
+
+# pglast wraps libpg_query, the PostgreSQL server parser, and is used by
+# tools/check_sql.py to syntax-check the schema and the hand-written queries
+# without a running database.
+pglast==8.7

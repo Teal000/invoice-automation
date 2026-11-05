@@ -1,0 +1,30 @@
+# Docker Compose definition for the services this project will use.
+#
+# NOT VERIFIED. Docker is not installed on the development machine, so this
+# file has never been executed. The project currently runs against a local
+# PostgreSQL 18 install; see docs/setup.md and docs/decisions.md (ADR-001).
+# Treat this as a starting point to be tested, not as a working setup.
+#
+# Only the database is defined. The API, the review interface and n8n are not
+# built yet, and a compose file listing services that do not exist would be
+# misleading.
+
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: ${INVAUT_DB_NAME:-invoice_automation}
+      POSTGRES_USER: ${INVAUT_DB_USER:-invoice_app}
+      POSTGRES_PASSWORD: ${INVAUT_DB_PASSWORD:?set INVAUT_DB_PASSWORD in .env}
+    ports:
+      - "${INVAUT_DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${INVAUT_DB_USER:-invoice_app}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

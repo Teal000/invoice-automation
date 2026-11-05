@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA-2026-0147",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-03-12",
+  "due_date": "2026-04-11",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-0031",
+  "subtotal": "1337.750",
+  "tax_total": "254.173",
+  "total": "1591.923",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "10",
+      "unit_price": "120.050",
+      "line_amount": "1200.500"
+    },
+    {
+      "line_number": 2,
+      "description": "Cartouches encre noire",
+      "quantity": "3",
+      "unit_price": "45.750",
+      "line_amount": "137.250"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,13 @@
+# Normalise line endings to LF in the repository and in the working tree.
+#
+# This is not cosmetic. The exact-file duplicate check hashes the bytes of a
+# fixture, and the generator writes LF. If Git checked these files out with
+# CRLF on Windows, a regenerated fixture would differ from the committed one
+# and the two byte-identical duplicate fixtures would only agree by accident.
+* text=auto eol=lf
+
+# Binary, never converted.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.pbix binary

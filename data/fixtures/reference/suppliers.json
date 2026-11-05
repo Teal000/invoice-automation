@@ -1,0 +1,26 @@
+{
+  "synthetic": true,
+  "suppliers": [
+    {
+      "name": "Fournitures Atlas SARL (synthetic)",
+      "reference": "SUP-001",
+      "reference_normalized": "SUP-001",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Papeterie Medina SA (synthetic)",
+      "reference": "SUP-002",
+      "reference_normalized": "SUP-002",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Logistique Carthage SARL (synthetic)",
+      "reference": "SUP-003",
+      "reference_normalized": "SUP-003",
+      "permitted_currency": "TND",
+      "is_active": true
+    }
+  ]
+}

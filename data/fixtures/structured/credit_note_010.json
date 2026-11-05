@@ -1,0 +1,23 @@
+{
+  "document_type": "credit_note",
+  "invoice_number": "AV-2026-0007",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-03-12",
+  "due_date": "2026-04-11",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-0040",
+  "subtotal": "36.800",
+  "tax_total": "6.992",
+  "total": "43.792",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "2",
+      "unit_price": "18.400",
+      "line_amount": "36.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}
