@@ -68,9 +68,24 @@ def _load_payload(path: Path) -> tuple[RawInvoice, SubmissionInput]:
         source="cli",
         original_file_name=path.name,
         file_sha256=hashlib.sha256(raw_bytes).hexdigest(),
-        storage_path=str(path.relative_to(PROJECT_ROOT)).replace("\\", "/"),
+        storage_path=_storage_path(path),
     )
     return invoice, submission
+
+
+def _storage_path(path: Path) -> str:
+    """Record where the source file is, relative to the project when possible.
+
+    A path outside the project is stored absolute rather than raising: the
+    point of the column is that an extracted value can be traced back to its
+    source, and a file someone ingested from elsewhere still needs to be
+    findable.
+    """
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(PROJECT_ROOT)).replace("\\", "/")
+    except ValueError:
+        return str(resolved).replace("\\", "/")
 
 
 def _amount(value: Any) -> str:

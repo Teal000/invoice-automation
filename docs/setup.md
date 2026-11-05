@@ -32,15 +32,7 @@ winget install --id PostgreSQL.PostgreSQL.18 --accept-package-agreements --accep
 ```
 
 The installer asks for a superuser password and installs the server as a
-Windows service on port 5432. Afterwards, create an application role and
-database owner. From an elevated PowerShell:
-
-```powershell
-& "C:\Program Files\PostgreSQL\18\bin\psql.exe" -U postgres -c "CREATE ROLE invoice_app LOGIN PASSWORD 'choose_a_password' CREATEDB;"
-```
-
-`CREATEDB` lets the application create its own database and the separate test
-database. Nothing in this project needs superuser rights.
+Windows service on port 5432.
 
 ## 3. Configuration
 
@@ -48,15 +40,29 @@ database. Nothing in this project needs superuser rights.
 Copy-Item .env.example .env
 ```
 
-Then edit `.env` and set `INVAUT_DB_PASSWORD` to the password you chose. Every
-setting is prefixed `INVAUT_`. The money, tolerance and tax values in that
-file are explicit on purpose: a tolerance that is not written down is not
-reproducible. The tax rate is a fictional test configuration for synthetic
-documents, not tax guidance.
+Then edit `.env` and set `INVAUT_DB_PASSWORD` to a password of your choosing
+for the application role — it does not need to match the superuser password,
+and it should not. Every setting is prefixed `INVAUT_`. The money, tolerance
+and tax values in that file are explicit on purpose: a tolerance that is not
+written down is not reproducible. The tax rate is a fictional test
+configuration for synthetic documents, not tax guidance.
 
 `.env` is git-ignored. Do not commit it.
 
-## 4. Create the schema and load the synthetic registry
+## 4. The application role
+
+```powershell
+powershell -NoProfile -File tools\setup_db_role.ps1
+```
+
+The script reads the application user and password from `.env`, prompts once
+for the superuser password, and creates the role with `CREATEDB` so the
+application can create its own database and the separate test database.
+Nothing in this project needs superuser rights, and the superuser password is
+not stored anywhere. Running it again updates the existing role instead of
+failing.
+
+## 5. Create the schema and load the synthetic registry
 
 ```powershell
 .\.venv\Scripts\python.exe -m invoice_automation.cli init-db
@@ -68,7 +74,7 @@ documents, not tax guidance.
 already-applied migration file changes on disk, the runner refuses to continue
 rather than leaving two databases silently different.
 
-## 5. Run the slice
+## 6. Run the slice
 
 ```powershell
 .\.venv\Scripts\python.exe -m invoice_automation.cli ingest-manifest
@@ -87,7 +93,7 @@ registry:
 .\.venv\Scripts\python.exe -m invoice_automation.cli reset --yes
 ```
 
-## 6. Tests
+## 7. Tests
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest tests/unit -q
