@@ -208,3 +208,69 @@ connection closed.
 
 The regression tests for it assert from a *second* connection, because an
 assertion on the same connection sees uncommitted work and passes either way.
+
+## ADR-014 — pdfplumber for extraction, not PyMuPDF
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+Extraction uses pdfplumber (MIT, over pdfminer.six) and generation uses
+reportlab. PyMuPDF is faster and was the obvious alternative, but it is
+AGPL-3.0: linking it would place its terms on this repository, which is meant
+to be shown to employers without a licence conversation.
+
+pdfplumber also gives every word with its coordinates, which is what the
+"field evidence" part of the data contract needs: the page, the source line
+and its bounding box are stored for each extracted value. A text-only reader
+such as pypdf would not support that.
+
+## ADR-015 — Extraction is geometric, not regex over a text dump
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+Words are grouped into lines by vertical position, and table cells are
+assigned to columns using boundaries derived from the header row. Labels are
+matched **start-anchored** against a line.
+
+Start-anchoring is not a detail. A document carrying both "Fournisseur :" and
+"Code fournisseur :" would hand a contains-match the wrong line, silently
+putting the supplier's name where its code belongs. Likewise, amounts are read
+by taking the rightmost run of numeric tokens, which is why "Taxe (19%)
+291,574" yields 291,574 rather than 19, and why "1 337,750" is rejoined into
+one amount instead of read as 1.
+
+## ADR-016 — An unreadable document is a review case, not an excluded kind
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+"This is a credit note and we do not handle credit notes" and "we could not
+read this document" are different outcomes and now have different paths. The
+extractor reports an unclassifiable document as `unknown`; normalisation
+records that as a missing required field, so `REQUIRED_FIELD_MISSING` fires
+and the invoice goes to **review**. `UNSUPPORTED_DOCUMENT` is skipped, and
+fires only for a kind that was read and is excluded.
+
+Found while building the held-out layout probe: an unreadable document was
+being recorded as `unsupported`, which would have moved documents the system
+simply failed on into a bucket intended for cases a person cannot fix either,
+and quietly flattered the review rate.
+
+## ADR-017 — A held-out layout the extractor is never taught
+
+**Date:** 5 November 2026
+**Status:** accepted
+
+The generator draws a fourth layout, `sousse`, whose labels are deliberately
+absent from the extractor. Three documents are rendered in it and measured
+separately.
+
+Without it the evaluation is the extractor marking its own homework: the three
+supported layouts and its label sets were written side by side, so a high
+score on them is close to uninformative. The probe measures the only thing
+that generalises — what happens when the layout is unknown — and the number
+that matters is how many values were invented, not how many were read.
+
+Adding `sousse` labels to `extraction/layouts.py` would destroy that
+measurement. The manifest and the methodology both say so.

@@ -4,35 +4,50 @@ What this project does not establish. Kept current as the work proceeds; if a
 line here becomes untrue, it is because the capability was built and measured,
 and the change will say so.
 
-## No measured performance
+## What has been measured, and what it is worth
 
-No accuracy, latency, cost, review-rate, time-saving or adoption figures are
-reported anywhere in this repository, because none have been measured. The
-test suite shows that the implemented rules behave as specified on cases
-written for them. That is a correctness statement about the code, not a
-performance claim about invoice processing.
+One thing has been measured: extraction from the 16 synthetic PDFs, with the
+method, denominators and date in `evaluation/methodology.md` and the figures
+in `evaluation/results/`.
 
-When a benchmark is run it will state the dataset, the configuration, the
-denominators and the date, and the figures will live in
-`evaluation/results/`.
+It scores 16/16. That number is close to uninformative and should not be
+quoted on its own: the three layouts and the extractor's label sets were
+written side by side, the set is 16 documents, and nothing is held out. It
+says the extractor reads the documents this generator draws.
+
+The figure worth quoting is the held-out layout: faced with a fourth layout it
+was never taught, the extractor recognised none of the three documents,
+recovered none of their 30 populated fields, and **invented no values** — the
+documents went to review instead. That is a real property, and it is the one
+that would matter on a supplier's unfamiliar template.
+
+No latency, cost, human-handling-time, time-saving or adoption figure is
+reported anywhere in this repository, because none has been measured.
 
 ## The data is synthetic
 
 Every supplier, purchase order, invoice and amount is invented. The French
 labels and TND amounts reflect a Tunisian business setting; the 19% tax rate
 is a fictional test configuration, not Tunisian tax guidance, and no rule here
-asserts tax compliance.
+asserts tax compliance. Each generated PDF carries a visible notice saying it
+is synthetic.
 
-Synthetic documents are generated from assumptions about how invoices look.
-Results on them reflect those assumptions. A high score on this data would say
-nothing about real supplier documents, which vary in ways a generator does not
-anticipate.
+Synthetic documents are generated from assumptions about how invoices look,
+and here the same person wrote those assumptions and the code that reads
+them. Results on this data reflect that circularity. It is the reason the
+held-out layout exists, and the reason the headline accuracy figure is
+reported next to it rather than on its own.
 
 ## What is not implemented
 
-- No extraction. The current input is structured values, not documents. There
-  is no PDF parsing and no OCR, so nothing here shows that values can be read
-  off a real invoice.
+- **No OCR.** Extraction reads the text layer of a digitally generated PDF. A
+  scanned document has no text layer, so it yields nothing and goes to
+  review. Tesseract is not installed on the development machine and no OCR
+  path has been written.
+- **Extraction is tied to known layouts.** Three label sets are supported. An
+  unfamiliar template is not read at all, which is safe but is not the same
+  as handling it. Real suppliers would each need their labels added, or a
+  different approach.
 - No HTTP API, no orchestration, no review interface, no dashboard.
 - No reviewer corrections. The revision table and the audit trail support
   them; the action that creates a correction does not exist yet, so the
@@ -62,10 +77,10 @@ all.
 
 ## Verification status
 
-167 tests pass, none skipped: 143 that need no database and 24 that do. The
+241 tests pass, none skipped: 207 that need no database and 34 that do. The
 schema has been applied to a live server, the 16 labelled cases produce their
-labelled outcomes through the full pipeline, and the reporting views reconcile
-with direct SQL queries.
+labelled outcomes through the full pipeline as payloads **and** as PDFs, and
+the reporting views reconcile with direct SQL queries.
 
 Two caveats on that, both real:
 
@@ -78,10 +93,11 @@ Two caveats on that, both real:
   known shape.** The concurrency test runs two threads; it is not a load test
   and says nothing about behaviour under real contention or volume.
 
-What the passing suite does *not* show: that values can be read off a real
+What the passing suite does *not* show: that values can be read off a **real**
 invoice, that the workflow survives a service failure (no retry or recovery
-path exists yet), or that any of this is faster than a person. Those need the
-extractor, the orchestration and a measured benchmark.
+path exists yet), or that any of this is faster than a person. The first needs
+real documents, the second needs the orchestration, and the third needs a
+timed comparison that has not been attempted.
 
 ## Not a product
 

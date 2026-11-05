@@ -6,7 +6,11 @@ Codes: ``REQUIRED_FIELD_MISSING``, ``DATE_INCONSISTENT``,
 
 from __future__ import annotations
 
-from ..models import KNOWN_UNSUPPORTED_DOCUMENT_TYPES, SUPPORTED_DOCUMENT_TYPE
+from ..models import (
+    KNOWN_UNSUPPORTED_DOCUMENT_TYPES,
+    SUPPORTED_DOCUMENT_TYPE,
+    UNCLASSIFIED_DOCUMENT_TYPE,
+)
 from .base import (
     Disposition,
     RuleResult,
@@ -18,6 +22,7 @@ from .base import (
 #: Header fields that must be present and parseable. ``due_date`` is absent
 #: from this list on purpose: the data contract marks it as optional.
 REQUIRED_HEADER_FIELDS = (
+    "document_type",
     "invoice_number",
     "supplier_reference",
     "invoice_date",
@@ -169,8 +174,26 @@ def currency_unsupported(ctx: ValidationContext) -> list[RuleResult]:
 
 
 def unsupported_document(ctx: ValidationContext) -> list[RuleResult]:
-    """Only plain invoices are handled; other document kinds are excluded."""
+    """Only plain invoices are handled; other document kinds are excluded.
+
+    An unclassifiable document is **not** reported here. "We could not read
+    this" is a review case, already reported by ``REQUIRED_FIELD_MISSING`` on
+    ``document_type``; this rule is for a kind that was read and is excluded,
+    such as a credit note. Conflating the two would route unreadable
+    documents into a bucket nobody reviews.
+    """
     document_type = ctx.invoice.document_type
+    if document_type == UNCLASSIFIED_DOCUMENT_TYPE:
+        return [
+            RuleResult(
+                code="UNSUPPORTED_DOCUMENT",
+                status=RuleStatus.SKIPPED,
+                severity=Severity.ERROR,
+                disposition=Disposition.UNSUPPORTED,
+                message="Not evaluated: the document kind could not be determined.",
+                field_name="document_type",
+            )
+        ]
     if document_type == SUPPORTED_DOCUMENT_TYPE:
         return [
             RuleResult(

@@ -48,10 +48,14 @@ has since corrected stops appearing. The full history stays in
 
 ## What is deliberately absent
 
-No extraction accuracy, no processing latency, no cost per document, no human
-handling time, no recovery success rate. Those require the extractor, the
-orchestration and a frozen benchmark, none of which exist yet. They will be
-defined here when they are measured, with the dataset and date stated.
+No processing latency, no cost per document, no human handling time, no
+recovery success rate. Those require the orchestration and a timed
+comparison, neither of which exists yet.
+
+Extraction accuracy is measured, but it is not a dashboard metric: it belongs
+to a dataset and an extractor version, not to the invoice register. It lives
+in `evaluation/results/` with its methodology in
+`evaluation/methodology.md`.
 
 ## One count that is deliberately not in the exception summary
 

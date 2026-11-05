@@ -5,6 +5,97 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-05 (week 2, part 1) — PDF extraction; a measured baseline
+
+### Built
+
+- `data/generate_pdf_fixtures.py`: renders every structured payload as a
+  synthetic invoice PDF across three layout families (`atlas`, `medina`,
+  `carthage`) with French labels, French number formatting and DD/MM/YYYY
+  dates. Deterministic via reportlab `invariant=1`, so regenerating gives
+  byte-identical files and the duplicate case is a genuine resend.
+- A fourth layout, `sousse`, drawn by the generator and **deliberately absent
+  from the extractor**, with three documents as a held-out probe.
+- `src/invoice_automation/extraction/`: geometric extraction over pdfplumber.
+  `words.py` groups words into lines and table columns; `layouts.py` holds the
+  three label sets; `pdf.py` produces a `RawInvoice` plus the raw text and
+  per-field evidence (page, source line, bounding box).
+- Migration `0003_field_evidence`: `invoice_revisions.field_evidence jsonb`.
+- The pipeline carries `raw_text`, `field_evidence`, `media_type` and
+  `byte_size`. **No rule changed** to accommodate documents — that was the
+  point of the extraction seam.
+- CLI: `ingest-pdf` and `ingest-pdf-manifest` (the latter also checks that each
+  document was read in the layout it was drawn in).
+- `evaluation/run_extraction_baseline.py` + `evaluation/methodology.md`.
+
+### Measured
+
+Extraction on the 16 documents it was built for: layout detection 16/16,
+critical-field document accuracy 16/16, 160/160 on fields present in the
+ground truth.
+
+Held-out `sousse` layout, 3 documents: layout recognised **0/3**, fields
+recovered **0/30**, fields invented **0**.
+
+The first set is self-referential — the layouts and the label sets were
+written together, 16 documents, nothing held out — and is reported that way in
+the README, the methodology and the limitations. The second is the informative
+one: an unknown layout yields nothing and routes to review rather than being
+read with the wrong labels.
+
+### Checked
+
+- `pytest -q` → **241 passed, 0 skipped** (207 without a database, 34 with).
+- 64 new extraction unit tests, including the label-ambiguity case
+  ("Fournisseur :" vs "Code fournisseur :"), the tax label carrying its rate,
+  the currency fallback, and an ordinary non-invoice PDF.
+- An integration test asserts a document and its payload reach the **same**
+  business state, so extraction losing information would fail the suite.
+- CLI run from empty: 16 PDFs produce the same aggregate overview as the
+  structured run (14 unique invoices, 1 duplicate arrival, review rate
+  0.9167).
+
+### What the work turned up
+
+- The generator first used U+202F as a thousands separator; the base-14
+  Helvetica encoding has no glyph for it and reportlab rendered it as "n", so
+  amounts came out as `1n200,500`. Now a plain space, which also forces the
+  extractor to rejoin numeric tokens the way real invoices require.
+- Dates were being written in ISO rather than the DD/MM/YYYY the docs claimed.
+- **A design wart the probe exposed:** an unreadable document was recorded as
+  `unsupported`, the same bucket as a credit note. Those are different —
+  "excluded kind" versus "we failed to read it" — and merging them would have
+  moved failures out of the review queue and flattered the review rate. An
+  unclassifiable document is now a missing `document_type`, so it fails
+  `REQUIRED_FIELD_MISSING` and goes to review (ADR-016).
+- The probe initially counted the explicit "unknown" marker as an invented
+  value. A stated refusal is not a fabrication; the metric now excludes it and
+  says so.
+
+### Still not done
+
+No OCR (Tesseract is not installed, and a scanned page has no text layer).
+No API, no n8n, no review interface, no dashboard. Reviewer corrections are
+still unimplemented, so the plan's requirement 4 remains unmet.
+
+### Next, in order
+
+1. FastAPI endpoints wrapping `process_structured_submission`:
+   `POST /submissions` with an idempotency key, `GET /submissions/{id}`,
+   `GET /invoices`, `GET /invoices/{id}`, `/health`.
+2. Persistent jobs, bounded retries and a recovery path — the job table
+   already carries `attempt_count`, `max_attempts` and `lease_expires_at`.
+   Needs `notification_outbox` (migration 0004) for de-duplicated
+   notifications.
+3. n8n: container versus npm still open (Node 24.14.0 present, Docker not).
+   Check the current n8n docs for supported Node versions before choosing.
+4. Week 3: reviewer corrections and revalidation, Streamlit review queue,
+   Power BI.
+
+Nothing pushed. Nothing on the résumé.
+
+---
+
 ## 2026-11-05 (later) — Database verified; week 1 exit condition met
 
 ### What ran

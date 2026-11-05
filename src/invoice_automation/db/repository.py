@@ -390,6 +390,7 @@ def insert_revision(
     problems: Iterable[FieldProblem],
     extraction_method: str | None,
     created_by: str,
+    field_evidence: list[dict[str, Any]] | None = None,
 ) -> UUID:
     row = conn.execute(
         """
@@ -400,14 +401,15 @@ def insert_revision(
             invoice_date, due_date, currency,
             purchase_order_number, purchase_order_number_normalized,
             subtotal, tax_total, total,
-            raw_values, field_problems, extraction_method, created_by)
+            raw_values, field_problems, field_evidence, extraction_method,
+            created_by)
         VALUES (%s, %s, %s, %s, %s,
                 %s, %s, %s,
                 %s, %s, %s,
                 %s, %s, %s,
                 %s, %s,
                 %s, %s, %s,
-                %s, %s, %s, %s)
+                %s, %s, %s, %s, %s)
         RETURNING revision_id
         """,
         (
@@ -432,6 +434,7 @@ def insert_revision(
             invoice.total,
             Jsonb(raw_values),
             Jsonb([asdict(problem) for problem in problems]),
+            Jsonb(field_evidence or []),
             extraction_method,
             created_by,
         ),

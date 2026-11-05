@@ -8,17 +8,20 @@ its purchase orders and every invoice are invented. The French labels and TND
 amounts reflect a Tunisian business setting; the 19% tax rate is a fictional
 test configuration, not tax guidance.
 
-**Status: in progress.** The deterministic core works end to end on structured
-input. Extraction from PDFs, the HTTP API, n8n orchestration, the review
-interface, the dashboard and the evaluation are not built yet. No accuracy,
-latency or time-saving figures are reported anywhere here, because none have
-been measured.
+**Status: in progress.** A synthetic invoice PDF goes in and comes out as a
+recorded, validated or flagged invoice with its rule outcomes, revision
+history and event trail. The HTTP API, n8n orchestration, the review
+interface and the dashboard are not built yet. There is no OCR: scanned
+documents are not handled. No time-saving or human-effort figure is reported
+anywhere here, because none has been measured.
 
 ## What exists today
 
 | Capability | State | How it was checked |
 |---|---|---|
-| 13 deterministic validation rules | Implemented | 143 unit tests, no database needed |
+| PDF text extraction across 3 layout families, with field evidence | Implemented | 64 unit tests on the committed documents; measured, see below |
+| An unrecognised layout invents nothing and routes to review | Implemented | Held-out 4th layout the extractor was never taught |
+| 13 deterministic validation rules | Implemented | 207 unit tests, no database needed |
 | Each rule fires on its own case and nothing else | Implemented | One isolated case per code; a test asserts every code is covered |
 | Decimal money handling, explicit precision and rounding | Implemented | Unit tests including tolerance boundaries |
 | Normalisation that records missing and unparseable fields instead of guessing | Implemented | Unit tests |
@@ -26,11 +29,42 @@ been measured.
 | Submission/invoice separation, revisions, rule outcomes, append-only events | Implemented | Integration tests, including that `UPDATE` and `DELETE` on the event log are refused |
 | Idempotency key, duplicate guards enforced by database constraints | Implemented | Integration tests, including two threads submitting the same invoice number at once |
 | Reporting views reconcile with direct SQL | Implemented | Integration test compares every count and rate against direct queries |
-| CLI: init-db, seed, ingest, ingest-manifest, register, overview, exceptions, show | Implemented | All run against a live database |
-| 16 labelled synthetic cases with ground truth, deterministic generator | Implemented | Every case produces its labelled state and codes, both in an in-memory replay and against the database |
-| PDF/OCR extraction, API, n8n, review UI, Power BI, benchmark | Not built | — |
+| CLI: init-db, seed, ingest, ingest-pdf, both manifests, register, overview, exceptions, show | Implemented | All run against a live database |
+| 16 labelled synthetic cases as payloads **and** as PDFs, with ground truth | Implemented | Every case produces its labelled state and codes three ways: in-memory replay, payloads against the database, PDFs against the database |
+| OCR for scanned documents, API, n8n, review UI, Power BI | Not built | — |
 
-**167 tests pass, none skipped**: 143 that need no database and 24 that do.
+**241 tests pass, none skipped**: 207 that need no database and 34 that do.
+
+## Measured so far
+
+Extraction, on the 16 synthetic documents it was built for
+([full results](evaluation/results/extraction_baseline.md)):
+
+| Measure | Result |
+|---|---|
+| Layout detection | 16/16 |
+| Critical-field document accuracy | 16/16 |
+| Field accuracy, fields present in ground truth | 160/160 |
+
+On a **held-out fourth layout the extractor was never taught** (3 documents):
+
+| Measure | Result |
+|---|---|
+| Layout recognised | 0/3 |
+| Fields recovered | 0/30 |
+| **Fields invented** | **0** |
+
+Read those two tables together. The first is the extractor marking its own
+homework: the layouts and its label sets were written side by side, on 16
+documents, with nothing held out. It says the extractor reads the documents
+this generator draws. It does not say anything about a real supplier invoice.
+
+The second is the informative one. Faced with a layout it does not know, the
+extractor recognises nothing, produces no values, and the rules route the
+document to a person — rather than reading the wrong label into a total and
+validating it. Failing by reading nothing is safe; failing by reading the
+wrong thing is not, because a wrong total that agrees with a wrong subtotal
+passes every arithmetic check.
 
 The version actually tested against is **PostgreSQL 16.2**, run as a
 project-local server (`tools/pg_dev_server.py`, see

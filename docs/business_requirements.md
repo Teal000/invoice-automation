@@ -55,10 +55,16 @@ version; item 4 and item 8 are not. The README states what is built.
 | `DATE_INCONSISTENT` | The due date is not before the invoice date | Review |
 | `UNSUPPORTED_DOCUMENT` | The document is a plain invoice | Unsupported |
 
-Required fields are `invoice_number`, `supplier_reference`, `invoice_date`,
-`currency`, `purchase_order_number`, `subtotal`, `tax_total`, `total`, at
-least one line item, and on each line its description, quantity, unit price
-and line amount. `due_date` is optional.
+Required fields are `document_type`, `invoice_number`, `supplier_reference`,
+`invoice_date`, `currency`, `purchase_order_number`, `subtotal`, `tax_total`,
+`total`, at least one line item, and on each line its description, quantity,
+unit price and line amount. `due_date` is optional.
+
+`document_type` is required because an extractor that cannot tell what a
+document is has failed to read a field, and that is a review case. It is kept
+separate from `UNSUPPORTED_DOCUMENT`, which is for a kind that *was* read and
+is excluded, such as a credit note. Merging the two would move documents the
+system merely failed on into a bucket meant for cases nobody can fix.
 
 Every failed check stores the expected value, the observed value and the field
 it concerns. A check that cannot be evaluated is stored as skipped with the

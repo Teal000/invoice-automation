@@ -14,6 +14,7 @@ none of them are.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 from uuid import UUID
 
 import psycopg
@@ -62,12 +63,22 @@ def process_structured_submission(
     *,
     config: RuleConfig | None = None,
     actor: str = "pipeline",
+    raw_text: str | None = None,
+    field_evidence: list[dict[str, Any]] | None = None,
+    media_type: str = "application/json",
+    byte_size: int | None = None,
 ) -> ProcessingResult:
-    """Record, validate and persist one structured arrival.
+    """Record, validate and persist one arrival.
 
-    ``raw`` is the extracted payload. In this version it comes from a
-    structured fixture; the PDF extractor will produce the same type, which is
-    why validation can be developed and tested without OCR.
+    ``raw`` is the extracted payload, whatever produced it. A structured
+    fixture builds one directly; the PDF extractor builds the same type from a
+    document. Everything after this point is identical either way, which is
+    why the rules could be built and tested before extraction existed.
+
+    ``raw_text`` and ``field_evidence`` carry a document's provenance: the text
+    the extractor saw, and where on the page each value was read. Both are
+    stored so a value can be traced back to its source. They are empty for a
+    structured payload, which has no document behind it.
 
     The connection should be in autocommit mode, as the ones from
     :func:`~invoice_automation.db.connection.connect` are. The transaction
@@ -114,10 +125,11 @@ def process_structured_submission(
             original_file_name=submission.original_file_name,
             content_sha256=submission.file_sha256,
             storage_path=submission.storage_path,
-            media_type="application/json",
-            byte_size=None,
+            media_type=media_type,
+            byte_size=byte_size,
             extraction_method=raw.extraction_method,
             raw_payload=raw,
+            raw_text=raw_text,
         )
         submission_id = repo.insert_submission(
             conn, document_id=document_id, submission=submission
@@ -240,6 +252,7 @@ def process_structured_submission(
             problems=normalisation.problems,
             extraction_method=raw.extraction_method,
             created_by=actor,
+            field_evidence=field_evidence,
         )
 
         repo.insert_validation_results(

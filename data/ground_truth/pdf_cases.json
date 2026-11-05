@@ -1,0 +1,184 @@
+{
+  "dataset": "pdf_slice2_v1",
+  "synthetic": true,
+  "note": "Synthetic invoice PDFs rendered from the structured payloads, which are therefore the ground truth for extraction. Order matters: business_duplicate_015 and exact_file_duplicate_016 depend on valid_001 having been processed first. The layouts and the extractor were written together, so accuracy on this set reflects the generator's assumptions and says nothing about real supplier documents.",
+  "layouts": [
+    "atlas",
+    "carthage",
+    "medina"
+  ],
+  "cases": [
+    {
+      "case_id": "valid_001",
+      "pdf": "valid_001.pdf",
+      "layout": "atlas",
+      "ground_truth": "valid_001.json",
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "label": "Clean invoice; all checks pass."
+    },
+    {
+      "case_id": "valid_002",
+      "pdf": "valid_002.pdf",
+      "layout": "medina",
+      "ground_truth": "valid_002.json",
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "label": "Clean invoice from a second supplier."
+    },
+    {
+      "case_id": "missing_total_003",
+      "pdf": "missing_total_003.pdf",
+      "layout": "atlas",
+      "ground_truth": "missing_total_003.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "label": "Document total absent; dependent checks are skipped, not passed."
+    },
+    {
+      "case_id": "unparseable_subtotal_004",
+      "pdf": "unparseable_subtotal_004.pdf",
+      "layout": "medina",
+      "ground_truth": "unparseable_subtotal_004.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "label": "Subtotal cannot be parsed; recorded as unparseable rather than guessed."
+    },
+    {
+      "case_id": "unknown_supplier_005",
+      "pdf": "unknown_supplier_005.pdf",
+      "layout": "carthage",
+      "ground_truth": "unknown_supplier_005.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "label": "Supplier reference absent from the registry."
+    },
+    {
+      "case_id": "line_total_mismatch_006",
+      "pdf": "line_total_mismatch_006.pdf",
+      "layout": "atlas",
+      "ground_truth": "line_total_mismatch_006.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "label": "Unit price inconsistent with the line amount on line 1."
+    },
+    {
+      "case_id": "subtotal_mismatch_007",
+      "pdf": "subtotal_mismatch_007.pdf",
+      "layout": "medina",
+      "ground_truth": "subtotal_mismatch_007.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "label": "Stated subtotal does not match the sum of the lines."
+    },
+    {
+      "case_id": "total_mismatch_008",
+      "pdf": "total_mismatch_008.pdf",
+      "layout": "carthage",
+      "ground_truth": "total_mismatch_008.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "label": "Subtotal plus tax does not reconcile with the total."
+    },
+    {
+      "case_id": "currency_eur_009",
+      "pdf": "currency_eur_009.pdf",
+      "layout": "atlas",
+      "ground_truth": "currency_eur_009.json",
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "label": "Currency outside the configured set; no conversion is attempted."
+    },
+    {
+      "case_id": "credit_note_010",
+      "pdf": "credit_note_010.pdf",
+      "layout": "medina",
+      "ground_truth": "credit_note_010.json",
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "UNSUPPORTED_DOCUMENT"
+      ],
+      "label": "Credit note; excluded from this version with an explicit code."
+    },
+    {
+      "case_id": "po_not_found_011",
+      "pdf": "po_not_found_011.pdf",
+      "layout": "carthage",
+      "ground_truth": "po_not_found_011.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "label": "Purchase-order reference not in the register."
+    },
+    {
+      "case_id": "po_supplier_mismatch_012",
+      "pdf": "po_supplier_mismatch_012.pdf",
+      "layout": "atlas",
+      "ground_truth": "po_supplier_mismatch_012.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "label": "Invoice supplier is not the supplier on the purchase order."
+    },
+    {
+      "case_id": "po_amount_mismatch_013",
+      "pdf": "po_amount_mismatch_013.pdf",
+      "layout": "medina",
+      "ground_truth": "po_amount_mismatch_013.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "label": "Invoice total exceeds the order amount by more than the tolerance."
+    },
+    {
+      "case_id": "date_inconsistent_014",
+      "pdf": "date_inconsistent_014.pdf",
+      "layout": "carthage",
+      "ground_truth": "date_inconsistent_014.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "label": "Due date falls before the invoice date."
+    },
+    {
+      "case_id": "business_duplicate_015",
+      "pdf": "business_duplicate_015.pdf",
+      "layout": "atlas",
+      "ground_truth": "business_duplicate_015.json",
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "label": "Second document for an invoice number already recorded; both files kept."
+    },
+    {
+      "case_id": "exact_file_duplicate_016",
+      "pdf": "exact_file_duplicate_016.pdf",
+      "layout": "atlas",
+      "ground_truth": "exact_file_duplicate_016.json",
+      "expected_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "label": "Byte-identical resend of valid_001; linked, not reprocessed."
+    }
+  ]
+}

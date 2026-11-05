@@ -7,6 +7,10 @@ src/invoice_automation/
   config.py          Settings (environment) and RuleConfig (plain dataclass)
   money.py           Decimal parsing, quantisation, tolerance
   models.py          RawInvoice -> NormalizedInvoice, field problems
+  extraction/
+    words.py         Words, lines, label lookup, table columns
+    layouts.py       The three supported layout families
+    pdf.py           PDF -> RawInvoice + raw text + field evidence
   rules/
     base.py          RuleResult, ValidationContext, reference-data views
     identity.py      REQUIRED_FIELD_MISSING, DATE_INCONSISTENT,
@@ -23,8 +27,9 @@ src/invoice_automation/
   pipeline.py        One arrival from input to recorded outcome
   cli.py             The visible end of the slice
 
-db/migrations/       0001 schema, 0002 reporting views
-data/                Fixture generator, payloads, synthetic registry, ground truth
+db/migrations/       0001 schema, 0002 reporting views, 0003 field evidence
+data/                Generators, payloads, PDFs, synthetic registry, ground truth
+evaluation/          Extraction baseline, methodology, results
 tools/check_sql.py   Parses all SQL with the PostgreSQL grammar
 tests/unit/          No database required
 tests/integration/   Skipped when no server is reachable
@@ -72,10 +77,52 @@ events are all recorded, or none of them are.
 ## Two seams, deliberately placed
 
 **Extraction.** The rules consume a `RawInvoice`: header fields and lines as
-optional strings. The structured fixtures produce one directly; a PDF
-extractor will produce the same type. That is why the validation logic could
-be built and tested before any extraction exists, and why adding extraction
-does not touch the rules.
+optional strings. The structured fixtures produce one directly; the PDF
+extractor produces the same type from a document. That is why the validation
+logic could be built and tested before any extraction existed — and when
+extraction arrived, **not one rule changed**. The integration suite asserts
+that a document and its payload reach the same business state, so a future
+divergence means either extraction lost something or a rule started depending
+on formatting.
+
+### How extraction works
+
+```text
+PDF
+ |
+ v  pdfplumber: every word with its coordinates
+words -> lines (grouped by vertical position)
+ |
+ v  detect the document kind from its title (FACTURE / AVOIR / ...)
+ v  score all layouts, pick the best; below half marks, give up
+ |
+ +-- header fields: start-anchored label, value is the rest of the line
+ +-- totals: rightmost run of numeric tokens on the label's line
+ +-- line items: columns from the header row's x-spans
+ |
+ v
+RawInvoice  +  raw text  +  field evidence (page, source line, bounding box)
+```
+
+Three label sets live in `extraction/layouts.py`; the engine in `words.py` is
+layout-agnostic, so a fourth family is a specification rather than new code.
+Two details carry more weight than their size suggests:
+
+- Labels match **start-anchored**. A document with both "Fournisseur :" and
+  "Code fournisseur :" would give a contains-match the wrong line.
+- Amounts are read as the **rightmost run of numeric tokens**, so
+  "Taxe (19%) 291,574" yields 291,574 and not 19, and the French thousands
+  group in "1 337,750" is rejoined rather than read as 1.
+
+When no layout scores well enough, the extractor returns almost nothing: the
+document kind, if it could tell, and no field values. The rules then fail
+`REQUIRED_FIELD_MISSING` and the document goes to review. Failing by reading
+nothing is recoverable; failing by reading the wrong label into a total is
+not, because a wrong total that agrees with a wrong subtotal passes every
+arithmetic check.
+
+There is no OCR. A scanned document has no text layer, so this path yields
+nothing and the document goes to review.
 
 **Orchestration.** `process_structured_submission(conn, raw, submission)` is
 one call that is safe to repeat: an idempotency key short-circuits a replay,
@@ -108,6 +155,7 @@ afterwards.
 
 ## Not built yet
 
-PDF and OCR extraction, the FastAPI service, n8n workflows, the Streamlit
-review interface, the Power BI dashboard, and the evaluation harness. The
-README lists what exists today and how it was checked.
+OCR for scanned documents, the FastAPI service, n8n workflows, the Streamlit
+review interface, and the Power BI dashboard. The README lists what exists
+today and how it was checked; `evaluation/methodology.md` says what has been
+measured and what has not.

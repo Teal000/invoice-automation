@@ -6,7 +6,9 @@ way to demonstrate the system before the API and the review interface exist:
     init-db           create the database if absent and apply migrations
     seed              load the synthetic supplier and purchase-order registry
     ingest            process one structured payload
-    ingest-manifest   process the labelled case set in order and check it
+    ingest-pdf        extract one PDF, then process it
+    ingest-manifest   process the labelled structured set and check it
+    ingest-pdf-manifest  extract and process the labelled PDF set and check it
     register          print the invoice register
     overview          print the processing overview with its denominators
     exceptions        print failure counts per rule code
@@ -28,6 +30,7 @@ from rich.table import Table
 
 from .config import PROJECT_ROOT, get_settings
 from .db import apply_all, connect, create_database, repository as repo
+from .extraction import ExtractionResult, extract_invoice
 from .models import RawInvoice, SubmissionInput, normalize_identifier
 from .pipeline import process_structured_submission
 
@@ -39,6 +42,8 @@ console = Console()
 
 DEFAULT_MANIFEST = PROJECT_ROOT / "data" / "ground_truth" / "structured_cases.json"
 DEFAULT_FIXTURES = PROJECT_ROOT / "data" / "fixtures" / "structured"
+DEFAULT_PDF_MANIFEST = PROJECT_ROOT / "data" / "ground_truth" / "pdf_cases.json"
+DEFAULT_PDF_DIR = PROJECT_ROOT / "data" / "fixtures" / "pdf"
 DEFAULT_REFERENCE = PROJECT_ROOT / "data" / "fixtures" / "reference"
 
 #: Tables emptied by `reset`, in dependency order. Reference data is kept.
@@ -71,6 +76,38 @@ def _load_payload(path: Path) -> tuple[RawInvoice, SubmissionInput]:
         storage_path=_storage_path(path),
     )
     return invoice, submission
+
+
+def _load_pdf(path: Path) -> tuple[ExtractionResult, RawInvoice, SubmissionInput]:
+    """Extract a PDF and describe its arrival.
+
+    The hash is taken over the file bytes, exactly as for a structured
+    payload, so the duplicate checks behave identically for both.
+    """
+    raw_bytes = path.read_bytes()
+    extraction = extract_invoice(path)
+    submission = SubmissionInput(
+        source="cli",
+        original_file_name=path.name,
+        file_sha256=hashlib.sha256(raw_bytes).hexdigest(),
+        storage_path=_storage_path(path),
+    )
+    return extraction, extraction.raw, submission
+
+
+def _process_pdf(conn, extraction: ExtractionResult, invoice, submission):
+    """Hand an extracted document to the same pipeline the fixtures use."""
+    return process_structured_submission(
+        conn,
+        invoice,
+        submission,
+        raw_text=extraction.raw_text,
+        field_evidence=extraction.evidence_payload(),
+        media_type="application/pdf",
+        byte_size=(PROJECT_ROOT / submission.storage_path).stat().st_size
+        if submission.storage_path and not Path(submission.storage_path).is_absolute()
+        else None,
+    )
 
 
 def _storage_path(path: Path) -> str:
@@ -172,6 +209,10 @@ def ingest(
     with connect() as conn:
         result = process_structured_submission(conn, invoice, submission)
 
+    _print_result(path, result)
+
+
+def _print_result(path: Path, result) -> None:
     label = "replayed" if result.replayed else str(result.state)
     console.print(f"[bold]{path.name}[/] -> {label}")
     console.print(f"  submission {result.submission_id}")
@@ -195,27 +236,54 @@ def ingest(
         console.print("  all applicable checks passed")
 
 
-@app.command("ingest-manifest")
-def ingest_manifest(
-    manifest: Path = typer.Option(DEFAULT_MANIFEST, help="Labelled case manifest."),
-    fixtures: Path = typer.Option(DEFAULT_FIXTURES, help="Fixture directory."),
+@app.command("ingest-pdf")
+def ingest_pdf(
+    path: Path = typer.Argument(..., help="Invoice PDF."),
+    idempotency_key: str = typer.Option(
+        None, help="Replaying the same key returns the earlier outcome."
+    ),
 ) -> None:
-    """Process the labelled cases in order and compare with their ground truth.
+    """Extract one PDF, then process it exactly as a structured payload."""
+    extraction, invoice, submission = _load_pdf(path)
+    if idempotency_key:
+        submission = submission.model_copy(update={"idempotency_key": idempotency_key})
+
+    with connect() as conn:
+        result = _process_pdf(conn, extraction, invoice, submission)
+
+    console.print(
+        f"  layout     {extraction.layout or '[red]not recognised[/]'}"
+        f"  ({len(extraction.evidence)} fields with evidence)"
+    )
+    _print_result(path, result)
+
+
+def _run_manifest(
+    *,
+    manifest: Path,
+    source_dir: Path,
+    file_key: str,
+    loader,
+) -> None:
+    """Process a labelled manifest in order and compare with ground truth.
 
     This is the acceptance check from the plan: every deliberately introduced
-    failure must produce its expected exception code. The command exits
-    non-zero if any case does not match, so it can be used in a pipeline.
+    failure must produce its expected exception code. Exits non-zero on any
+    mismatch, so it can be used in a pipeline.
     """
     data = json.loads(manifest.read_text("utf-8"))
     table = Table(title=f"{data['dataset']} (synthetic)")
-    for column in ("case", "state", "expected", "failed codes", "match"):
+    columns = ["case", "state", "expected", "failed codes", "match"]
+    show_layout = any("layout" in case for case in data["cases"])
+    if show_layout:
+        columns.insert(1, "layout")
+    for column in columns:
         table.add_column(column)
 
     mismatches = 0
     with connect() as conn:
         for case in data["cases"]:
-            invoice, submission = _load_payload(fixtures / case["file"])
-            result = process_structured_submission(conn, invoice, submission)
+            result, extra = loader(conn, source_dir / case[file_key])
 
             expected_codes = tuple(case["expected_failed_codes"])
             ok = (
@@ -224,19 +292,60 @@ def ingest_manifest(
             )
             if not ok:
                 mismatches += 1
-            table.add_row(
+            row = [
                 case["case_id"],
                 str(result.state),
                 case["expected_state"],
                 ", ".join(result.failed_codes) or "-",
                 "[green]yes[/]" if ok else "[red]no[/]",
-            )
+            ]
+            if show_layout:
+                detected = extra or "-"
+                expected_layout = case.get("layout")
+                row.insert(
+                    1,
+                    detected
+                    if detected == expected_layout
+                    else f"[red]{detected}[/]",
+                )
+            table.add_row(*row)
 
     console.print(table)
     if mismatches:
         console.print(f"[red]{mismatches} case(s) did not match the ground truth[/]")
         raise typer.Exit(code=1)
     console.print(f"[green]all {len(data['cases'])} cases matched the ground truth[/]")
+
+
+@app.command("ingest-manifest")
+def ingest_manifest(
+    manifest: Path = typer.Option(DEFAULT_MANIFEST, help="Labelled case manifest."),
+    fixtures: Path = typer.Option(DEFAULT_FIXTURES, help="Fixture directory."),
+) -> None:
+    """Process the labelled structured cases and check them against ground truth."""
+
+    def load(conn, path: Path):
+        invoice, submission = _load_payload(path)
+        return process_structured_submission(conn, invoice, submission), None
+
+    _run_manifest(
+        manifest=manifest, source_dir=fixtures, file_key="file", loader=load
+    )
+
+
+@app.command("ingest-pdf-manifest")
+def ingest_pdf_manifest(
+    manifest: Path = typer.Option(DEFAULT_PDF_MANIFEST, help="Labelled PDF manifest."),
+    pdfs: Path = typer.Option(DEFAULT_PDF_DIR, help="PDF directory."),
+) -> None:
+    """Extract and process every labelled PDF, checking state and layout."""
+
+    def load(conn, path: Path):
+        extraction, invoice, submission = _load_pdf(path)
+        result = _process_pdf(conn, extraction, invoice, submission)
+        return result, extraction.layout
+
+    _run_manifest(manifest=manifest, source_dir=pdfs, file_key="pdf", loader=load)
 
 
 @app.command()

@@ -35,6 +35,14 @@ from .money import MoneyParseError, parse_decimal, quantize_money
 #: Document kinds this version handles. Anything else is reported as
 #: UNSUPPORTED_DOCUMENT rather than approximated.
 SUPPORTED_DOCUMENT_TYPE = "invoice"
+
+#: What an extractor reports when it could not tell what the document is.
+#: Distinct from a recognised kind that this version excludes: "this is a
+#: credit note and we do not handle credit notes" is a business exclusion,
+#: while "we could not read this document" is a review case. Treating the
+#: second as the first would quietly move unreadable documents out of the
+#: review queue and into a bucket nobody looks at.
+UNCLASSIFIED_DOCUMENT_TYPE = "unknown"
 KNOWN_UNSUPPORTED_DOCUMENT_TYPES = (
     "credit_note",
     "debit_note",
@@ -288,7 +296,17 @@ def normalize_invoice(raw: RawInvoice, config: RuleConfig) -> NormalizationResul
             )
         )
 
-    document_type = (raw.document_type or SUPPORTED_DOCUMENT_TYPE).strip().lower()
+    if raw.document_type is None or not raw.document_type.strip():
+        problems.append(FieldProblem("document_type", raw.document_type, "missing"))
+        document_type = UNCLASSIFIED_DOCUMENT_TYPE
+    else:
+        document_type = raw.document_type.strip().lower()
+        if document_type == UNCLASSIFIED_DOCUMENT_TYPE:
+            # The extractor read the document but could not classify it. That
+            # is a field it failed to determine, not a document kind.
+            problems.append(
+                FieldProblem("document_type", raw.document_type, "unparseable")
+            )
 
     normalized = NormalizedInvoice(
         document_type=document_type,

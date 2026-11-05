@@ -1,0 +1,28 @@
+{
+  "dataset": "pdf_unseen_layout_probe_v1",
+  "synthetic": true,
+  "note": "Held-out probe. The 'sousse' layout is drawn by this generator and is deliberately absent from src/invoice_automation/extraction/layouts.py. Do not add its labels there: that would destroy the only measurement here that is not the extractor marking its own homework. The wanted behaviour is a clean failure, not a lucky guess.",
+  "cases": [
+    {
+      "case_id": "unseen_valid_001",
+      "pdf": "unseen_valid_001.pdf",
+      "layout": "sousse",
+      "ground_truth": "valid_001.json",
+      "label": "Same payload drawn in a layout the extractor was not taught; measures behaviour on an unseen layout."
+    },
+    {
+      "case_id": "unseen_valid_002",
+      "pdf": "unseen_valid_002.pdf",
+      "layout": "sousse",
+      "ground_truth": "valid_002.json",
+      "label": "Same payload drawn in a layout the extractor was not taught; measures behaviour on an unseen layout."
+    },
+    {
+      "case_id": "unseen_line_total_mismatch_006",
+      "pdf": "unseen_line_total_mismatch_006.pdf",
+      "layout": "sousse",
+      "ground_truth": "line_total_mismatch_006.json",
+      "label": "Same payload drawn in a layout the extractor was not taught; measures behaviour on an unseen layout."
+    }
+  ]
+}

@@ -12,3 +12,7 @@ pglast==8.7
 # the version named in docs/setup.md; `pg_dev_server.py status` prints the
 # version actually running.
 pgserver==0.1.4
+
+# reportlab draws the synthetic invoice PDFs in data/generate_pdf_fixtures.py.
+# Generation only: the application never needs it at runtime.
+reportlab==5.1.0
