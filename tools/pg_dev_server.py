@@ -25,7 +25,9 @@ The data directory is `pgdata/`, which is git-ignored.
 from __future__ import annotations
 
 import re
+import subprocess
 import sys
+import time
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -72,7 +74,26 @@ def server():
     PGDATA.mkdir(exist_ok=True)
     # cleanup_mode=None: the server keeps running after this process exits,
     # which is what makes it usable from separate command invocations.
-    return pgserver.get_server(PGDATA, cleanup_mode=None)
+    try:
+        return pgserver.get_server(PGDATA, cleanup_mode=None)
+    except subprocess.TimeoutExpired:
+        # pgserver gives pg_ctl ten seconds. A cold start on this machine can
+        # take longer and still succeed: the postmaster comes up moments after
+        # pg_ctl has been given up on. Treating that as a failure made `start`
+        # report an error about a server that was in fact running, so poll for
+        # readiness instead of trusting the timeout.
+        print("pg_ctl timed out; waiting for the postmaster to answer...")
+        deadline = time.monotonic() + 60
+        last_error: Exception | None = None
+        while time.monotonic() < deadline:
+            time.sleep(2)
+            try:
+                return pgserver.get_server(PGDATA, cleanup_mode=None)
+            except Exception as exc:  # noqa: BLE001 - retried until the deadline
+                last_error = exc
+        raise RuntimeError(
+            f"the server did not become ready within 60 seconds: {last_error}"
+        ) from last_error
 
 
 def postgres_version(uri: str) -> str:

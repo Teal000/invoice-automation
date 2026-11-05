@@ -39,10 +39,12 @@ reported anywhere here, because none has been measured.
 | Reporting views reconcile with direct SQL | Implemented | Integration test compares every count and rate against direct queries |
 | CLI: init-db, seed, ingest, serve, recover, notifications, both manifests, register, overview, exceptions, show | Implemented | All run against a live database |
 | 16 labelled synthetic cases as payloads **and** as PDFs, with ground truth | Implemented | Every case produces its labelled state and codes three ways: in-memory replay, payloads against the database, PDFs against the database |
-| Container setup (Dockerfile, compose with db + api + n8n) | Written | **Never built or run**: Docker is not installed yet |
+| Container setup: db, api and n8n in compose | Implemented | Built and run; all three containers healthy |
+| The schema on PostgreSQL 18 | Verified | All five migrations applied and the **whole suite passes** against PostgreSQL 18.6 in the container |
+| n8n workflows | Written, imported, **not running** | They import and the credential is seeded; they do not execute past the webhook. See `workflows/n8n/README.md` |
 | Notification *delivery*, OCR, n8n workflows, review **interface**, Power BI | Not built | — |
 
-**315 tests pass, none skipped**: 207 that need no database and 108 that do.
+**328 tests pass, none skipped**: 207 that need no database and 121 that do — and they pass against **both** PostgreSQL 16.2 (the local dev server) and PostgreSQL 18.6 (the container).
 
 ## Measured so far
 
@@ -75,14 +77,11 @@ validating it. Failing by reading nothing is safe; failing by reading the
 wrong thing is not, because a wrong total that agrees with a wrong subtotal
 passes every arithmetic check.
 
-The version actually tested against is **PostgreSQL 16.2**, run as a
-project-local server (`tools/pg_dev_server.py`, see
-[decisions.md](docs/decisions.md) ADR-012) because no system PostgreSQL was
-installed on the development machine. The documented setup targets PostgreSQL
-18 and has **not** been exercised. Every feature the schema uses — identity
-columns, partial-index `ON CONFLICT` inference, `FILTER`, `jsonb`,
-`gen_random_uuid()` — exists in both, but that is an argument, not a test
-result.
+The suite passes on **PostgreSQL 16.2** (the project-local dev server, see
+[decisions.md](docs/decisions.md) ADR-012) and on **PostgreSQL 18.6** (the
+container from `compose.yaml`). The second of those was an open caveat from
+week 1 until the container stack ran; it is now a test result rather than an
+argument.
 
 ## The idea in one pass
 

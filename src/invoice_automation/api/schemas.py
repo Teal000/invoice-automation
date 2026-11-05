@@ -140,6 +140,14 @@ class InvoiceSummary(ViewModel):
     total: Decimal | None = None
     purchase_order_number: str | None = None
     current_revision_number: int | None = None
+    current_revision_source: str | None = Field(
+        default=None,
+        description=(
+            "Where the current values came from: 'extraction' or "
+            "'reviewer_correction'. A reviewer needs to know which they are "
+            "looking at."
+        ),
+    )
     failed_rule_codes: int = 0
     failed_checks: int = 0
     has_reviewer_edit: bool = False

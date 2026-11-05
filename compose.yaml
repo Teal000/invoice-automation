@@ -30,7 +30,12 @@ services:
       # Published so psql and the local CLI can reach the same database.
       - "${INVAUT_DB_PORT_PUBLISHED:-5432}:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      # Mounted at /var/lib/postgresql, NOT at .../data. The postgres:18
+      # image changed this: it now places the cluster in a version-named
+      # subdirectory so that pg_upgrade --link can work without crossing a
+      # mount boundary, and it refuses to start when it finds data at the old
+      # path. The first run of this file failed exactly that way.
+      - pgdata:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${INVAUT_DB_USER:-invoice_app} -d ${INVAUT_DB_NAME:-invoice_automation}"]
       interval: 5s

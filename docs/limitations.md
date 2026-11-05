@@ -91,18 +91,17 @@ all.
 
 ## Verification status
 
-315 tests pass, none skipped: 207 that need no database and 108 that do. The
+328 tests pass, none skipped: 207 that need no database and 121 that do. The
 schema has been applied to a live server, the 16 labelled cases produce their
 labelled outcomes through the full pipeline as payloads **and** as PDFs, and
 the reporting views reconcile with direct SQL queries.
 
 Two caveats on that, both real:
 
-- **The version tested is PostgreSQL 16.2, not the documented 18.** The tests
-  ran against a project-local server bundled as a Python wheel, because no
-  system PostgreSQL was installed (see decisions.md ADR-012). Every feature
-  the schema uses exists in both versions, so the risk is low, but PostgreSQL
-  18 remains untested.
+- **No orchestration actually runs.** The n8n workflows import into a running
+  n8n and do not execute past the webhook; publishing them needs the editor,
+  which needs an account only the owner can create. Nothing drives processing
+  or recovery on a schedule today.
 - **Testing happened on one machine, with one user, on synthetic data of a
   known shape.** The concurrency test runs two threads; it is not a load test
   and says nothing about behaviour under real contention or volume.
