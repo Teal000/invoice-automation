@@ -41,7 +41,7 @@ reported anywhere here, because none has been measured.
 | 16 labelled synthetic cases as payloads **and** as PDFs, with ground truth | Implemented | Every case produces its labelled state and codes three ways: in-memory replay, payloads against the database, PDFs against the database |
 | Container setup: db, api and n8n in compose | Implemented | Built and run; all three containers healthy |
 | The schema on PostgreSQL 18 | Verified | All five migrations applied and the **whole suite passes** against PostgreSQL 18.6 in the container |
-| n8n orchestration: webhook triggers processing through the API | Runs | Observed once end to end: a PDF uploaded unprocessed, its id posted to the webhook, n8n called the API, the submission reached a recorded outcome. Only that one path has been seen; see `workflows/n8n/README.md` |
+| n8n orchestration: webhook triggers processing through the API | Runs | Observed end to end on both branches: a PDF uploaded unprocessed, its id posted to the webhook, n8n calls the API, the submission reaches `validated` or `needs_review`. The two scheduled workflows are published but have not been seen to fire |
 | Notification *delivery*, OCR, n8n workflows, review **interface**, Power BI | Not built | — |
 
 **328 tests pass, none skipped**: 207 that need no database and 121 that do — and they pass against **both** PostgreSQL 16.2 (the local dev server) and PostgreSQL 18.6 (the container).

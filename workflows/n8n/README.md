@@ -14,26 +14,38 @@ and what is not is below; nothing here should be read as working.
 | Imported into n8n 2.46.6 | Done |
 | Credential seeded inside the container from its own environment | Done |
 | Published from the editor | Done |
-| **Executed end to end against the live API** | **Done, once** |
+| **Webhook workflow executed end to end against the live API** | **Done, both branches** |
+| Scheduled workflows observed firing | Not yet |
 
 ### What was observed
 
-A PDF was uploaded without being processed, its submission id was posted to
-`/webhook/invoice-submission`, and n8n called
-`POST /submissions/{id}/process` on the API. The workflow returned the
-service's own response and the submission moved from `pending` to a recorded
-outcome:
+Each PDF was uploaded **without** being processed, its submission id was
+posted to `/webhook/invoice-submission`, and n8n called
+`POST /submissions/{id}/process`. The submission moved from `pending` to a
+recorded outcome each time, and both branches of the "Needs review?" split
+were exercised:
 
 ```
-webhook HTTP 200
-n8n returned: state = duplicate, failed = ["EXACT_FILE_DUPLICATE"]
-API says:     outcome = duplicate, job = succeeded, attempts = 1
+valid_002.pdf
+  webhook HTTP 200
+  n8n returned: state = validated    | failed = []
+  API says:     outcome = validated  | job = succeeded | attempts = 1
+
+missing_total_003.pdf
+  webhook HTTP 200
+  n8n returned: state = needs_review | failed = ["REQUIRED_FIELD_MISSING"]
+  API says:     outcome = needs_review | job = succeeded | attempts = 1
 ```
 
-`duplicate` because that PDF had already been uploaded during earlier
-testing, so the file-hash check caught it: the correct answer, and a slightly
-unfortunate one to demonstrate with. Runs covering the validated and
-needs-review branches have not been recorded yet.
+An earlier run returned `duplicate` for a PDF that had been uploaded during
+testing, which is the file-hash check working as intended.
+
+The review case produced exactly one `review_required` notification in the
+outbox, and nothing was delivered.
+
+The two **scheduled** workflows are published but have not been observed
+firing: the recovery sweep runs every fifteen minutes and the notification
+read every five, and no run of either has been recorded here yet.
 
 **Publishing is per import.** `import:workflow` deactivates the workflow it
 replaces — the import log says `Deactivating workflow` — so the editor's
