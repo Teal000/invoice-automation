@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA008-2026-1036",
+  "supplier_reference": "SUP-008",
+  "supplier_name": "Equipements Gabes SA (synthetic)",
+  "invoice_date": "2026-04-01",
+  "due_date": "2026-05-01",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1036",
+  "subtotal": "2609.400",
+  "tax_total": "495.786",
+  "total": "3105.186",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "12",
+      "unit_price": "47.850",
+      "line_amount": "574.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "12",
+      "unit_price": "121.750",
+      "line_amount": "1461.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "12",
+      "unit_price": "47.850",
+      "line_amount": "574.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

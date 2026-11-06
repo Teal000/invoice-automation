@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA010-2026-1039",
+  "supplier_reference": "SUP-010",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-04-26",
+  "due_date": "2026-05-26",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1039",
+  "subtotal": "435.900",
+  "tax_total": "82.821",
+  "total": "518.721",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "5",
+      "unit_price": "16.980",
+      "line_amount": "39.900"
+    },
+    {
+      "line_number": 2,
+      "description": "Cartouches encre noire",
+      "quantity": "8",
+      "unit_price": "49.500",
+      "line_amount": "396.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

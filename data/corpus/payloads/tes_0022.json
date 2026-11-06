@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1169",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2026-01-20",
+  "due_date": "2026-02-20",
+  "currency": "EUR",
+  "purchase_order_number": "PO-2026-1169",
+  "subtotal": "305.160",
+  "tax_total": "57.980",
+  "total": "363.140",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "2",
+      "unit_price": "123.700",
+      "line_amount": "247.400"
+    },
+    {
+      "line_number": 2,
+      "description": "Classeurs a levier",
+      "quantity": "4",
+      "unit_price": "14.440",
+      "line_amount": "57.760"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

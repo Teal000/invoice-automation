@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA002-2026-1173",
+  "supplier_reference": "SUP-002",
+  "supplier_name": "Papeterie Medina SA (synthetic)",
+  "invoice_date": "2026-03-14",
+  "due_date": "2026-04-14",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1173",
+  "subtotal": "1492.880",
+  "tax_total": "283.647",
+  "total": "1776.527",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Classeurs a levier",
+      "quantity": "2",
+      "unit_price": "23.440",
+      "line_amount": "28.880"
+    },
+    {
+      "line_number": 2,
+      "description": "Lampes de bureau LED",
+      "quantity": "6",
+      "unit_price": "67.000",
+      "line_amount": "402.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Toner laser monochrome",
+      "quantity": "5",
+      "unit_price": "212.400",
+      "line_amount": "1062.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

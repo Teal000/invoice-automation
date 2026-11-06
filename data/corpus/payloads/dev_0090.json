@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA007-2026-1089",
+  "supplier_reference": "SUP-007",
+  "supplier_name": "Materiel Sfax SARL (synthetic)",
+  "invoice_date": "2026-09-02",
+  "due_date": "2026-10-02",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-999999",
+  "subtotal": "1840.000",
+  "tax_total": "349.600",
+  "total": "2189.600",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "8",
+      "unit_price": "191.600",
+      "line_amount": "1532.800"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "12",
+      "unit_price": "25.600",
+      "line_amount": "307.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA009-2026-1171",
+  "supplier_reference": "SUP-009",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2026-02-04",
+  "due_date": "2026-03-04",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1171",
+  "subtotal": "95.700",
+  "tax_total": "18.183",
+  "total": "113.883",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "2",
+      "unit_price": "47.850",
+      "line_amount": "95.700"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

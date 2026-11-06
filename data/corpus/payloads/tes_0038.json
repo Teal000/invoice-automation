@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA007-2026-1185",
+  "supplier_reference": "SUP-007",
+  "supplier_name": "Materiel Sfax SARL (synthetic)",
+  "invoice_date": "2026-05-20",
+  "due_date": "2026-06-20",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1185",
+  "subtotal": "13010.000",
+  "tax_total": "2471.900",
+  "total": "15481.900",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Agrafeuses metal",
+      "quantity": "0",
+      "unit_price": "25.050",
+      "line_amount": "0.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "20",
+      "unit_price": "650.500",
+      "line_amount": "13010.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

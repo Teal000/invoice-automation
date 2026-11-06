@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA008-2026-1006",
+  "supplier_reference": "SUP-900",
+  "supplier_name": "Fournisseur Inconnu (synthetic)",
+  "invoice_date": "2026-07-12",
+  "due_date": "2026-08-12",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1006",
+  "subtotal": "39.960",
+  "tax_total": "7.592",
+  "total": "47.552",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "3",
+      "unit_price": "13.320",
+      "line_amount": "39.960"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

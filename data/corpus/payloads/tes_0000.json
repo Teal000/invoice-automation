@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1147",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-04-07",
+  "due_date": "2026-05-07",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1147",
+  "subtotal": "123.320",
+  "tax_total": "23.431",
+  "total": "184.251",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "2",
+      "unit_price": "15.360",
+      "line_amount": "30.720"
+    },
+    {
+      "line_number": 2,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "5",
+      "unit_price": "9.060",
+      "line_amount": "45.300"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "1",
+      "unit_price": "47.300",
+      "line_amount": "47.300"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

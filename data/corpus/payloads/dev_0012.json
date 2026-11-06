@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1013",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-05-25",
+  "due_date": "2026-06-25",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1013",
+  "subtotal": "82.320",
+  "tax_total": "15.641",
+  "total": "97.961",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Classeurs a levier",
+      "quantity": "6",
+      "unit_price": "13.720",
+      "line_amount": "82.320"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

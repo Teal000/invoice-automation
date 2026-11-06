@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA003-2026-1100",
+  "supplier_reference": "SUP-003",
+  "supplier_name": "Logistique Carthage SARL (synthetic)",
+  "invoice_date": "2026-06-15",
+  "due_date": "2026-01-01",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1100",
+  "subtotal": "115.520",
+  "tax_total": "21.949",
+  "total": "137.469",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Classeurs a levier",
+      "quantity": "8",
+      "unit_price": "14.440",
+      "line_amount": "115.520"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

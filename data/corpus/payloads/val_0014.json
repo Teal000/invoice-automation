@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA003-2026-1127",
+  "supplier_reference": "SUP-003",
+  "supplier_name": "Logistique Carthage SARL (synthetic)",
+  "invoice_date": "2026-09-01",
+  "due_date": "2026-10-01",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1127",
+  "subtotal": "117.800",
+  "tax_total": "22.382",
+  "total": "140.182",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "2",
+      "unit_price": "67.900",
+      "line_amount": "117.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

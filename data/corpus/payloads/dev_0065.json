@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1064",
+  "supplier_reference": "SUP-900",
+  "supplier_name": "Fournisseur Inconnu (synthetic)",
+  "invoice_date": "2026-04-15",
+  "due_date": "2026-05-15",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1064",
+  "subtotal": "561.600",
+  "tax_total": "106.704",
+  "total": "668.304",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "4",
+      "unit_price": "66.100",
+      "line_amount": "264.400"
+    },
+    {
+      "line_number": 2,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "6",
+      "unit_price": "8.700",
+      "line_amount": "52.200"
+    },
+    {
+      "line_number": 3,
+      "description": "Agrafeuses metal",
+      "quantity": "10",
+      "unit_price": "24.500",
+      "line_amount": "245.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

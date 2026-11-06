@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1046",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-06-15",
+  "due_date": "2026-01-01",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1046",
+  "subtotal": "1265.400",
+  "tax_total": "240.426",
+  "total": "1505.826",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Agrafeuses metal",
+      "quantity": "2",
+      "unit_price": "26.700",
+      "line_amount": "53.400"
+    },
+    {
+      "line_number": 2,
+      "description": "Toner laser monochrome",
+      "quantity": "6",
+      "unit_price": "202.000",
+      "line_amount": "1212.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

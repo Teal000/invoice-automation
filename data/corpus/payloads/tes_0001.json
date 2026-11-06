@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA010-2026-1148",
+  "supplier_reference": "SUP-010",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-07-12",
+  "due_date": "2026-08-12",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1148",
+  "subtotal": "4147.000",
+  "tax_total": "722.480",
+  "total": "4869.480",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "20",
+      "unit_price": "204.600",
+      "line_amount": "4092.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

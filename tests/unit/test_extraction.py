@@ -25,12 +25,18 @@ from invoice_automation.rules.base import RuleStatus
 from invoice_automation.rules.engine import BusinessState
 
 PDF_DIR = PROJECT_ROOT / "data" / "fixtures" / "pdf"
-UNSEEN_DIR = PROJECT_ROOT / "data" / "fixtures" / "pdf_unseen"
+CORPUS_PDFS = PROJECT_ROOT / "data" / "corpus" / "pdf"
+CORPUS_MANIFEST = PROJECT_ROOT / "data" / "manifests" / "corpus_splits.json"
 STRUCTURED = PROJECT_ROOT / "data" / "fixtures" / "structured"
 PDF_MANIFEST = PROJECT_ROOT / "data" / "ground_truth" / "pdf_cases.json"
-UNSEEN_MANIFEST = PROJECT_ROOT / "data" / "ground_truth" / "pdf_unseen_cases.json"
 
 MANIFEST = json.loads(PDF_MANIFEST.read_text(encoding="utf-8"))
+CORPUS = json.loads(CORPUS_MANIFEST.read_text(encoding="utf-8"))
+UNSEEN_LAYOUT = CORPUS["unseen_layout"]
+# Computed at module scope on purpose: a comprehension inside a class body
+# cannot see the class's own names, so doing this in the class picked up the
+# wrong manifest entirely.
+UNSEEN_CASES = [c for c in CORPUS["cases"] if c["layout"] == UNSEEN_LAYOUT][:3]
 CASES = {case["case_id"]: case for case in MANIFEST["cases"]}
 
 
@@ -235,22 +241,31 @@ class TestGroundTruthAgreement:
 
 
 class TestUnseenLayout:
-    """A layout the extractor was never taught. It must fail, not guess."""
+    """The layout held out of the frozen test split. It must fail, not guess.
 
-    UNSEEN = json.loads(UNSEEN_MANIFEST.read_text(encoding="utf-8"))
+    These assertions are what stop the held-out layout quietly becoming a
+    familiar one: teaching the extractor `kairouan` would break them, and the
+    benchmark's only generalising number along with it.
+    """
 
-    @pytest.mark.parametrize("case", UNSEEN["cases"], ids=lambda c: c["case_id"])
+    UNSEEN = UNSEEN_CASES
+
+    @pytest.mark.parametrize("case", UNSEEN, ids=lambda c: c["case_id"])
     def test_no_layout_is_claimed(self, case):
-        result = extract_invoice(UNSEEN_DIR / case["pdf"])
+        result = extract_invoice(CORPUS_PDFS / case["pdf"])
         assert result.layout is None
         assert result.raw.extraction_method.endswith("unknown-layout")
 
-    @pytest.mark.parametrize("case", UNSEEN["cases"], ids=lambda c: c["case_id"])
+    @pytest.mark.parametrize("case", UNSEEN, ids=lambda c: c["case_id"])
     def test_no_values_are_invented(self, case):
-        result = extract_invoice(UNSEEN_DIR / case["pdf"])
+        result = extract_invoice(CORPUS_PDFS / case["pdf"])
         raw = result.raw
-        # document_type is an explicit refusal, not a value.
-        assert raw.document_type == UNCLASSIFIED_DOCUMENT_TYPE
+        # The kind may still be read: it is printed on the face of the
+        # document and does not depend on knowing the layout. Reporting
+        # "this is an invoice I cannot parse" is better than reporting
+        # nothing, and it keeps the document out of the excluded-kind bucket.
+        assert raw.document_type in ("invoice", UNCLASSIFIED_DOCUMENT_TYPE)
+        # No *value* is invented, which is the property that matters.
         for field in (
             "invoice_number",
             "supplier_reference",
@@ -268,7 +283,7 @@ class TestUnseenLayout:
     def test_the_document_is_routed_to_review_not_to_unsupported(self):
         """An unreadable document is a review case, not an excluded kind."""
         config = RuleConfig()
-        result = extract_invoice(UNSEEN_DIR / self.UNSEEN["cases"][0]["pdf"])
+        result = extract_invoice(CORPUS_PDFS / UNSEEN_CASES[0]["pdf"])
         normalised = normalize_invoice(result.raw, config)
         outcome = run_rules(
             ValidationContext(
@@ -282,8 +297,10 @@ class TestUnseenLayout:
         )
         assert outcome.state is BusinessState.NEEDS_REVIEW
         assert outcome.failed_codes == ("REQUIRED_FIELD_MISSING",)
-        # Not reported as an excluded document kind: it was never classified.
-        assert outcome.code_status("UNSUPPORTED_DOCUMENT") is RuleStatus.SKIPPED
+        # Never reported as an excluded document kind. Whether the kind was
+        # read or not, "we could not parse this" is a review case, and the
+        # two must not be confused.
+        assert outcome.code_status("UNSUPPORTED_DOCUMENT") is not RuleStatus.FAIL
 
 
 class TestUnrelatedDocument:

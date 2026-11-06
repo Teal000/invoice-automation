@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA009-2026-1032",
+  "supplier_reference": "SUP-009",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2026-09-16",
+  "due_date": "2026-10-16",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1032",
+  "subtotal": "7270.150",
+  "tax_total": "1381.329",
+  "total": "8651.479",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "10",
+      "unit_price": "665.900",
+      "line_amount": "6659.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Cartouches encre noire",
+      "quantity": "5",
+      "unit_price": "44.550",
+      "line_amount": "222.750"
+    },
+    {
+      "line_number": 3,
+      "description": "Toner laser monochrome",
+      "quantity": "2",
+      "unit_price": "194.200",
+      "line_amount": "388.400"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

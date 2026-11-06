@@ -68,6 +68,29 @@ def client() -> ApiClient:
     return api
 
 
+
+def _table(rows: list[dict], columns: list[str] | None = None) -> None:
+    """Render rows as a Markdown table.
+
+    Deliberately not st.dataframe: that pulls in pandas, and on at least one
+    machine here the Application Control policy blocks its native libraries,
+    which took the whole screen down with an import error. A review queue has
+    no need of a dataframe, so it does not depend on one.
+    """
+    if not rows:
+        st.caption("Nothing to show.")
+        return
+    columns = columns or list(rows[0])
+    header = "| " + " | ".join(columns) + " |"
+    divider = "|" + "|".join(["---"] * len(columns)) + "|"
+    body = [
+        "| " + " | ".join(str(row.get(c, "") if row.get(c) is not None else "—")
+                          for c in columns) + " |"
+        for row in rows
+    ]
+    st.markdown("\n".join([header, divider, *body]))
+
+
 def amount(value: Any) -> str:
     return "—" if value in (None, "") else str(value)
 
@@ -212,7 +235,7 @@ def _checks(detail: dict[str, Any]) -> None:
         st.success("No failed checks on the current revision.")
 
     with st.expander("Every check, including earlier revisions"):
-        st.dataframe(
+        _table(
             [
                 {
                     "revision": c["revision_number"] if not c["submission_level"] else "arrival",
@@ -224,8 +247,7 @@ def _checks(detail: dict[str, Any]) -> None:
                     "observed": c["observed_value"],
                 }
                 for c in detail["checks"]
-            ],
-            width="stretch",
+            ]
         )
     st.caption(
         "A skipped check is not a passed one: it means the rule could not be "
@@ -235,24 +257,19 @@ def _checks(detail: dict[str, Any]) -> None:
 
 def _lines(detail: dict[str, Any]) -> None:
     st.subheader("Lines")
-    st.dataframe(detail["lines"], width="stretch")
+    _table(detail["lines"])
 
 
 def _history(detail: dict[str, Any]) -> None:
     with st.expander("History"):
         st.write("**Revisions**")
-        st.dataframe(detail["revisions"], width="stretch")
+        _table(detail["revisions"])
         if detail.get("review_actions"):
             st.write("**Reviewer actions**")
-            st.dataframe(detail["review_actions"], width="stretch")
+            _table(detail["review_actions"])
         st.write("**Events**")
-        st.dataframe(
-            [
-                {k: v for k, v in event.items() if k != "details"}
-                for event in detail["events"]
-            ],
-            width="stretch",
-        )
+        _table([{k: v for k, v in event.items() if k != "details"}
+                for event in detail["events"]])
 
 
 def _actions(detail: dict[str, Any]) -> None:
@@ -415,7 +432,7 @@ def overview_view() -> None:
 
     if summary["exceptions"]:
         st.subheader("Exceptions by rule")
-        st.dataframe(summary["exceptions"], width="stretch")
+        _table(summary["exceptions"])
 
     st.caption(summary["data_note"])
 

@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA010-2026-1025",
+  "supplier_reference": "SUP-010",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-06-19",
+  "due_date": "2026-07-19",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1025",
+  "subtotal": "3333.160",
+  "tax_total": "633.300",
+  "total": "4003.960",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "1",
+      "unit_price": "48.400",
+      "line_amount": "48.400"
+    },
+    {
+      "line_number": 2,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "6",
+      "unit_price": "17.180",
+      "line_amount": "103.080"
+    },
+    {
+      "line_number": 3,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "12",
+      "unit_price": "12.640",
+      "line_amount": "151.680"
+    },
+    {
+      "line_number": 4,
+      "description": "Ecrans 24 pouces",
+      "quantity": "6",
+      "unit_price": "505.000",
+      "line_amount": "3030.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

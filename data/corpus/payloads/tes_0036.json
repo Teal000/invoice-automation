@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA007-2026-1183",
+  "supplier_reference": "SUP-007",
+  "supplier_name": "Materiel Sfax SARL (synthetic)",
+  "invoice_date": "2026-02-16",
+  "due_date": "2026-03-16",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1183",
+  "subtotal": "48.960",
+  "tax_total": "9.302",
+  "total": "95.762",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "6",
+      "unit_price": "8.160",
+      "line_amount": "48.960"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

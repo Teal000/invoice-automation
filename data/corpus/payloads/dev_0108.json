@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1103",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-09-25",
+  "due_date": "2026-10-25",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1103",
+  "subtotal": "10155.400",
+  "tax_total": "1929.526",
+  "total": "12122.426",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "6",
+      "unit_price": "665.900",
+      "line_amount": "3995.400"
+    },
+    {
+      "line_number": 2,
+      "description": "Chaises de bureau",
+      "quantity": "20",
+      "unit_price": "277.400",
+      "line_amount": "5548.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "5",
+      "unit_price": "122.400",
+      "line_amount": "612.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1080",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-04-26",
+  "due_date": "2026-05-26",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1080",
+  "subtotal": "8965.000",
+  "tax_total": "1703.350",
+  "total": "10668.350",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "20",
+      "unit_price": "445.000",
+      "line_amount": "8900.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Classeurs a levier",
+      "quantity": "5",
+      "unit_price": "13.000",
+      "line_amount": "65.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

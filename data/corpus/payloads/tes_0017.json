@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1164",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2027-03-04",
+  "due_date": "2027-04-03",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1164",
+  "subtotal": "235.760",
+  "tax_total": "44.794",
+  "total": "280.554",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Classeurs a levier",
+      "quantity": "10",
+      "unit_price": "11.560",
+      "line_amount": "115.600"
+    },
+    {
+      "line_number": 2,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "8",
+      "unit_price": "15.020",
+      "line_amount": "120.160"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

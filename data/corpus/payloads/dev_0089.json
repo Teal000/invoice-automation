@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1088",
+  "supplier_reference": "SUP-900",
+  "supplier_name": "Fournisseur Inconnu (synthetic)",
+  "invoice_date": "2026-08-21",
+  "due_date": "2026-09-21",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1088",
+  "subtotal": "409.780",
+  "tax_total": "77.858",
+  "total": "487.638",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Classeurs a levier",
+      "quantity": "6",
+      "unit_price": "11.560",
+      "line_amount": "69.360"
+    },
+    {
+      "line_number": 2,
+      "description": "Cartouches encre noire",
+      "quantity": "2",
+      "unit_price": "45.650",
+      "line_amount": "91.300"
+    },
+    {
+      "line_number": 3,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "10",
+      "unit_price": "17.520",
+      "line_amount": "175.200"
+    },
+    {
+      "line_number": 4,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "8",
+      "unit_price": "9.240",
+      "line_amount": "73.920"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1154",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2026-08-09",
+  "due_date": "2026-09-09",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1154",
+  "subtotal": "1890.000",
+  "tax_total": "359.100",
+  "total": "2249.100",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "10",
+      "unit_price": "189.000",
+      "line_amount": "1890.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

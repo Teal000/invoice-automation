@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1175",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-06-19",
+  "due_date": "2026-07-19",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1175",
+  "subtotal": "montant illisible",
+  "tax_total": "309.746",
+  "total": "1939.986",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "12",
+      "unit_price": "17.520",
+      "line_amount": "210.240"
+    },
+    {
+      "line_number": 2,
+      "description": "Toner laser monochrome",
+      "quantity": "6",
+      "unit_price": "196.800",
+      "line_amount": "1180.800"
+    },
+    {
+      "line_number": 3,
+      "description": "Lampes de bureau LED",
+      "quantity": "4",
+      "unit_price": "59.800",
+      "line_amount": "239.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

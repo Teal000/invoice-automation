@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1010",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2027-03-04",
+  "due_date": "2027-04-03",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1010",
+  "subtotal": "615.840",
+  "tax_total": "117.010",
+  "total": "732.850",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "1",
+      "unit_price": "67.000",
+      "line_amount": "67.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Classeurs a levier",
+      "quantity": "6",
+      "unit_price": "12.640",
+      "line_amount": "75.840"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "10",
+      "unit_price": "47.300",
+      "line_amount": "473.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

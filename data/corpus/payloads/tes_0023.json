@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1170",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-05-20",
+  "due_date": "2026-06-20",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1170",
+  "subtotal": "71.440",
+  "tax_total": "13.574",
+  "total": "85.014",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "4",
+      "unit_price": "17.860",
+      "line_amount": "71.440"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

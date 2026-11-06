@@ -48,40 +48,43 @@ reported anywhere here, because none has been measured.
 
 ## Measured so far
 
-Extraction, on the 16 synthetic documents it was built for
-([full results](evaluation/results/extraction_baseline.md)):
+A benchmark over **200 synthetic documents** across five layout families,
+split 120 development / 40 validation / 40 frozen test. Full method and
+caveats in [evaluation/methodology.md](evaluation/methodology.md); every
+figure below is reproducible from a documented command.
+
+The frozen test split (40 documents), run once:
+
+| Measure | Familiar layouts (32) | Unseen layout (8) |
+|---|---|---|
+| Layout identified | 32/32 | **0/8** |
+| Critical-field document accuracy | 32/32 | **0/8** |
+| **Values invented** | — | **0** |
 
 | Measure | Result |
 |---|---|
-| Layout detection | 16/16 |
-| Critical-field document accuracy | 16/16 |
-| Field accuracy, fields present in ground truth | 160/160 |
+| Pipeline conformance | 32/40 |
+| Fault recall, all seeded faults | 20/24 |
+| …faults a rule targets | 19/19 |
+| …**faults no rule targets** | **1/5** |
 
-On a **held-out fourth layout the extractor was never taught** (3 documents):
+Read together, those say something useful. On layouts it was taught the
+extractor recovers every critical field; on a layout it has never seen it
+identifies nothing, recovers nothing and **invents nothing**, so those eight
+documents go to a person instead of being validated on values read with the
+wrong labels. Conformance is 32/40 *because* of those eight — they do not
+reach the state their labels describe, and reporting that is the point of
+measuring it.
 
-| Measure | Result |
-|---|---|
-| Layout recognised | 0/3 |
-| Fields recovered | 0/30 |
-| **Fields invented** | **0** |
+The corpus deliberately contains faults no rule can catch — a supplier name
+that disagrees with a correct code, an invoice dated next year, a
+zero-quantity line, a line entered twice. The rules catch every fault they
+were built for and none of those. The one that was flagged was flagged only
+because its layout was unreadable, not because the fault was noticed.
 
-Read those two tables together. The first is the extractor marking its own
-homework: the layouts and its label sets were written side by side, on 16
-documents, with nothing held out. It says the extractor reads the documents
-this generator draws. It does not say anything about a real supplier invoice.
-
-The second is the informative one. Faced with a layout it does not know, the
-extractor recognises nothing, produces no values, and the rules route the
-document to a person — rather than reading the wrong label into a total and
-validating it. Failing by reading nothing is safe; failing by reading the
-wrong thing is not, because a wrong total that agrees with a wrong subtotal
-passes every arithmetic check.
-
-The suite passes on **PostgreSQL 16.2** (the project-local dev server, see
-[decisions.md](docs/decisions.md) ADR-012) and on **PostgreSQL 18.6** (the
-container from `compose.yaml`). The second of those was an open caveat from
-week 1 until the container stack ran; it is now a test result rather than an
-argument.
+What none of this establishes: anything about real supplier invoices, about
+scanned documents (there is no OCR), or about time saved (nothing has been
+timed).
 
 ## The idea in one pass
 

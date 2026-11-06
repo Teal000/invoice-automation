@@ -1,0 +1,30 @@
+{
+  "document_type": "credit_note",
+  "invoice_number": "FA012-2026-1060",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-09-25",
+  "due_date": "2026-10-25",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1060",
+  "subtotal": "1493.280",
+  "tax_total": "283.723",
+  "total": "1777.003",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "12",
+      "unit_price": "121.100",
+      "line_amount": "1453.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Classeurs a levier",
+      "quantity": "3",
+      "unit_price": "13.360",
+      "line_amount": "40.080"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

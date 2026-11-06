@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA008-2026-1099",
+  "supplier_reference": "SUP-008",
+  "supplier_name": "Equipements Gabes SA (synthetic)",
+  "invoice_date": "2026-09-14",
+  "due_date": "2026-10-14",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1099",
+  "subtotal": "36.240",
+  "tax_total": "6.886",
+  "total": "43.126",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles (relance)",
+      "quantity": "4",
+      "unit_price": "9.060",
+      "line_amount": "36.240"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

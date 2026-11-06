@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1044",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-07-19",
+  "due_date": "2026-08-19",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1044",
+  "subtotal": "762.350",
+  "tax_total": "144.847",
+  "total": "907.197",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Agrafeuses metal",
+      "quantity": "6",
+      "unit_price": "25.600",
+      "line_amount": "153.600"
+    },
+    {
+      "line_number": 2,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "5",
+      "unit_price": "121.750",
+      "line_amount": "608.750"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

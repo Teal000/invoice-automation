@@ -1,0 +1,2271 @@
+{
+  "split": "development",
+  "documents": 120,
+  "layout_detection": {
+    "familiar": {
+      "correct": 120,
+      "total": 120,
+      "accuracy": 1.0
+    },
+    "unseen": {
+      "correct": 0,
+      "total": 0,
+      "accuracy": null
+    }
+  },
+  "extraction": {
+    "critical_field_document_accuracy_familiar": {
+      "correct": 120,
+      "total": 120,
+      "accuracy": 1.0
+    },
+    "critical_field_document_accuracy_unseen": {
+      "correct": 0,
+      "total": 0,
+      "accuracy": null
+    },
+    "per_field_all": {
+      "document_type": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "invoice_number_normalized": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "supplier_reference_normalized": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "invoice_date": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "due_date": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "currency": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "purchase_order_number_normalized": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "subtotal": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "tax_total": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "total": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "line_items": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      }
+    },
+    "per_field_present_in_truth": {
+      "document_type": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "invoice_number_normalized": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "supplier_reference_normalized": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "invoice_date": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "due_date": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "currency": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "purchase_order_number_normalized": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "subtotal": {
+        "correct": 116,
+        "total": 116,
+        "accuracy": 1.0
+      },
+      "tax_total": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      },
+      "total": {
+        "correct": 115,
+        "total": 115,
+        "accuracy": 1.0
+      },
+      "line_items": {
+        "correct": 120,
+        "total": 120,
+        "accuracy": 1.0
+      }
+    },
+    "per_layout_critical_field_document_accuracy": {
+      "atlas": {
+        "correct": 43,
+        "total": 43,
+        "accuracy": 1.0
+      },
+      "medina": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "carthage": {
+        "correct": 37,
+        "total": 37,
+        "accuracy": 1.0
+      }
+    },
+    "values_invented_on_the_unseen_layout": 0
+  },
+  "pipeline_conformance": {
+    "correct": 120,
+    "total": 120,
+    "accuracy": 1.0
+  },
+  "fault_detection": {
+    "recall_over_all_seeded_faults": {
+      "correct": 60,
+      "total": 78,
+      "accuracy": 0.7692
+    },
+    "recall_over_detectable_faults": {
+      "correct": 60,
+      "total": 60,
+      "accuracy": 1.0
+    },
+    "recall_over_undetectable_faults": {
+      "correct": 0,
+      "total": 18,
+      "accuracy": 0.0
+    },
+    "undetectable_flagged_only_because_unreadable": 0,
+    "precision": {
+      "flagged": 60,
+      "flagged_with_a_seeded_fault": 60,
+      "precision": 1.0
+    }
+  },
+  "cases": [
+    {
+      "case_id": "dev_0000",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0001",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0002",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0003",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0004",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0005",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "actual_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0006",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0007",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0008",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0009",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0010",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0011",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0012",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0013",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0014",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0015",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0016",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0017",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "actual_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0018",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0019",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0020",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0021",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0022",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "actual_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0023",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0024",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0025",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0026",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0027",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0028",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0029",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0030",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0031",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0032",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0033",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0034",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0035",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0036",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0037",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0038",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0039",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0040",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0041",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "actual_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0042",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0043",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0044",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0045",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "date_inconsistent"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "actual_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0046",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0047",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0048",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0049",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0050",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0051",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0052",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0053",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0054",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0055",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0056",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0057",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0058",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0059",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "credit_note"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "unsupported",
+      "expected_failed_codes": [
+        "UNSUPPORTED_DOCUMENT"
+      ],
+      "actual_failed_codes": [
+        "UNSUPPORTED_DOCUMENT"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0060",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0061",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0061_resend",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "actual_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0061_variant",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0064",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0065",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "actual_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0066",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0067",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0068",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0069",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "date_inconsistent"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "actual_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0070",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0071",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0072",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0073",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0074",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0075",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0076",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0077",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "actual_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0078",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0079",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0080",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0081",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0082",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "actual_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0083",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0084",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0085",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0086",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0087",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0088",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0089",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "actual_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0090",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0091",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0092",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0093",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0094",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "actual_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0095",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "credit_note"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "unsupported",
+      "expected_failed_codes": [
+        "UNSUPPORTED_DOCUMENT"
+      ],
+      "actual_failed_codes": [
+        "UNSUPPORTED_DOCUMENT"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0096",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0096_resend",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "actual_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0096_variant",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0099",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0100",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0101",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0102",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0102_resend",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "actual_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0102_variant",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0105",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "date_inconsistent"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "actual_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0106",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "actual_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0107",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0108",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0109",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0110",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0111",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0112",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0113",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "actual_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0114",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0115",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0116",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0117",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0118",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "actual_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "dev_0119",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    }
+  ],
+  "run_at": "2026-11-06T11:11:28+00:00",
+  "dataset": "corpus_v1",
+  "seed": 20261106,
+  "extractor": "pdf_text:v1",
+  "python": "3.12.13"
+}

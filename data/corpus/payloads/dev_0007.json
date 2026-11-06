@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA010-2026-1008",
+  "supplier_reference": "SUP-010",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-07-01",
+  "due_date": "2026-08-01",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1008",
+  "subtotal": "4955.060",
+  "tax_total": "941.461",
+  "total": "5896.521",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "12",
+      "unit_price": "61.600",
+      "line_amount": "739.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "6",
+      "unit_price": "19.560",
+      "line_amount": "117.360"
+    },
+    {
+      "line_number": 3,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "6",
+      "unit_price": "121.750",
+      "line_amount": "730.500"
+    },
+    {
+      "line_number": 4,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "5",
+      "unit_price": "673.600",
+      "line_amount": "3368.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA008-2026-1011",
+  "supplier_reference": "SUP-008",
+  "supplier_name": "Equipements Gabes SA (synthetic)",
+  "invoice_date": "2026-03-17",
+  "due_date": "2026-04-17",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1011",
+  "subtotal": "7008.100",
+  "tax_total": "1331.539",
+  "total": "8339.639",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "20",
+      "unit_price": "212.400",
+      "line_amount": "4248.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Chaises de bureau",
+      "quantity": "8",
+      "unit_price": "294.200",
+      "line_amount": "2353.600"
+    },
+    {
+      "line_number": 3,
+      "description": "Lampes de bureau LED",
+      "quantity": "6",
+      "unit_price": "63.400",
+      "line_amount": "380.400"
+    },
+    {
+      "line_number": 4,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "3",
+      "unit_price": "8.700",
+      "line_amount": "26.100"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

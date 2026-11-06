@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1111",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-01-13",
+  "due_date": "2026-02-13",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1111",
+  "subtotal": "176.700",
+  "tax_total": "33.573",
+  "total": "210.273",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "3",
+      "unit_price": "58.900",
+      "line_amount": "176.700"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA007-2026-1140",
+  "supplier_reference": "SUP-007",
+  "supplier_name": "Materiel Sfax SARL (synthetic)",
+  "invoice_date": "2026-03-10",
+  "due_date": "2026-04-10",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1140",
+  "subtotal": "582.360",
+  "tax_total": "110.648",
+  "total": "693.008",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "3",
+      "unit_price": "58.000",
+      "line_amount": "174.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "3",
+      "unit_price": "125.000",
+      "line_amount": "375.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "4",
+      "unit_price": "8.340",
+      "line_amount": "33.360"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

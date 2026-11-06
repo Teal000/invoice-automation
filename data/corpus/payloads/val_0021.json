@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1134",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-05-13",
+  "due_date": "2026-06-13",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1134",
+  "subtotal": "4276.400",
+  "tax_total": "812.516",
+  "total": "5088.916",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "12",
+      "unit_price": "119.800",
+      "line_amount": "1437.600"
+    },
+    {
+      "line_number": 2,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "12",
+      "unit_price": "19.900",
+      "line_amount": "238.800"
+    },
+    {
+      "line_number": 3,
+      "description": "Ecrans 24 pouces",
+      "quantity": "5",
+      "unit_price": "520.000",
+      "line_amount": "2600.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

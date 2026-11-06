@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1132",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-07-21",
+  "due_date": "2026-08-21",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1132",
+  "subtotal": "7281.400",
+  "tax_total": "1383.466",
+  "total": "8664.866",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "6",
+      "unit_price": "119.800",
+      "line_amount": "718.800"
+    },
+    {
+      "line_number": 2,
+      "description": "Lampes de bureau LED",
+      "quantity": "4",
+      "unit_price": "63.400",
+      "line_amount": "253.600"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "10",
+      "unit_price": "47.300",
+      "line_amount": "473.000"
+    },
+    {
+      "line_number": 4,
+      "description": "Chaises de bureau",
+      "quantity": "20",
+      "unit_price": "291.800",
+      "line_amount": "5836.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

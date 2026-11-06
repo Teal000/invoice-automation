@@ -1,0 +1,89 @@
+{
+  "synthetic": true,
+  "suppliers": [
+    {
+      "name": "Fournitures Atlas SARL (synthetic)",
+      "reference": "SUP-001",
+      "reference_normalized": "SUP-001",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Papeterie Medina SA (synthetic)",
+      "reference": "SUP-002",
+      "reference_normalized": "SUP-002",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Logistique Carthage SARL (synthetic)",
+      "reference": "SUP-003",
+      "reference_normalized": "SUP-003",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Bureautique Sahel SA (synthetic)",
+      "reference": "SUP-004",
+      "reference_normalized": "SUP-004",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Comptoir Kairouan SARL (synthetic)",
+      "reference": "SUP-005",
+      "reference_normalized": "SUP-005",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Distribution Bizerte SA (synthetic)",
+      "reference": "SUP-006",
+      "reference_normalized": "SUP-006",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Materiel Sfax SARL (synthetic)",
+      "reference": "SUP-007",
+      "reference_normalized": "SUP-007",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Equipements Gabes SA (synthetic)",
+      "reference": "SUP-008",
+      "reference_normalized": "SUP-008",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Imprimerie Nabeul SARL (synthetic)",
+      "reference": "SUP-009",
+      "reference_normalized": "SUP-009",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Mobilier Sousse SA (synthetic)",
+      "reference": "SUP-010",
+      "reference_normalized": "SUP-010",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Technologies Ariana SARL (synthetic)",
+      "reference": "SUP-011",
+      "reference_normalized": "SUP-011",
+      "permitted_currency": "TND",
+      "is_active": true
+    },
+    {
+      "name": "Services Monastir SA (synthetic)",
+      "reference": "SUP-012",
+      "reference_normalized": "SUP-012",
+      "permitted_currency": "TND",
+      "is_active": true
+    }
+  ]
+}

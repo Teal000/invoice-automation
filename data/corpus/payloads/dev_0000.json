@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1001",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-06-01",
+  "due_date": "2026-07-01",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1001",
+  "subtotal": "136.950",
+  "tax_total": "26.021",
+  "total": "200.471",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "3",
+      "unit_price": "45.650",
+      "line_amount": "136.950"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

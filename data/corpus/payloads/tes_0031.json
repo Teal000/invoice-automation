@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA010-2026-1178",
+  "supplier_reference": "SUP-010",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-03-18",
+  "due_date": "2026-04-18",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1178",
+  "subtotal": "2428.100",
+  "tax_total": "461.339",
+  "total": "2889.439",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "4",
+      "unit_price": "119.150",
+      "line_amount": "476.600"
+    },
+    {
+      "line_number": 2,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "3",
+      "unit_price": "650.500",
+      "line_amount": "1951.500"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

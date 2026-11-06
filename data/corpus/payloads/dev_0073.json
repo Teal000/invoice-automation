@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1072",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2026-08-08",
+  "due_date": "2026-09-08",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1072",
+  "subtotal": "4750.000",
+  "tax_total": "902.500",
+  "total": "5652.500",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "10",
+      "unit_price": "475.000",
+      "line_amount": "4750.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

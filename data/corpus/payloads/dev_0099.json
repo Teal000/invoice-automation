@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA004-2026-1096",
+  "supplier_reference": "SUP-004",
+  "supplier_name": "Bureautique Sahel SA (synthetic)",
+  "invoice_date": "2026-09-22",
+  "due_date": "2026-10-22",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1096",
+  "subtotal": "4840.960",
+  "tax_total": "919.782",
+  "total": "5760.742",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "10",
+      "unit_price": "482.500",
+      "line_amount": "4825.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "2",
+      "unit_price": "7.980",
+      "line_amount": "15.960"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

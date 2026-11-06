@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA005-2026-1057",
+  "supplier_reference": "SUP-005",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-01-08",
+  "due_date": "2026-02-08",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1057",
+  "subtotal": "1740.720",
+  "tax_total": "330.737",
+  "total": "2071.457",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Chaises de bureau",
+      "quantity": "3",
+      "unit_price": "296.600",
+      "line_amount": "889.800"
+    },
+    {
+      "line_number": 2,
+      "description": "Toner laser monochrome",
+      "quantity": "3",
+      "unit_price": "212.400",
+      "line_amount": "637.200"
+    },
+    {
+      "line_number": 3,
+      "description": "Classeurs a levier",
+      "quantity": "2",
+      "unit_price": "13.360",
+      "line_amount": "26.720"
+    },
+    {
+      "line_number": 4,
+      "description": "Cartouches encre noire",
+      "quantity": "4",
+      "unit_price": "46.750",
+      "line_amount": "187.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

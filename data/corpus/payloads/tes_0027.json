@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1174",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2026-07-26",
+  "due_date": "2026-08-26",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1174",
+  "subtotal": "480.800",
+  "tax_total": "91.352",
+  "total": "572.152",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "6",
+      "unit_price": "61.600",
+      "line_amount": "369.600"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "4",
+      "unit_price": "27.800",
+      "line_amount": "111.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

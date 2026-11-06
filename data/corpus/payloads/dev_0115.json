@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1110",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-05-15",
+  "due_date": "2026-06-15",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1110",
+  "subtotal": "1810.000",
+  "tax_total": "343.900",
+  "total": "2153.900",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "4",
+      "unit_price": "452.500",
+      "line_amount": "1810.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

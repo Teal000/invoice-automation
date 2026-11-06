@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1108",
+  "supplier_reference": "SUP-900",
+  "supplier_name": "Fournisseur Inconnu (synthetic)",
+  "invoice_date": "2026-07-04",
+  "due_date": "2026-08-04",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1108",
+  "subtotal": "2302.200",
+  "tax_total": "437.418",
+  "total": "2739.618",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "4",
+      "unit_price": "44.550",
+      "line_amount": "178.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Toner laser monochrome",
+      "quantity": "10",
+      "unit_price": "212.400",
+      "line_amount": "2124.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

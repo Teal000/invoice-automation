@@ -1,0 +1,888 @@
+{
+  "split": "validation",
+  "documents": 40,
+  "layout_detection": {
+    "familiar": {
+      "correct": 40,
+      "total": 40,
+      "accuracy": 1.0
+    },
+    "unseen": {
+      "correct": 0,
+      "total": 0,
+      "accuracy": null
+    }
+  },
+  "extraction": {
+    "critical_field_document_accuracy_familiar": {
+      "correct": 40,
+      "total": 40,
+      "accuracy": 1.0
+    },
+    "critical_field_document_accuracy_unseen": {
+      "correct": 0,
+      "total": 0,
+      "accuracy": null
+    },
+    "per_field_all": {
+      "document_type": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "invoice_number_normalized": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "supplier_reference_normalized": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "invoice_date": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "due_date": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "currency": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "purchase_order_number_normalized": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "subtotal": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "tax_total": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "total": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "line_items": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      }
+    },
+    "per_field_present_in_truth": {
+      "document_type": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "invoice_number_normalized": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "supplier_reference_normalized": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "invoice_date": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "due_date": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "currency": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "purchase_order_number_normalized": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "subtotal": {
+        "correct": 39,
+        "total": 39,
+        "accuracy": 1.0
+      },
+      "tax_total": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "total": {
+        "correct": 39,
+        "total": 39,
+        "accuracy": 1.0
+      },
+      "line_items": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      }
+    },
+    "per_layout_critical_field_document_accuracy": {
+      "atlas": {
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0
+      },
+      "medina": {
+        "correct": 12,
+        "total": 12,
+        "accuracy": 1.0
+      },
+      "carthage": {
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0
+      },
+      "sousse": {
+        "correct": 12,
+        "total": 12,
+        "accuracy": 1.0
+      }
+    },
+    "values_invented_on_the_unseen_layout": 0
+  },
+  "pipeline_conformance": {
+    "correct": 40,
+    "total": 40,
+    "accuracy": 1.0
+  },
+  "fault_detection": {
+    "recall_over_all_seeded_faults": {
+      "correct": 21,
+      "total": 22,
+      "accuracy": 0.9545
+    },
+    "recall_over_detectable_faults": {
+      "correct": 21,
+      "total": 21,
+      "accuracy": 1.0
+    },
+    "recall_over_undetectable_faults": {
+      "correct": 0,
+      "total": 1,
+      "accuracy": 0.0
+    },
+    "undetectable_flagged_only_because_unreadable": 0,
+    "precision": {
+      "flagged": 21,
+      "flagged_with_a_seeded_fault": 21,
+      "precision": 1.0
+    }
+  },
+  "cases": [
+    {
+      "case_id": "val_0000",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0001",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0002",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0003",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0004",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0005",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0006",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0007",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0007_resend",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "actual_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0007_variant",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0010",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0011",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0012",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0013",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0014",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0015",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0016",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0017",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "actual_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0018",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0019",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0020",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0021",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0022",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0023",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0024",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0025",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0025_resend",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "actual_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0025_variant",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0028",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0029",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0030",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0031",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0031_resend",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "actual_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0031_variant",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0034",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "actual_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0035",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0036",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0037",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0037_resend",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "actual_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "val_0037_variant",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "actual_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    }
+  ],
+  "run_at": "2026-11-06T11:11:30+00:00",
+  "dataset": "corpus_v1",
+  "seed": 20261106,
+  "extractor": "pdf_text:v1",
+  "python": "3.12.13"
+}

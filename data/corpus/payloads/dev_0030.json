@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA004-2026-1031",
+  "supplier_reference": "SUP-004",
+  "supplier_name": "Bureautique Sahel SA (synthetic)",
+  "invoice_date": "2026-08-17",
+  "due_date": "2026-09-17",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1031",
+  "subtotal": "826.930",
+  "tax_total": "157.117",
+  "total": "984.047",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "6",
+      "unit_price": "18.880",
+      "line_amount": "113.280"
+    },
+    {
+      "line_number": 2,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "8",
+      "unit_price": "12.300",
+      "line_amount": "98.400"
+    },
+    {
+      "line_number": 3,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "5",
+      "unit_price": "123.050",
+      "line_amount": "615.250"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

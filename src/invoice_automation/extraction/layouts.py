@@ -82,8 +82,13 @@ class LayoutSpec:
     subtotal_labels: tuple[str, ...]
     tax_labels: tuple[str, ...]
     total_labels: tuple[str, ...]
+    #: Optional overrides for layouts that put several amounts on one line,
+    #: where "the rightmost number after the label" would read the wrong one.
+    subtotal_rule: FieldRule | None = None
+    tax_rule: FieldRule | None = None
+    total_rule: FieldRule | None = None
     #: Ordered (column name, accepted header texts).
-    columns: tuple[tuple[str, tuple[str, ...]], ...]
+    columns: tuple[tuple[str, tuple[str, ...]], ...] = ()
 
     def header_rules(self) -> dict[str, FieldRule]:
         rules = {
@@ -101,6 +106,9 @@ class LayoutSpec:
 
 #: Shared table-stop labels: the totals block of any of the three layouts.
 TOTALS_LABELS = (
+    "Base HT",
+    "Taxes",
+    "Net à régler",
     "Total HT",
     "Sous-total",
     "Montant hors taxe",
@@ -176,7 +184,38 @@ CARTHAGE = LayoutSpec(
     ),
 )
 
-LAYOUTS: tuple[LayoutSpec, ...] = (ATLAS, MEDINA, CARTHAGE)
+
+#: Amounts on one line: "Base HT 1 114,520 / Taxes 211,759 / Net a regler 1 326,279".
+#: Reading the rightmost number after the label would return the final total
+#: for all three, so each is captured by position instead.
+_AMOUNT = r"([\d][\d\s.,]*)"
+
+SOUSSE = LayoutSpec(
+    name="sousse",
+    invoice_number=label("Numéro de pièce", "Numero de piece"),
+    invoice_date=label("Daté du", "Date du"),
+    due_date=label("Exigible le"),
+    purchase_order_number=label("Rattaché à la commande", "Rattache a la commande"),
+    # "Emetteur" also prefixes "Emetteur ref.", and the longest label wins, so
+    # the reference does not capture the name or the other way round.
+    supplier_name=label("Emetteur"),
+    supplier_reference=label("Emetteur réf.", "Emetteur ref."),
+    currency=label("Unité monétaire", "Unite monetaire"),
+    subtotal_labels=("Base HT",),
+    tax_labels=("Taxes",),
+    total_labels=("Net à régler", "Net a regler"),
+    subtotal_rule=regex(r"Base HT\s+" + _AMOUNT + r"\s*/"),
+    tax_rule=regex(r"Taxes\s+" + _AMOUNT + r"\s*/"),
+    total_rule=regex(r"Net à régler\s+" + _AMOUNT + r"\s*$"),
+    columns=(
+        ("description", ("Libellé",)),
+        ("quantity", ("Nb",)),
+        ("unit_price", ("Prix",)),
+        ("line_amount", ("Valeur",)),
+    ),
+)
+
+LAYOUTS: tuple[LayoutSpec, ...] = (ATLAS, MEDINA, CARTHAGE, SOUSSE)
 
 #: Document titles, longest first so a specific title is not shadowed by a
 #: shorter one that is a prefix of it.

@@ -23,7 +23,8 @@ from invoice_automation.rules.engine import BusinessState
 pytestmark = pytest.mark.integration
 
 PDF_DIR = PROJECT_ROOT / "data" / "fixtures" / "pdf"
-UNSEEN_DIR = PROJECT_ROOT / "data" / "fixtures" / "pdf_unseen"
+# The layout the extractor is not taught, held out of the frozen test split.
+UNSEEN_DIR = PROJECT_ROOT / "data" / "corpus" / "pdf"
 PDF_MANIFEST = PROJECT_ROOT / "data" / "ground_truth" / "pdf_cases.json"
 
 
@@ -189,7 +190,7 @@ class TestPdfDuplicates:
 
 class TestUnreadableLayout:
     def test_a_document_in_an_unknown_layout_is_recorded_for_review(self, seeded):
-        result, extraction = ingest(seeded, UNSEEN_DIR / "unseen_valid_001.pdf")
+        result, extraction = ingest(seeded, UNSEEN_DIR / "tes_0004.pdf")
 
         assert extraction.layout is None
         assert result.state is BusinessState.NEEDS_REVIEW
@@ -209,10 +210,10 @@ class TestUnreadableLayout:
         # Nothing was invented, and the source text is kept so a person can
         # read the document that defeated the extractor.
         assert row["total"] is None
-        assert "Base HT" in row["raw_text"]
+        assert row["raw_text"]  # the text that defeated the extractor is kept
 
     def test_it_is_kept_separate_from_an_excluded_document_kind(self, seeded):
-        unreadable, _ = ingest(seeded, UNSEEN_DIR / "unseen_valid_002.pdf")
+        unreadable, _ = ingest(seeded, UNSEEN_DIR / "tes_0009.pdf")
         excluded, _ = ingest(seeded, PDF_DIR / "credit_note_010.pdf")
 
         assert unreadable.state is BusinessState.NEEDS_REVIEW

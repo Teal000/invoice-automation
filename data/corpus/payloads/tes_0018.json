@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1165",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-07-10",
+  "due_date": "2026-08-10",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1165",
+  "subtotal": "70.400",
+  "tax_total": "13.376",
+  "total": "83.776",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Classeurs a levier",
+      "quantity": "5",
+      "unit_price": "14.080",
+      "line_amount": "70.400"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

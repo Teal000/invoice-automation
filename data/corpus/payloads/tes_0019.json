@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA002-2026-1166",
+  "supplier_reference": "SUP-002",
+  "supplier_name": "Papeterie Medina SA (synthetic)",
+  "invoice_date": "2026-07-07",
+  "due_date": "2026-08-07",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1166",
+  "subtotal": "2657.600",
+  "tax_total": "504.944",
+  "total": "3162.544",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "5",
+      "unit_price": "497.500",
+      "line_amount": "2487.500"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "6",
+      "unit_price": "28.350",
+      "line_amount": "170.100"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

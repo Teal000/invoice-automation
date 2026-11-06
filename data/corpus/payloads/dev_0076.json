@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA008-2026-1075",
+  "supplier_reference": "SUP-008",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2026-06-09",
+  "due_date": "2026-07-09",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1075",
+  "subtotal": "258.480",
+  "tax_total": "49.111",
+  "total": "307.591",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Classeurs a levier",
+      "quantity": "6",
+      "unit_price": "11.560",
+      "line_amount": "69.360"
+    },
+    {
+      "line_number": 2,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "8",
+      "unit_price": "19.560",
+      "line_amount": "156.480"
+    },
+    {
+      "line_number": 3,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "4",
+      "unit_price": "8.160",
+      "line_amount": "32.640"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

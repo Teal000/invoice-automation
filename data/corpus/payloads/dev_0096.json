@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1095",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-05-08",
+  "due_date": "2026-06-08",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1095",
+  "subtotal": "2882.040",
+  "tax_total": "547.588",
+  "total": "3429.628",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "8",
+      "unit_price": "62.500",
+      "line_amount": "500.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Chaises de bureau",
+      "quantity": "8",
+      "unit_price": "287.000",
+      "line_amount": "2296.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "6",
+      "unit_price": "14.340",
+      "line_amount": "86.040"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

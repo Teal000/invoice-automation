@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA004-2026-1145",
+  "supplier_reference": "SUP-004",
+  "supplier_name": "Bureautique Sahel SA (synthetic)",
+  "invoice_date": "2026-02-17",
+  "due_date": "2026-03-17",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1145",
+  "subtotal": "492.800",
+  "tax_total": "93.632",
+  "total": "586.432",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "8",
+      "unit_price": "61.600",
+      "line_amount": "492.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

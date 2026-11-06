@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1137",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-05-24",
+  "due_date": "2026-06-24",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1137",
+  "subtotal": "1189.240",
+  "tax_total": "225.956",
+  "total": "1415.196",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "20",
+      "unit_price": "8.880",
+      "line_amount": "177.600"
+    },
+    {
+      "line_number": 2,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "4",
+      "unit_price": "13.660",
+      "line_amount": "54.640"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "20",
+      "unit_price": "47.850",
+      "line_amount": "957.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

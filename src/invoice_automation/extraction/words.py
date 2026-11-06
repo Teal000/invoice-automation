@@ -108,7 +108,8 @@ class Document:
             return None
         line, _, consumed = found
         value = line.remainder_after(consumed).strip()
-        value = value.lstrip(":-–—").strip()
+        # ">" is a separator too: one layout writes "Label > value".
+        value = value.lstrip(":-–—>").strip()
         return (value, line) if value else None
 
     def search(self, pattern: re.Pattern[str]) -> tuple[re.Match[str], Line] | None:

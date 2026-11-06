@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1176",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-05-02",
+  "due_date": "2026-06-02",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1176",
+  "subtotal": "336.520",
+  "tax_total": "63.939",
+  "total": "400.459",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Agrafeuses metal",
+      "quantity": "12",
+      "unit_price": "23.950",
+      "line_amount": "287.400"
+    },
+    {
+      "line_number": 2,
+      "description": "Classeurs a levier",
+      "quantity": "4",
+      "unit_price": "12.280",
+      "line_amount": "49.120"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

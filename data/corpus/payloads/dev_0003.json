@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA004-2026-1004",
+  "supplier_reference": "SUP-004",
+  "supplier_name": "Bureautique Sahel SA (synthetic)",
+  "invoice_date": "2026-07-06",
+  "due_date": "2026-08-06",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1004",
+  "subtotal": "479.680",
+  "tax_total": "91.139",
+  "total": "",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "8",
+      "unit_price": "48.400",
+      "line_amount": "387.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Classeurs a levier",
+      "quantity": "8",
+      "unit_price": "11.560",
+      "line_amount": "92.480"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

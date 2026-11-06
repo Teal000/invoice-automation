@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA005-2026-1125",
+  "supplier_reference": "SUP-005",
+  "supplier_name": "Comptoir Kairouan SARL (synthetic)",
+  "invoice_date": "2026-07-20",
+  "due_date": "2026-08-20",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1125",
+  "subtotal": "1186.700",
+  "tax_total": "225.473",
+  "total": "1449.673",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Agrafeuses metal",
+      "quantity": "20",
+      "unit_price": "28.350",
+      "line_amount": "567.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "1",
+      "unit_price": "619.700",
+      "line_amount": "619.700"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

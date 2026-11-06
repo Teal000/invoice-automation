@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA004-2026-1053",
+  "supplier_reference": "SUP-004",
+  "supplier_name": "Bureautique Sahel SA (synthetic)",
+  "invoice_date": "2026-09-01",
+  "due_date": "2026-10-01",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1053",
+  "subtotal": "montant illisible",
+  "tax_total": "73.074",
+  "total": "457.674",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "5",
+      "unit_price": "8.880",
+      "line_amount": "44.400"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "12",
+      "unit_price": "28.350",
+      "line_amount": "340.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

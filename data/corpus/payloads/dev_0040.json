@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA005-2026-1041",
+  "supplier_reference": "SUP-005",
+  "supplier_name": "Comptoir Kairouan SARL (synthetic)",
+  "invoice_date": "2026-05-12",
+  "due_date": "2026-06-12",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1041",
+  "subtotal": "2861.500",
+  "tax_total": "543.685",
+  "total": "3405.185",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "5",
+      "unit_price": "520.000",
+      "line_amount": "2600.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "10",
+      "unit_price": "26.150",
+      "line_amount": "261.500"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

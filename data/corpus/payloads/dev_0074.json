@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA010-2026-1073",
+  "supplier_reference": "SUP-010",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-09-09",
+  "due_date": "2026-10-09",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1073",
+  "subtotal": "2929.200",
+  "tax_total": "556.548",
+  "total": "3485.748",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Agrafeuses metal",
+      "quantity": "6",
+      "unit_price": "35.700",
+      "line_amount": "160.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Ecrans 24 pouces",
+      "quantity": "4",
+      "unit_price": "452.500",
+      "line_amount": "1810.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "8",
+      "unit_price": "45.100",
+      "line_amount": "360.800"
+    },
+    {
+      "line_number": 4,
+      "description": "Toner laser monochrome",
+      "quantity": "3",
+      "unit_price": "199.400",
+      "line_amount": "598.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

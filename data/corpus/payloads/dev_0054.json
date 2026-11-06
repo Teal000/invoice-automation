@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA009-2026-1055",
+  "supplier_reference": "SUP-009",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2026-06-25",
+  "due_date": "2026-07-25",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-999999",
+  "subtotal": "6197.780",
+  "tax_total": "1177.578",
+  "total": "7375.358",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "3",
+      "unit_price": "212.400",
+      "line_amount": "637.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "3",
+      "unit_price": "7.800",
+      "line_amount": "23.400"
+    },
+    {
+      "line_number": 3,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "1",
+      "unit_price": "17.180",
+      "line_amount": "17.180"
+    },
+    {
+      "line_number": 4,
+      "description": "Ecrans 24 pouces",
+      "quantity": "12",
+      "unit_price": "460.000",
+      "line_amount": "5520.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

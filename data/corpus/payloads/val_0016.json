@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA004-2026-1129",
+  "supplier_reference": "SUP-004",
+  "supplier_name": "Bureautique Sahel SA (synthetic)",
+  "invoice_date": "2026-01-18",
+  "due_date": "2026-02-18",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1129",
+  "subtotal": "1447.000",
+  "tax_total": "274.930",
+  "total": "1721.930",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Chaises de bureau",
+      "quantity": "5",
+      "unit_price": "289.400",
+      "line_amount": "1447.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

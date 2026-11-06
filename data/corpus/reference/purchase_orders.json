@@ -1,0 +1,1413 @@
+{
+  "synthetic": true,
+  "purchase_orders": [
+    {
+      "po_number": "PO-2026-1001",
+      "po_number_normalized": "PO-2026-1001",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "200.471",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1002",
+      "po_number_normalized": "PO-2026-1002",
+      "supplier_reference": "SUP-005",
+      "currency": "TND",
+      "expected_amount": "15.042",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1003",
+      "po_number_normalized": "PO-2026-1003",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "3971.292",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1004",
+      "po_number_normalized": "PO-2026-1004",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "570.819",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1005",
+      "po_number_normalized": "PO-2026-1005",
+      "supplier_reference": "SUP-005",
+      "currency": "TND",
+      "expected_amount": "6792.520",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1006",
+      "po_number_normalized": "PO-2026-1006",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "47.552",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1008",
+      "po_number_normalized": "PO-2026-1008",
+      "supplier_reference": "SUP-002",
+      "currency": "TND",
+      "expected_amount": "5896.521",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1009",
+      "po_number_normalized": "PO-2026-1009",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "824.004",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1010",
+      "po_number_normalized": "PO-2026-1010",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "732.850",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1011",
+      "po_number_normalized": "PO-2026-1011",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "8339.639",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1012",
+      "po_number_normalized": "PO-2026-1012",
+      "supplier_reference": "SUP-002",
+      "currency": "TND",
+      "expected_amount": "3719.464",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1013",
+      "po_number_normalized": "PO-2026-1013",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "97.961",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1014",
+      "po_number_normalized": "PO-2026-1014",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "8342.376",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1015",
+      "po_number_normalized": "PO-2026-1015",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "10639.433",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1016",
+      "po_number_normalized": "PO-2026-1016",
+      "supplier_reference": "SUP-002",
+      "currency": "TND",
+      "expected_amount": "4865.851",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1017",
+      "po_number_normalized": "PO-2026-1017",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "4086.460",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1018",
+      "po_number_normalized": "PO-2026-1018",
+      "supplier_reference": "SUP-005",
+      "currency": "TND",
+      "expected_amount": "716.678",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1020",
+      "po_number_normalized": "PO-2026-1020",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "4902.800",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1021",
+      "po_number_normalized": "PO-2026-1021",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "4360.388",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1022",
+      "po_number_normalized": "PO-2026-1022",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "1681.803",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1023",
+      "po_number_normalized": "PO-2026-1023",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "8264.729",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1024",
+      "po_number_normalized": "PO-2026-1024",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "11126.500",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1025",
+      "po_number_normalized": "PO-2026-1025",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "4003.960",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1026",
+      "po_number_normalized": "PO-2026-1026",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "400.221",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1027",
+      "po_number_normalized": "PO-2026-1027",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "1140.020",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1028",
+      "po_number_normalized": "PO-2026-1028",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "5967.969",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1029",
+      "po_number_normalized": "PO-2026-1029",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "8561.336",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1030",
+      "po_number_normalized": "PO-2026-1030",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "455.556",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1031",
+      "po_number_normalized": "PO-2026-1031",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "984.047",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1032",
+      "po_number_normalized": "PO-2026-1032",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "8651.479",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1033",
+      "po_number_normalized": "PO-2026-1033",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "3480.774",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1034",
+      "po_number_normalized": "PO-2026-1034",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "5111.407",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1035",
+      "po_number_normalized": "PO-2026-1035",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "471.240",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1036",
+      "po_number_normalized": "PO-2026-1036",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "3105.186",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1037",
+      "po_number_normalized": "PO-2026-1037",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "417.857",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1038",
+      "po_number_normalized": "PO-2026-1038",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "7525.322",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1039",
+      "po_number_normalized": "PO-2026-1039",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "518.721",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1040",
+      "po_number_normalized": "PO-2026-1040",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "1184.026",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1041",
+      "po_number_normalized": "PO-2026-1041",
+      "supplier_reference": "SUP-005",
+      "currency": "TND",
+      "expected_amount": "3405.185",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1042",
+      "po_number_normalized": "PO-2026-1042",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "6222.510",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1043",
+      "po_number_normalized": "PO-2026-1043",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "2755.088",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1044",
+      "po_number_normalized": "PO-2026-1044",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "907.197",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1045",
+      "po_number_normalized": "PO-2026-1045",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "2642.371",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1046",
+      "po_number_normalized": "PO-2026-1046",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "1505.826",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1047",
+      "po_number_normalized": "PO-2026-1047",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "3020.125",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1048",
+      "po_number_normalized": "PO-2026-1048",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "1041.726",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1049",
+      "po_number_normalized": "PO-2026-1049",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "925.490",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1050",
+      "po_number_normalized": "PO-2026-1050",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "2320.738",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1051",
+      "po_number_normalized": "PO-2026-1051",
+      "supplier_reference": "SUP-005",
+      "currency": "TND",
+      "expected_amount": "7093.650",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1052",
+      "po_number_normalized": "PO-2026-1052",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "6545.428",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1053",
+      "po_number_normalized": "PO-2026-1053",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "457.674",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1054",
+      "po_number_normalized": "PO-2026-1054",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "9056.376",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1056",
+      "po_number_normalized": "PO-2026-1056",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "4744.768",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1057",
+      "po_number_normalized": "PO-2026-1057",
+      "supplier_reference": "SUP-005",
+      "currency": "TND",
+      "expected_amount": "2071.457",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1058",
+      "po_number_normalized": "PO-2026-1058",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "764.397",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1059",
+      "po_number_normalized": "PO-2026-1059",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "6510.014",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1060",
+      "po_number_normalized": "PO-2026-1060",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "1777.003",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1061",
+      "po_number_normalized": "PO-2026-1061",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "5209.121",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1062",
+      "po_number_normalized": "PO-2026-1062",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "189.305",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1063",
+      "po_number_normalized": "PO-2026-1063",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "1304.716",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1064",
+      "po_number_normalized": "PO-2026-1064",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "668.304",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1066",
+      "po_number_normalized": "PO-2026-1066",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "185.497",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1067",
+      "po_number_normalized": "PO-2026-1067",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "6549.879",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1068",
+      "po_number_normalized": "PO-2026-1068",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "128.282",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1069",
+      "po_number_normalized": "PO-2026-1069",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "4799.508",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1070",
+      "po_number_normalized": "PO-2026-1070",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "1950.815",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1071",
+      "po_number_normalized": "PO-2026-1071",
+      "supplier_reference": "SUP-002",
+      "currency": "TND",
+      "expected_amount": "3166.412",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1072",
+      "po_number_normalized": "PO-2026-1072",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "5652.500",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1073",
+      "po_number_normalized": "PO-2026-1073",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "3485.748",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1074",
+      "po_number_normalized": "PO-2026-1074",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "423.045",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1075",
+      "po_number_normalized": "PO-2026-1075",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "307.591",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1076",
+      "po_number_normalized": "PO-2026-1076",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "5789.445",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1077",
+      "po_number_normalized": "PO-2026-1077",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "2032.163",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1078",
+      "po_number_normalized": "PO-2026-1078",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "2076.026",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1079",
+      "po_number_normalized": "PO-2026-1079",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "42.083",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1080",
+      "po_number_normalized": "PO-2026-1080",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "10668.350",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1081",
+      "po_number_normalized": "PO-2026-1081",
+      "supplier_reference": "SUP-002",
+      "currency": "TND",
+      "expected_amount": "1201.900",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1082",
+      "po_number_normalized": "PO-2026-1082",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "5003.165",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1083",
+      "po_number_normalized": "PO-2026-1083",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "359.514",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1084",
+      "po_number_normalized": "PO-2026-1084",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "6752.012",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1085",
+      "po_number_normalized": "PO-2026-1085",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "16214.940",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1086",
+      "po_number_normalized": "PO-2026-1086",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "8716.322",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1087",
+      "po_number_normalized": "PO-2026-1087",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "4479.898",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1088",
+      "po_number_normalized": "PO-2026-1088",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "487.638",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1090",
+      "po_number_normalized": "PO-2026-1090",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "25645.880",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1091",
+      "po_number_normalized": "PO-2026-1091",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "92.630",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1092",
+      "po_number_normalized": "PO-2026-1092",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "5737.514",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1093",
+      "po_number_normalized": "PO-2026-1093",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "106.267",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1094",
+      "po_number_normalized": "PO-2026-1094",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "6618.709",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1095",
+      "po_number_normalized": "PO-2026-1095",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "3429.628",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1096",
+      "po_number_normalized": "PO-2026-1096",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "5760.742",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1097",
+      "po_number_normalized": "PO-2026-1097",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "284.648",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1098",
+      "po_number_normalized": "PO-2026-1098",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "67.021",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1099",
+      "po_number_normalized": "PO-2026-1099",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "43.126",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1100",
+      "po_number_normalized": "PO-2026-1100",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "137.469",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1101",
+      "po_number_normalized": "PO-2026-1101",
+      "supplier_reference": "SUP-005",
+      "currency": "TND",
+      "expected_amount": "1774.826",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1102",
+      "po_number_normalized": "PO-2026-1102",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "167.076",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1103",
+      "po_number_normalized": "PO-2026-1103",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "12122.426",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1104",
+      "po_number_normalized": "PO-2026-1104",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "845.804",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1105",
+      "po_number_normalized": "PO-2026-1105",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "1118.695",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1106",
+      "po_number_normalized": "PO-2026-1106",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "1406.437",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1107",
+      "po_number_normalized": "PO-2026-1107",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "2069.386",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1108",
+      "po_number_normalized": "PO-2026-1108",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "2739.618",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1109",
+      "po_number_normalized": "PO-2026-1109",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "5005.854",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1110",
+      "po_number_normalized": "PO-2026-1110",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "2153.900",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1111",
+      "po_number_normalized": "PO-2026-1111",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "147.191",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1112",
+      "po_number_normalized": "PO-2026-1112",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "2298.723",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1113",
+      "po_number_normalized": "PO-2026-1113",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "8600.749",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1114",
+      "po_number_normalized": "PO-2026-1114",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "8283.780",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1115",
+      "po_number_normalized": "PO-2026-1115",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "6659.196",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1116",
+      "po_number_normalized": "PO-2026-1116",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "1624.874",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1117",
+      "po_number_normalized": "PO-2026-1117",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "2380.952",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1118",
+      "po_number_normalized": "PO-2026-1118",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "1326.279",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1119",
+      "po_number_normalized": "PO-2026-1119",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "1668.975",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1120",
+      "po_number_normalized": "PO-2026-1120",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "8253.483",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1122",
+      "po_number_normalized": "PO-2026-1122",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "9119.208",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1123",
+      "po_number_normalized": "PO-2026-1123",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "4497.438",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1124",
+      "po_number_normalized": "PO-2026-1124",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "127.520",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1125",
+      "po_number_normalized": "PO-2026-1125",
+      "supplier_reference": "SUP-005",
+      "currency": "TND",
+      "expected_amount": "1449.673",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1126",
+      "po_number_normalized": "PO-2026-1126",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "4211.172",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1127",
+      "po_number_normalized": "PO-2026-1127",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "140.182",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1128",
+      "po_number_normalized": "PO-2026-1128",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "2056.439",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1129",
+      "po_number_normalized": "PO-2026-1129",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "1721.930",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1130",
+      "po_number_normalized": "PO-2026-1130",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "310.352",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1132",
+      "po_number_normalized": "PO-2026-1132",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "8664.866",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1133",
+      "po_number_normalized": "PO-2026-1133",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "1296.648",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1134",
+      "po_number_normalized": "PO-2026-1134",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "5088.916",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1135",
+      "po_number_normalized": "PO-2026-1135",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "8934.520",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1136",
+      "po_number_normalized": "PO-2026-1136",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "4147.150",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1137",
+      "po_number_normalized": "PO-2026-1137",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "1415.196",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1138",
+      "po_number_normalized": "PO-2026-1138",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "657.237",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1139",
+      "po_number_normalized": "PO-2026-1139",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "5590.620",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1140",
+      "po_number_normalized": "PO-2026-1140",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "693.008",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1142",
+      "po_number_normalized": "PO-2026-1142",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "723.996",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1143",
+      "po_number_normalized": "PO-2026-1143",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "5746.153",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1144",
+      "po_number_normalized": "PO-2026-1144",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "1551.760",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1145",
+      "po_number_normalized": "PO-2026-1145",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "586.432",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1146",
+      "po_number_normalized": "PO-2026-1146",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "63.403",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1147",
+      "po_number_normalized": "PO-2026-1147",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "184.251",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1148",
+      "po_number_normalized": "PO-2026-1148",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "4869.480",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1149",
+      "po_number_normalized": "PO-2026-1149",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "6009.500",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1150",
+      "po_number_normalized": "PO-2026-1150",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "1263.780",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1151",
+      "po_number_normalized": "PO-2026-1151",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "3357.585",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1152",
+      "po_number_normalized": "PO-2026-1152",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "2537.080",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1154",
+      "po_number_normalized": "PO-2026-1154",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "2249.100",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1155",
+      "po_number_normalized": "PO-2026-1155",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "2834.116",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1156",
+      "po_number_normalized": "PO-2026-1156",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "4053.735",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1157",
+      "po_number_normalized": "PO-2026-1157",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "6643.294",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1158",
+      "po_number_normalized": "PO-2026-1158",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "2468.358",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1159",
+      "po_number_normalized": "PO-2026-1159",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "3343.757",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1160",
+      "po_number_normalized": "PO-2026-1160",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "9581.166",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1161",
+      "po_number_normalized": "PO-2026-1161",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "651.882",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1162",
+      "po_number_normalized": "PO-2026-1162",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "7154.304",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1163",
+      "po_number_normalized": "PO-2026-1163",
+      "supplier_reference": "SUP-001",
+      "currency": "TND",
+      "expected_amount": "7549.360",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1164",
+      "po_number_normalized": "PO-2026-1164",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "280.554",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1165",
+      "po_number_normalized": "PO-2026-1165",
+      "supplier_reference": "SUP-011",
+      "currency": "TND",
+      "expected_amount": "83.776",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1166",
+      "po_number_normalized": "PO-2026-1166",
+      "supplier_reference": "SUP-008",
+      "currency": "TND",
+      "expected_amount": "3162.544",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1167",
+      "po_number_normalized": "PO-2026-1167",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "720.045",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1168",
+      "po_number_normalized": "PO-2026-1168",
+      "supplier_reference": "SUP-004",
+      "currency": "TND",
+      "expected_amount": "5364.068",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1169",
+      "po_number_normalized": "PO-2026-1169",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "363.140",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1170",
+      "po_number_normalized": "PO-2026-1170",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "85.014",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1171",
+      "po_number_normalized": "PO-2026-1171",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "113.883",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1172",
+      "po_number_normalized": "PO-2026-1172",
+      "supplier_reference": "SUP-002",
+      "currency": "TND",
+      "expected_amount": "794.254",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1173",
+      "po_number_normalized": "PO-2026-1173",
+      "supplier_reference": "SUP-002",
+      "currency": "TND",
+      "expected_amount": "1776.527",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1174",
+      "po_number_normalized": "PO-2026-1174",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "572.152",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1175",
+      "po_number_normalized": "PO-2026-1175",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "1939.986",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1176",
+      "po_number_normalized": "PO-2026-1176",
+      "supplier_reference": "SUP-012",
+      "currency": "TND",
+      "expected_amount": "400.459",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1178",
+      "po_number_normalized": "PO-2026-1178",
+      "supplier_reference": "SUP-010",
+      "currency": "TND",
+      "expected_amount": "2889.439",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1179",
+      "po_number_normalized": "PO-2026-1179",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "3637.711",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1180",
+      "po_number_normalized": "PO-2026-1180",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "22259.569",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1181",
+      "po_number_normalized": "PO-2026-1181",
+      "supplier_reference": "SUP-009",
+      "currency": "TND",
+      "expected_amount": "4675.153",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1182",
+      "po_number_normalized": "PO-2026-1182",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "281.435",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1183",
+      "po_number_normalized": "PO-2026-1183",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "95.762",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1184",
+      "po_number_normalized": "PO-2026-1184",
+      "supplier_reference": "SUP-003",
+      "currency": "TND",
+      "expected_amount": "16951.003",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1185",
+      "po_number_normalized": "PO-2026-1185",
+      "supplier_reference": "SUP-007",
+      "currency": "TND",
+      "expected_amount": "15481.900",
+      "state": "open"
+    },
+    {
+      "po_number": "PO-2026-1186",
+      "po_number_normalized": "PO-2026-1186",
+      "supplier_reference": "SUP-006",
+      "currency": "TND",
+      "expected_amount": "8960.700",
+      "state": "open"
+    }
+  ]
+}

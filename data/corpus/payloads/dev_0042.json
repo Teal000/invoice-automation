@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA007-2026-1043",
+  "supplier_reference": "SUP-007",
+  "supplier_name": "Materiel Sfax SARL (synthetic)",
+  "invoice_date": "2026-05-05",
+  "due_date": "2026-06-05",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1043",
+  "subtotal": "2315.200",
+  "tax_total": "439.888",
+  "total": "2755.088",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "0",
+      "unit_price": "16.840",
+      "line_amount": "0.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Chaises de bureau",
+      "quantity": "8",
+      "unit_price": "289.400",
+      "line_amount": "2315.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1131",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-02-11",
+  "due_date": "2026-03-11",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-999999",
+  "subtotal": "4635.520",
+  "tax_total": "880.749",
+  "total": "5516.269",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "4",
+      "unit_price": "12.980",
+      "line_amount": "51.920"
+    },
+    {
+      "line_number": 2,
+      "description": "Ecrans 24 pouces",
+      "quantity": "8",
+      "unit_price": "452.500",
+      "line_amount": "3620.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "8",
+      "unit_price": "120.450",
+      "line_amount": "963.600"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

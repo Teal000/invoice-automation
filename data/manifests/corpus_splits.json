@@ -1,0 +1,3087 @@
+{
+  "dataset": "corpus_v1",
+  "synthetic": true,
+  "seed": 20261106,
+  "note": "Deterministic from the seed: regenerating produces byte-identical documents. The test split is frozen - it contains the kairouan layout, which the extractor is not taught, and must not be used to tune anything. Duplicate families share a split so no split is scored on a document whose twin is in another.",
+  "familiar_layouts": [
+    "atlas",
+    "medina",
+    "carthage"
+  ],
+  "validation_extra_layout": "sousse",
+  "unseen_layout": "kairouan",
+  "counts": {
+    "documents": 200,
+    "by_split": {
+      "development": 120,
+      "validation": 40,
+      "test": 40
+    },
+    "by_layout": {
+      "atlas": 59,
+      "medina": 60,
+      "carthage": 53,
+      "sousse": 20,
+      "kairouan": 8
+    },
+    "clean": 76,
+    "with_detectable_fault": 100,
+    "with_undetectable_fault": 24
+  },
+  "undetectable_faults": {
+    "supplier_name_mismatch": "Supplier name does not match the registered name for that code",
+    "future_invoice_date": "Invoice dated next year",
+    "zero_quantity_line": "A line billed with quantity zero",
+    "duplicated_line": "An identical line item entered twice"
+  },
+  "cases": [
+    {
+      "case_id": "dev_0000",
+      "pdf": "dev_0000.pdf",
+      "payload": "dev_0000.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0001",
+      "pdf": "dev_0001.pdf",
+      "payload": "dev_0001.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0002",
+      "pdf": "dev_0002.pdf",
+      "payload": "dev_0002.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0003",
+      "pdf": "dev_0003.pdf",
+      "payload": "dev_0003.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0004",
+      "pdf": "dev_0004.pdf",
+      "payload": "dev_0004.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0005",
+      "pdf": "dev_0005.pdf",
+      "payload": "dev_0005.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0006",
+      "pdf": "dev_0006.pdf",
+      "payload": "dev_0006.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0007",
+      "pdf": "dev_0007.pdf",
+      "payload": "dev_0007.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0008",
+      "pdf": "dev_0008.pdf",
+      "payload": "dev_0008.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0009",
+      "pdf": "dev_0009.pdf",
+      "payload": "dev_0009.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Invoice dated next year"
+    },
+    {
+      "case_id": "dev_0010",
+      "pdf": "dev_0010.pdf",
+      "payload": "dev_0010.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0011",
+      "pdf": "dev_0011.pdf",
+      "payload": "dev_0011.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0012",
+      "pdf": "dev_0012.pdf",
+      "payload": "dev_0012.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0013",
+      "pdf": "dev_0013.pdf",
+      "payload": "dev_0013.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Invoice dated next year"
+    },
+    {
+      "case_id": "dev_0014",
+      "pdf": "dev_0014.pdf",
+      "payload": "dev_0014.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0015",
+      "pdf": "dev_0015.pdf",
+      "payload": "dev_0015.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "An identical line item entered twice"
+    },
+    {
+      "case_id": "dev_0016",
+      "pdf": "dev_0016.pdf",
+      "payload": "dev_0016.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0017",
+      "pdf": "dev_0017.pdf",
+      "payload": "dev_0017.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0018",
+      "pdf": "dev_0018.pdf",
+      "payload": "dev_0018.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0019",
+      "pdf": "dev_0019.pdf",
+      "payload": "dev_0019.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0020",
+      "pdf": "dev_0020.pdf",
+      "payload": "dev_0020.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0021",
+      "pdf": "dev_0021.pdf",
+      "payload": "dev_0021.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0022",
+      "pdf": "dev_0022.pdf",
+      "payload": "dev_0022.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0023",
+      "pdf": "dev_0023.pdf",
+      "payload": "dev_0023.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0024",
+      "pdf": "dev_0024.pdf",
+      "payload": "dev_0024.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0025",
+      "pdf": "dev_0025.pdf",
+      "payload": "dev_0025.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0026",
+      "pdf": "dev_0026.pdf",
+      "payload": "dev_0026.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0027",
+      "pdf": "dev_0027.pdf",
+      "payload": "dev_0027.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0028",
+      "pdf": "dev_0028.pdf",
+      "payload": "dev_0028.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Supplier name does not match the registered name for that code"
+    },
+    {
+      "case_id": "dev_0029",
+      "pdf": "dev_0029.pdf",
+      "payload": "dev_0029.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0030",
+      "pdf": "dev_0030.pdf",
+      "payload": "dev_0030.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0031",
+      "pdf": "dev_0031.pdf",
+      "payload": "dev_0031.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0032",
+      "pdf": "dev_0032.pdf",
+      "payload": "dev_0032.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0033",
+      "pdf": "dev_0033.pdf",
+      "payload": "dev_0033.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0034",
+      "pdf": "dev_0034.pdf",
+      "payload": "dev_0034.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0035",
+      "pdf": "dev_0035.pdf",
+      "payload": "dev_0035.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "An identical line item entered twice"
+    },
+    {
+      "case_id": "dev_0036",
+      "pdf": "dev_0036.pdf",
+      "payload": "dev_0036.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0037",
+      "pdf": "dev_0037.pdf",
+      "payload": "dev_0037.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0038",
+      "pdf": "dev_0038.pdf",
+      "payload": "dev_0038.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0039",
+      "pdf": "dev_0039.pdf",
+      "payload": "dev_0039.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0040",
+      "pdf": "dev_0040.pdf",
+      "payload": "dev_0040.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0041",
+      "pdf": "dev_0041.pdf",
+      "payload": "dev_0041.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0042",
+      "pdf": "dev_0042.pdf",
+      "payload": "dev_0042.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "A line billed with quantity zero"
+    },
+    {
+      "case_id": "dev_0043",
+      "pdf": "dev_0043.pdf",
+      "payload": "dev_0043.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0044",
+      "pdf": "dev_0044.pdf",
+      "payload": "dev_0044.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Supplier name does not match the registered name for that code"
+    },
+    {
+      "case_id": "dev_0045",
+      "pdf": "dev_0045.pdf",
+      "payload": "dev_0045.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "date_inconsistent"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0046",
+      "pdf": "dev_0046.pdf",
+      "payload": "dev_0046.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0047",
+      "pdf": "dev_0047.pdf",
+      "payload": "dev_0047.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0048",
+      "pdf": "dev_0048.pdf",
+      "payload": "dev_0048.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0049",
+      "pdf": "dev_0049.pdf",
+      "payload": "dev_0049.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0050",
+      "pdf": "dev_0050.pdf",
+      "payload": "dev_0050.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0051",
+      "pdf": "dev_0051.pdf",
+      "payload": "dev_0051.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0052",
+      "pdf": "dev_0052.pdf",
+      "payload": "dev_0052.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0053",
+      "pdf": "dev_0053.pdf",
+      "payload": "dev_0053.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Invoice dated next year"
+    },
+    {
+      "case_id": "dev_0054",
+      "pdf": "dev_0054.pdf",
+      "payload": "dev_0054.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0055",
+      "pdf": "dev_0055.pdf",
+      "payload": "dev_0055.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0056",
+      "pdf": "dev_0056.pdf",
+      "payload": "dev_0056.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Supplier name does not match the registered name for that code"
+    },
+    {
+      "case_id": "dev_0057",
+      "pdf": "dev_0057.pdf",
+      "payload": "dev_0057.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0058",
+      "pdf": "dev_0058.pdf",
+      "payload": "dev_0058.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0059",
+      "pdf": "dev_0059.pdf",
+      "payload": "dev_0059.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "credit_note"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "UNSUPPORTED_DOCUMENT"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0060",
+      "pdf": "dev_0060.pdf",
+      "payload": "dev_0060.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0061",
+      "pdf": "dev_0061.pdf",
+      "payload": "dev_0061.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "dev-family-0061",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "First arrival of a duplicate family."
+    },
+    {
+      "case_id": "dev_0061_resend",
+      "pdf": "dev_0061_resend.pdf",
+      "payload": "dev_0061_resend.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "dev-family-0061",
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "note": "Byte-identical resend of the previous document."
+    },
+    {
+      "case_id": "dev_0061_variant",
+      "pdf": "dev_0061_variant.pdf",
+      "payload": "dev_0061_variant.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "dev-family-0061",
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "note": "Different document claiming an invoice number already recorded."
+    },
+    {
+      "case_id": "dev_0064",
+      "pdf": "dev_0064.pdf",
+      "payload": "dev_0064.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0065",
+      "pdf": "dev_0065.pdf",
+      "payload": "dev_0065.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0066",
+      "pdf": "dev_0066.pdf",
+      "payload": "dev_0066.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0067",
+      "pdf": "dev_0067.pdf",
+      "payload": "dev_0067.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0068",
+      "pdf": "dev_0068.pdf",
+      "payload": "dev_0068.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0069",
+      "pdf": "dev_0069.pdf",
+      "payload": "dev_0069.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "date_inconsistent"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0070",
+      "pdf": "dev_0070.pdf",
+      "payload": "dev_0070.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "A line billed with quantity zero"
+    },
+    {
+      "case_id": "dev_0071",
+      "pdf": "dev_0071.pdf",
+      "payload": "dev_0071.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0072",
+      "pdf": "dev_0072.pdf",
+      "payload": "dev_0072.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0073",
+      "pdf": "dev_0073.pdf",
+      "payload": "dev_0073.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0074",
+      "pdf": "dev_0074.pdf",
+      "payload": "dev_0074.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0075",
+      "pdf": "dev_0075.pdf",
+      "payload": "dev_0075.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0076",
+      "pdf": "dev_0076.pdf",
+      "payload": "dev_0076.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Supplier name does not match the registered name for that code"
+    },
+    {
+      "case_id": "dev_0077",
+      "pdf": "dev_0077.pdf",
+      "payload": "dev_0077.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0078",
+      "pdf": "dev_0078.pdf",
+      "payload": "dev_0078.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0079",
+      "pdf": "dev_0079.pdf",
+      "payload": "dev_0079.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "An identical line item entered twice"
+    },
+    {
+      "case_id": "dev_0080",
+      "pdf": "dev_0080.pdf",
+      "payload": "dev_0080.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0081",
+      "pdf": "dev_0081.pdf",
+      "payload": "dev_0081.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0082",
+      "pdf": "dev_0082.pdf",
+      "payload": "dev_0082.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0083",
+      "pdf": "dev_0083.pdf",
+      "payload": "dev_0083.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0084",
+      "pdf": "dev_0084.pdf",
+      "payload": "dev_0084.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0085",
+      "pdf": "dev_0085.pdf",
+      "payload": "dev_0085.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0086",
+      "pdf": "dev_0086.pdf",
+      "payload": "dev_0086.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "A line billed with quantity zero"
+    },
+    {
+      "case_id": "dev_0087",
+      "pdf": "dev_0087.pdf",
+      "payload": "dev_0087.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0088",
+      "pdf": "dev_0088.pdf",
+      "payload": "dev_0088.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0089",
+      "pdf": "dev_0089.pdf",
+      "payload": "dev_0089.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0090",
+      "pdf": "dev_0090.pdf",
+      "payload": "dev_0090.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0091",
+      "pdf": "dev_0091.pdf",
+      "payload": "dev_0091.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "An identical line item entered twice"
+    },
+    {
+      "case_id": "dev_0092",
+      "pdf": "dev_0092.pdf",
+      "payload": "dev_0092.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0093",
+      "pdf": "dev_0093.pdf",
+      "payload": "dev_0093.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0094",
+      "pdf": "dev_0094.pdf",
+      "payload": "dev_0094.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0095",
+      "pdf": "dev_0095.pdf",
+      "payload": "dev_0095.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "credit_note"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "UNSUPPORTED_DOCUMENT"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0096",
+      "pdf": "dev_0096.pdf",
+      "payload": "dev_0096.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "dev-family-0096",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "First arrival of a duplicate family."
+    },
+    {
+      "case_id": "dev_0096_resend",
+      "pdf": "dev_0096_resend.pdf",
+      "payload": "dev_0096_resend.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "dev-family-0096",
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "note": "Byte-identical resend of the previous document."
+    },
+    {
+      "case_id": "dev_0096_variant",
+      "pdf": "dev_0096_variant.pdf",
+      "payload": "dev_0096_variant.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "dev-family-0096",
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "note": "Different document claiming an invoice number already recorded."
+    },
+    {
+      "case_id": "dev_0099",
+      "pdf": "dev_0099.pdf",
+      "payload": "dev_0099.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0100",
+      "pdf": "dev_0100.pdf",
+      "payload": "dev_0100.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Supplier name does not match the registered name for that code"
+    },
+    {
+      "case_id": "dev_0101",
+      "pdf": "dev_0101.pdf",
+      "payload": "dev_0101.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0102",
+      "pdf": "dev_0102.pdf",
+      "payload": "dev_0102.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "dev-family-0102",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "First arrival of a duplicate family."
+    },
+    {
+      "case_id": "dev_0102_resend",
+      "pdf": "dev_0102_resend.pdf",
+      "payload": "dev_0102_resend.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "dev-family-0102",
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "note": "Byte-identical resend of the previous document."
+    },
+    {
+      "case_id": "dev_0102_variant",
+      "pdf": "dev_0102_variant.pdf",
+      "payload": "dev_0102_variant.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "dev-family-0102",
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "note": "Different document claiming an invoice number already recorded."
+    },
+    {
+      "case_id": "dev_0105",
+      "pdf": "dev_0105.pdf",
+      "payload": "dev_0105.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "date_inconsistent"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "DATE_INCONSISTENT"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0106",
+      "pdf": "dev_0106.pdf",
+      "payload": "dev_0106.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0107",
+      "pdf": "dev_0107.pdf",
+      "payload": "dev_0107.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "duplicated_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "An identical line item entered twice"
+    },
+    {
+      "case_id": "dev_0108",
+      "pdf": "dev_0108.pdf",
+      "payload": "dev_0108.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0109",
+      "pdf": "dev_0109.pdf",
+      "payload": "dev_0109.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Invoice dated next year"
+    },
+    {
+      "case_id": "dev_0110",
+      "pdf": "dev_0110.pdf",
+      "payload": "dev_0110.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0111",
+      "pdf": "dev_0111.pdf",
+      "payload": "dev_0111.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0112",
+      "pdf": "dev_0112.pdf",
+      "payload": "dev_0112.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0113",
+      "pdf": "dev_0113.pdf",
+      "payload": "dev_0113.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0114",
+      "pdf": "dev_0114.pdf",
+      "payload": "dev_0114.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0115",
+      "pdf": "dev_0115.pdf",
+      "payload": "dev_0115.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0116",
+      "pdf": "dev_0116.pdf",
+      "payload": "dev_0116.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0117",
+      "pdf": "dev_0117.pdf",
+      "payload": "dev_0117.json",
+      "split": "development",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Invoice dated next year"
+    },
+    {
+      "case_id": "dev_0118",
+      "pdf": "dev_0118.pdf",
+      "payload": "dev_0118.json",
+      "split": "development",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "dev_0119",
+      "pdf": "dev_0119.pdf",
+      "payload": "dev_0119.json",
+      "split": "development",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0000",
+      "pdf": "val_0000.pdf",
+      "payload": "val_0000.json",
+      "split": "validation",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0001",
+      "pdf": "val_0001.pdf",
+      "payload": "val_0001.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0002",
+      "pdf": "val_0002.pdf",
+      "payload": "val_0002.json",
+      "split": "validation",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0003",
+      "pdf": "val_0003.pdf",
+      "payload": "val_0003.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0004",
+      "pdf": "val_0004.pdf",
+      "payload": "val_0004.json",
+      "split": "validation",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0005",
+      "pdf": "val_0005.pdf",
+      "payload": "val_0005.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Invoice dated next year"
+    },
+    {
+      "case_id": "val_0006",
+      "pdf": "val_0006.pdf",
+      "payload": "val_0006.json",
+      "split": "validation",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0007",
+      "pdf": "val_0007.pdf",
+      "payload": "val_0007.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "val-family-0007",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "First arrival of a duplicate family."
+    },
+    {
+      "case_id": "val_0007_resend",
+      "pdf": "val_0007_resend.pdf",
+      "payload": "val_0007_resend.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "val-family-0007",
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "note": "Byte-identical resend of the previous document."
+    },
+    {
+      "case_id": "val_0007_variant",
+      "pdf": "val_0007_variant.pdf",
+      "payload": "val_0007_variant.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "val-family-0007",
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "note": "Different document claiming an invoice number already recorded."
+    },
+    {
+      "case_id": "val_0010",
+      "pdf": "val_0010.pdf",
+      "payload": "val_0010.json",
+      "split": "validation",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0011",
+      "pdf": "val_0011.pdf",
+      "payload": "val_0011.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0012",
+      "pdf": "val_0012.pdf",
+      "payload": "val_0012.json",
+      "split": "validation",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0013",
+      "pdf": "val_0013.pdf",
+      "payload": "val_0013.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0014",
+      "pdf": "val_0014.pdf",
+      "payload": "val_0014.json",
+      "split": "validation",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0015",
+      "pdf": "val_0015.pdf",
+      "payload": "val_0015.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0016",
+      "pdf": "val_0016.pdf",
+      "payload": "val_0016.json",
+      "split": "validation",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0017",
+      "pdf": "val_0017.pdf",
+      "payload": "val_0017.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0018",
+      "pdf": "val_0018.pdf",
+      "payload": "val_0018.json",
+      "split": "validation",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0019",
+      "pdf": "val_0019.pdf",
+      "payload": "val_0019.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0020",
+      "pdf": "val_0020.pdf",
+      "payload": "val_0020.json",
+      "split": "validation",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0021",
+      "pdf": "val_0021.pdf",
+      "payload": "val_0021.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0022",
+      "pdf": "val_0022.pdf",
+      "payload": "val_0022.json",
+      "split": "validation",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0023",
+      "pdf": "val_0023.pdf",
+      "payload": "val_0023.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0024",
+      "pdf": "val_0024.pdf",
+      "payload": "val_0024.json",
+      "split": "validation",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0025",
+      "pdf": "val_0025.pdf",
+      "payload": "val_0025.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "val-family-0025",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "First arrival of a duplicate family."
+    },
+    {
+      "case_id": "val_0025_resend",
+      "pdf": "val_0025_resend.pdf",
+      "payload": "val_0025_resend.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "val-family-0025",
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "note": "Byte-identical resend of the previous document."
+    },
+    {
+      "case_id": "val_0025_variant",
+      "pdf": "val_0025_variant.pdf",
+      "payload": "val_0025_variant.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "val-family-0025",
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "note": "Different document claiming an invoice number already recorded."
+    },
+    {
+      "case_id": "val_0028",
+      "pdf": "val_0028.pdf",
+      "payload": "val_0028.json",
+      "split": "validation",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0029",
+      "pdf": "val_0029.pdf",
+      "payload": "val_0029.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0030",
+      "pdf": "val_0030.pdf",
+      "payload": "val_0030.json",
+      "split": "validation",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0031",
+      "pdf": "val_0031.pdf",
+      "payload": "val_0031.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "val-family-0031",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "First arrival of a duplicate family."
+    },
+    {
+      "case_id": "val_0031_resend",
+      "pdf": "val_0031_resend.pdf",
+      "payload": "val_0031_resend.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "val-family-0031",
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "note": "Byte-identical resend of the previous document."
+    },
+    {
+      "case_id": "val_0031_variant",
+      "pdf": "val_0031_variant.pdf",
+      "payload": "val_0031_variant.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "val-family-0031",
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "note": "Different document claiming an invoice number already recorded."
+    },
+    {
+      "case_id": "val_0034",
+      "pdf": "val_0034.pdf",
+      "payload": "val_0034.json",
+      "split": "validation",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "val_0035",
+      "pdf": "val_0035.pdf",
+      "payload": "val_0035.json",
+      "split": "validation",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0036",
+      "pdf": "val_0036.pdf",
+      "payload": "val_0036.json",
+      "split": "validation",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "val_0037",
+      "pdf": "val_0037.pdf",
+      "payload": "val_0037.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "val-family-0037",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "First arrival of a duplicate family."
+    },
+    {
+      "case_id": "val_0037_resend",
+      "pdf": "val_0037_resend.pdf",
+      "payload": "val_0037_resend.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "val-family-0037",
+      "seeded_faults": [
+        "exact_resend"
+      ],
+      "detectable": true,
+      "expected_state": "duplicate",
+      "expected_failed_codes": [
+        "EXACT_FILE_DUPLICATE"
+      ],
+      "note": "Byte-identical resend of the previous document."
+    },
+    {
+      "case_id": "val_0037_variant",
+      "pdf": "val_0037_variant.pdf",
+      "payload": "val_0037_variant.json",
+      "split": "validation",
+      "layout": "medina",
+      "family": "val-family-0037",
+      "seeded_faults": [
+        "business_duplicate"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "BUSINESS_DUPLICATE"
+      ],
+      "note": "Different document claiming an invoice number already recorded."
+    },
+    {
+      "case_id": "tes_0000",
+      "pdf": "tes_0000.pdf",
+      "payload": "tes_0000.json",
+      "split": "test",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0001",
+      "pdf": "tes_0001.pdf",
+      "payload": "tes_0001.json",
+      "split": "test",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0002",
+      "pdf": "tes_0002.pdf",
+      "payload": "tes_0002.json",
+      "split": "test",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0003",
+      "pdf": "tes_0003.pdf",
+      "payload": "tes_0003.json",
+      "split": "test",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0004",
+      "pdf": "tes_0004.pdf",
+      "payload": "tes_0004.json",
+      "split": "test",
+      "layout": "kairouan",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0005",
+      "pdf": "tes_0005.pdf",
+      "payload": "tes_0005.json",
+      "split": "test",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0006",
+      "pdf": "tes_0006.pdf",
+      "payload": "tes_0006.json",
+      "split": "test",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0007",
+      "pdf": "tes_0007.pdf",
+      "payload": "tes_0007.json",
+      "split": "test",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0008",
+      "pdf": "tes_0008.pdf",
+      "payload": "tes_0008.json",
+      "split": "test",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0009",
+      "pdf": "tes_0009.pdf",
+      "payload": "tes_0009.json",
+      "split": "test",
+      "layout": "kairouan",
+      "family": "unique",
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Invoice dated next year"
+    },
+    {
+      "case_id": "tes_0010",
+      "pdf": "tes_0010.pdf",
+      "payload": "tes_0010.json",
+      "split": "test",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "A line billed with quantity zero"
+    },
+    {
+      "case_id": "tes_0011",
+      "pdf": "tes_0011.pdf",
+      "payload": "tes_0011.json",
+      "split": "test",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0012",
+      "pdf": "tes_0012.pdf",
+      "payload": "tes_0012.json",
+      "split": "test",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Supplier name does not match the registered name for that code"
+    },
+    {
+      "case_id": "tes_0013",
+      "pdf": "tes_0013.pdf",
+      "payload": "tes_0013.json",
+      "split": "test",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0014",
+      "pdf": "tes_0014.pdf",
+      "payload": "tes_0014.json",
+      "split": "test",
+      "layout": "kairouan",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0015",
+      "pdf": "tes_0015.pdf",
+      "payload": "tes_0015.json",
+      "split": "test",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0016",
+      "pdf": "tes_0016.pdf",
+      "payload": "tes_0016.json",
+      "split": "test",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0017",
+      "pdf": "tes_0017.pdf",
+      "payload": "tes_0017.json",
+      "split": "test",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "Invoice dated next year"
+    },
+    {
+      "case_id": "tes_0018",
+      "pdf": "tes_0018.pdf",
+      "payload": "tes_0018.json",
+      "split": "test",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0019",
+      "pdf": "tes_0019.pdf",
+      "payload": "tes_0019.json",
+      "split": "test",
+      "layout": "kairouan",
+      "family": "unique",
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0020",
+      "pdf": "tes_0020.pdf",
+      "payload": "tes_0020.json",
+      "split": "test",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0021",
+      "pdf": "tes_0021.pdf",
+      "payload": "tes_0021.json",
+      "split": "test",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0022",
+      "pdf": "tes_0022.pdf",
+      "payload": "tes_0022.json",
+      "split": "test",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0023",
+      "pdf": "tes_0023.pdf",
+      "payload": "tes_0023.json",
+      "split": "test",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0024",
+      "pdf": "tes_0024.pdf",
+      "payload": "tes_0024.json",
+      "split": "test",
+      "layout": "kairouan",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0025",
+      "pdf": "tes_0025.pdf",
+      "payload": "tes_0025.json",
+      "split": "test",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0026",
+      "pdf": "tes_0026.pdf",
+      "payload": "tes_0026.json",
+      "split": "test",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0027",
+      "pdf": "tes_0027.pdf",
+      "payload": "tes_0027.json",
+      "split": "test",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0028",
+      "pdf": "tes_0028.pdf",
+      "payload": "tes_0028.json",
+      "split": "test",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0029",
+      "pdf": "tes_0029.pdf",
+      "payload": "tes_0029.json",
+      "split": "test",
+      "layout": "kairouan",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0030",
+      "pdf": "tes_0030.pdf",
+      "payload": "tes_0030.json",
+      "split": "test",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0031",
+      "pdf": "tes_0031.pdf",
+      "payload": "tes_0031.json",
+      "split": "test",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0032",
+      "pdf": "tes_0032.pdf",
+      "payload": "tes_0032.json",
+      "split": "test",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0033",
+      "pdf": "tes_0033.pdf",
+      "payload": "tes_0033.json",
+      "split": "test",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0034",
+      "pdf": "tes_0034.pdf",
+      "payload": "tes_0034.json",
+      "split": "test",
+      "layout": "kairouan",
+      "family": "unique",
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0035",
+      "pdf": "tes_0035.pdf",
+      "payload": "tes_0035.json",
+      "split": "test",
+      "layout": "atlas",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0036",
+      "pdf": "tes_0036.pdf",
+      "payload": "tes_0036.json",
+      "split": "test",
+      "layout": "medina",
+      "family": "unique",
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0037",
+      "pdf": "tes_0037.pdf",
+      "payload": "tes_0037.json",
+      "split": "test",
+      "layout": "carthage",
+      "family": "unique",
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "note": ""
+    },
+    {
+      "case_id": "tes_0038",
+      "pdf": "tes_0038.pdf",
+      "payload": "tes_0038.json",
+      "split": "test",
+      "layout": "sousse",
+      "family": "unique",
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": "A line billed with quantity zero"
+    },
+    {
+      "case_id": "tes_0039",
+      "pdf": "tes_0039.pdf",
+      "payload": "tes_0039.json",
+      "split": "test",
+      "layout": "kairouan",
+      "family": "unique",
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "expected_failed_codes": [],
+      "note": ""
+    }
+  ]
+}

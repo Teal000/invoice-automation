@@ -1,0 +1,902 @@
+{
+  "split": "test",
+  "documents": 40,
+  "layout_detection": {
+    "familiar": {
+      "correct": 32,
+      "total": 32,
+      "accuracy": 1.0
+    },
+    "unseen": {
+      "correct": 0,
+      "total": 8,
+      "accuracy": 0.0
+    }
+  },
+  "extraction": {
+    "critical_field_document_accuracy_familiar": {
+      "correct": 32,
+      "total": 32,
+      "accuracy": 1.0
+    },
+    "critical_field_document_accuracy_unseen": {
+      "correct": 0,
+      "total": 8,
+      "accuracy": 0.0
+    },
+    "per_field_all": {
+      "document_type": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "invoice_number_normalized": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "supplier_reference_normalized": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "invoice_date": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "due_date": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "currency": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "purchase_order_number_normalized": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "subtotal": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "tax_total": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "total": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "line_items": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      }
+    },
+    "per_field_present_in_truth": {
+      "document_type": {
+        "correct": 40,
+        "total": 40,
+        "accuracy": 1.0
+      },
+      "invoice_number_normalized": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "supplier_reference_normalized": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "invoice_date": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "due_date": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "currency": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "purchase_order_number_normalized": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "subtotal": {
+        "correct": 30,
+        "total": 38,
+        "accuracy": 0.7895
+      },
+      "tax_total": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "total": {
+        "correct": 31,
+        "total": 39,
+        "accuracy": 0.7949
+      },
+      "line_items": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      }
+    },
+    "per_layout_critical_field_document_accuracy": {
+      "atlas": {
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0
+      },
+      "medina": {
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0
+      },
+      "carthage": {
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0
+      },
+      "sousse": {
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0
+      },
+      "kairouan": {
+        "correct": 0,
+        "total": 8,
+        "accuracy": 0.0
+      }
+    },
+    "values_invented_on_the_unseen_layout": 0
+  },
+  "pipeline_conformance": {
+    "correct": 32,
+    "total": 40,
+    "accuracy": 0.8
+  },
+  "fault_detection": {
+    "recall_over_all_seeded_faults": {
+      "correct": 20,
+      "total": 24,
+      "accuracy": 0.8333
+    },
+    "recall_over_detectable_faults": {
+      "correct": 19,
+      "total": 19,
+      "accuracy": 1.0
+    },
+    "recall_over_undetectable_faults": {
+      "correct": 1,
+      "total": 5,
+      "accuracy": 0.2
+    },
+    "undetectable_flagged_only_because_unreadable": 1,
+    "precision": {
+      "flagged": 25,
+      "flagged_with_a_seeded_fault": 20,
+      "precision": 0.8
+    }
+  },
+  "cases": [
+    {
+      "case_id": "tes_0000",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0001",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0002",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0003",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "missing_total"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0004",
+      "layout": "kairouan",
+      "layout_detected": null,
+      "unseen_layout": true,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": false,
+      "critical_fields_correct": false
+    },
+    {
+      "case_id": "tes_0005",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unknown_supplier"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "actual_failed_codes": [
+        "UNKNOWN_SUPPLIER"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0006",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0007",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0008",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0009",
+      "layout": "kairouan",
+      "layout_detected": null,
+      "unseen_layout": true,
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": false,
+      "critical_fields_correct": false
+    },
+    {
+      "case_id": "tes_0010",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0011",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0012",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "supplier_name_mismatch"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0013",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0014",
+      "layout": "kairouan",
+      "layout_detected": null,
+      "unseen_layout": true,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": false,
+      "critical_fields_correct": false
+    },
+    {
+      "case_id": "tes_0015",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0016",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0017",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "future_invoice_date"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0018",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0019",
+      "layout": "kairouan",
+      "layout_detected": null,
+      "unseen_layout": true,
+      "seeded_faults": [
+        "po_supplier_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_SUPPLIER_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": false,
+      "critical_fields_correct": false
+    },
+    {
+      "case_id": "tes_0020",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0021",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0022",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "unsupported",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "actual_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0023",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0024",
+      "layout": "kairouan",
+      "layout_detected": null,
+      "unseen_layout": true,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": false,
+      "critical_fields_correct": false
+    },
+    {
+      "case_id": "tes_0025",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0026",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "line_total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "LINE_TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0027",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0028",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "unparseable_subtotal"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0029",
+      "layout": "kairouan",
+      "layout_detected": null,
+      "unseen_layout": true,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": false,
+      "critical_fields_correct": false
+    },
+    {
+      "case_id": "tes_0030",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_not_found"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "actual_failed_codes": [
+        "PO_NOT_FOUND"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0031",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0032",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "po_amount_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "PO_AMOUNT_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0033",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0034",
+      "layout": "kairouan",
+      "layout_detected": null,
+      "unseen_layout": true,
+      "seeded_faults": [
+        "foreign_currency"
+      ],
+      "detectable": true,
+      "expected_state": "unsupported",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": false,
+      "critical_fields_correct": false
+    },
+    {
+      "case_id": "tes_0035",
+      "layout": "atlas",
+      "layout_detected": "atlas",
+      "unseen_layout": false,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0036",
+      "layout": "medina",
+      "layout_detected": "medina",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "total_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0037",
+      "layout": "carthage",
+      "layout_detected": "carthage",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "subtotal_mismatch"
+      ],
+      "detectable": true,
+      "expected_state": "needs_review",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "actual_failed_codes": [
+        "SUBTOTAL_MISMATCH"
+      ],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0038",
+      "layout": "sousse",
+      "layout_detected": "sousse",
+      "unseen_layout": false,
+      "seeded_faults": [
+        "zero_quantity_line"
+      ],
+      "detectable": false,
+      "expected_state": "validated",
+      "actual_state": "validated",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [],
+      "conforms": true,
+      "critical_fields_correct": true
+    },
+    {
+      "case_id": "tes_0039",
+      "layout": "kairouan",
+      "layout_detected": null,
+      "unseen_layout": true,
+      "seeded_faults": [],
+      "detectable": true,
+      "expected_state": "validated",
+      "actual_state": "needs_review",
+      "expected_failed_codes": [],
+      "actual_failed_codes": [
+        "REQUIRED_FIELD_MISSING"
+      ],
+      "conforms": false,
+      "critical_fields_correct": false
+    }
+  ],
+  "run_at": "2026-11-06T11:11:31+00:00",
+  "dataset": "corpus_v1",
+  "seed": 20261106,
+  "extractor": "pdf_text:v1",
+  "python": "3.12.13",
+  "note": "Frozen test split. It contains the layout the extractor was never taught. Tuning anything against these figures invalidates them."
+}

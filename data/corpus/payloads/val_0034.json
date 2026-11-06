@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1143",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2026-09-22",
+  "due_date": "2026-10-22",
+  "currency": "EUR",
+  "purchase_order_number": "PO-2026-1143",
+  "subtotal": "4828.700",
+  "tax_total": "917.453",
+  "total": "5746.153",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "10",
+      "unit_price": "15.020",
+      "line_amount": "150.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Chaises de bureau",
+      "quantity": "12",
+      "unit_price": "299.000",
+      "line_amount": "3588.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "2",
+      "unit_price": "120.450",
+      "line_amount": "240.900"
+    },
+    {
+      "line_number": 4,
+      "description": "Toner laser monochrome",
+      "quantity": "4",
+      "unit_price": "212.400",
+      "line_amount": "849.600"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

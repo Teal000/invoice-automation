@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA005-2026-1002",
+  "supplier_reference": "SUP-005",
+  "supplier_name": "Comptoir Kairouan SARL (synthetic)",
+  "invoice_date": "2026-05-07",
+  "due_date": "2026-06-07",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1002",
+  "subtotal": "12.640",
+  "tax_total": "2.402",
+  "total": "15.042",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "1",
+      "unit_price": "12.640",
+      "line_amount": "12.640"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

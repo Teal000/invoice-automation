@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1035",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-02-15",
+  "due_date": "2026-03-15",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1035",
+  "subtotal": "396.000",
+  "tax_total": "75.240",
+  "total": "471.240",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "8",
+      "unit_price": "49.500",
+      "line_amount": "396.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

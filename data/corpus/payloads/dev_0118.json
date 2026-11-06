@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1113",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-09-20",
+  "due_date": "2026-10-20",
+  "currency": "EUR",
+  "purchase_order_number": "PO-2026-1113",
+  "subtotal": "7227.520",
+  "tax_total": "1373.229",
+  "total": "8600.749",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "4",
+      "unit_price": "14.680",
+      "line_amount": "58.720"
+    },
+    {
+      "line_number": 2,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "10",
+      "unit_price": "121.100",
+      "line_amount": "1211.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Chaises de bureau",
+      "quantity": "20",
+      "unit_price": "282.200",
+      "line_amount": "5644.000"
+    },
+    {
+      "line_number": 4,
+      "description": "Agrafeuses metal",
+      "quantity": "12",
+      "unit_price": "26.150",
+      "line_amount": "313.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

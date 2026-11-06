@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA010-2026-1144",
+  "supplier_reference": "SUP-010",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-06-19",
+  "due_date": "2026-07-19",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1144",
+  "subtotal": "1304.000",
+  "tax_total": "247.760",
+  "total": "1551.760",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "20",
+      "unit_price": "65.200",
+      "line_amount": "1304.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

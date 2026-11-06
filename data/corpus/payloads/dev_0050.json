@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA005-2026-1051",
+  "supplier_reference": "SUP-005",
+  "supplier_name": "Comptoir Kairouan SARL (synthetic)",
+  "invoice_date": "2026-04-05",
+  "due_date": "2026-05-05",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1051",
+  "subtotal": "5961.050",
+  "tax_total": "1132.600",
+  "total": "7093.650",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "10",
+      "unit_price": "218.800",
+      "line_amount": "2098.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Ecrans 24 pouces",
+      "quantity": "8",
+      "unit_price": "467.500",
+      "line_amount": "3740.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "1",
+      "unit_price": "123.050",
+      "line_amount": "123.050"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

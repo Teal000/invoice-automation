@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA004-2026-1069",
+  "supplier_reference": "SUP-004",
+  "supplier_name": "Bureautique Sahel SA (synthetic)",
+  "invoice_date": "2026-09-05",
+  "due_date": "2026-10-05",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1069",
+  "subtotal": "4033.200",
+  "tax_total": "766.308",
+  "total": "4799.508",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Agrafeuses metal",
+      "quantity": "0",
+      "unit_price": "28.900",
+      "line_amount": "0.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "10",
+      "unit_price": "17.520",
+      "line_amount": "175.200"
+    },
+    {
+      "line_number": 3,
+      "description": "Classeurs a levier",
+      "quantity": "2",
+      "unit_price": "13.000",
+      "line_amount": "26.000"
+    },
+    {
+      "line_number": 4,
+      "description": "Toner laser monochrome",
+      "quantity": "20",
+      "unit_price": "191.600",
+      "line_amount": "3832.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

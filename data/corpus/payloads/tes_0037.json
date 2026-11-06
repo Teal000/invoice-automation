@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA003-2026-1184",
+  "supplier_reference": "SUP-003",
+  "supplier_name": "Logistique Carthage SARL (synthetic)",
+  "invoice_date": "2026-06-13",
+  "due_date": "2026-07-13",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1184",
+  "subtotal": "14299.540",
+  "tax_total": "2651.463",
+  "total": "16951.003",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "5",
+      "unit_price": "212.400",
+      "line_amount": "1062.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "1",
+      "unit_price": "18.540",
+      "line_amount": "18.540"
+    },
+    {
+      "line_number": 3,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "20",
+      "unit_price": "658.200",
+      "line_amount": "13164.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

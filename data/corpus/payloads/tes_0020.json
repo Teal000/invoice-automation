@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA007-2026-1167",
+  "supplier_reference": "SUP-007",
+  "supplier_name": "Materiel Sfax SARL (synthetic)",
+  "invoice_date": "2026-08-15",
+  "due_date": "2026-09-15",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1167",
+  "subtotal": "864.400",
+  "tax_total": "164.236",
+  "total": "1028.636",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "6",
+      "unit_price": "46.200",
+      "line_amount": "277.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "4",
+      "unit_price": "123.700",
+      "line_amount": "494.800"
+    },
+    {
+      "line_number": 3,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "10",
+      "unit_price": "9.240",
+      "line_amount": "92.400"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

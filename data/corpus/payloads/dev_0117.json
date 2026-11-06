@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1112",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2027-03-04",
+  "due_date": "2027-04-03",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1112",
+  "subtotal": "1931.700",
+  "tax_total": "367.023",
+  "total": "2298.723",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "12",
+      "unit_price": "121.100",
+      "line_amount": "1453.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Cartouches encre noire",
+      "quantity": "10",
+      "unit_price": "47.850",
+      "line_amount": "478.500"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

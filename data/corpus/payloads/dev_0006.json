@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA005-2026-1007",
+  "supplier_reference": "SUP-005",
+  "supplier_name": "Comptoir Kairouan SARL (synthetic)",
+  "invoice_date": "2026-01-15",
+  "due_date": "2026-02-15",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-999999",
+  "subtotal": "430.700",
+  "tax_total": "81.833",
+  "total": "512.533",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Agrafeuses metal",
+      "quantity": "8",
+      "unit_price": "23.400",
+      "line_amount": "187.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "2",
+      "unit_price": "121.750",
+      "line_amount": "243.500"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

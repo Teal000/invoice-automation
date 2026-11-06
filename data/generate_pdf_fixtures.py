@@ -394,11 +394,83 @@ def draw_sousse(canvas: Canvas, payload: dict) -> None:
     _notice(canvas)
 
 
+
+
+def draw_kairouan(canvas: Canvas, payload: dict) -> None:
+    """A fifth layout, held out of the frozen test split.
+
+    Like `sousse`, the extractor is deliberately not taught this one, and for
+    the same reason: a benchmark where every layout is familiar measures the
+    extractor against its own assumptions. Unlike `sousse`, which is used for
+    the small probe, this family appears only in the frozen test set.
+
+    Wording and geometry differ from all four others: labels are upper case
+    with no colon, the supplier and its code share one line in a different
+    order, and the totals sit in a single horizontal row.
+    """
+    title = TITLE_BY_DOCUMENT_TYPE.get(payload["document_type"], "DOCUMENT")
+    canvas.setFont("Helvetica-Bold", 15)
+    canvas.drawString(17 * mm, PAGE_HEIGHT - 25 * mm, title)
+    canvas.rect(15 * mm, PAGE_HEIGHT - 29 * mm, PAGE_WIDTH - 30 * mm, 10 * mm)
+
+    canvas.setFont("Helvetica", 9)
+    y = PAGE_HEIGHT - 40 * mm
+    right = PAGE_WIDTH - 17 * mm
+    for label, value in (
+        ("PIECE N", payload["invoice_number"]),
+        ("DU", fr_date(payload["invoice_date"])),
+        ("ECHEANCE", fr_date(payload["due_date"])),
+        ("MONNAIE", payload["currency"]),
+        ("REF CDE", payload["purchase_order_number"]),
+    ):
+        canvas.drawRightString(right, y, f"{label} {value if value else ''}")
+        y -= 5.5 * mm
+
+    canvas.setFont("Helvetica", 9)
+    canvas.drawString(
+        17 * mm,
+        PAGE_HEIGHT - 40 * mm,
+        f"EMIS PAR {payload['supplier_reference'] or ''} - "
+        f"{payload['supplier_name'] or ''}",
+    )
+
+    y -= 8 * mm
+    canvas.setFont("Helvetica-Bold", 9)
+    canvas.drawString(17 * mm, y, "Produit")
+    canvas.drawRightString(122 * mm, y, "Qte")
+    canvas.drawRightString(154 * mm, y, "PU")
+    canvas.drawRightString(PAGE_WIDTH - 17 * mm, y, "Total")
+    y -= 3 * mm
+    canvas.line(17 * mm, y, PAGE_WIDTH - 17 * mm, y)
+    y -= 6 * mm
+
+    canvas.setFont("Helvetica", 9)
+    for line in payload["line_items"]:
+        canvas.drawString(17 * mm, y, line["description"] or "")
+        canvas.drawRightString(122 * mm, y, fr_quantity(line["quantity"]))
+        canvas.drawRightString(154 * mm, y, fr_amount(line["unit_price"]))
+        canvas.drawRightString(PAGE_WIDTH - 17 * mm, y, fr_amount(line["line_amount"]))
+        y -= 6 * mm
+
+    y -= 8 * mm
+    canvas.setFont("Helvetica-Bold", 9)
+    canvas.drawString(
+        17 * mm,
+        y,
+        f"HT {fr_amount(payload['subtotal'])}    "
+        f"TVA {fr_amount(payload['tax_total'])}    "
+        f"TTC {fr_amount(payload['total'])}",
+    )
+
+    _notice(canvas)
+
+
 LAYOUTS = {
     "atlas": draw_atlas,
     "medina": draw_medina,
     "carthage": draw_carthage,
     "sousse": draw_sousse,
+    "kairouan": draw_kairouan,
 }
 
 #: Cases also rendered in the unseen layout, for the held-out probe. Chosen to

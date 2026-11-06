@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA005-2026-1101",
+  "supplier_reference": "SUP-005",
+  "supplier_name": "Comptoir Kairouan SARL (synthetic)",
+  "invoice_date": "2026-08-02",
+  "due_date": "2026-09-02",
+  "currency": "EUR",
+  "purchase_order_number": "PO-2026-1101",
+  "subtotal": "1491.450",
+  "tax_total": "283.376",
+  "total": "1774.826",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "5",
+      "unit_price": "124.350",
+      "line_amount": "621.750"
+    },
+    {
+      "line_number": 2,
+      "description": "Cartouches encre noire",
+      "quantity": "8",
+      "unit_price": "48.400",
+      "line_amount": "387.200"
+    },
+    {
+      "line_number": 3,
+      "description": "Ecrans 24 pouces",
+      "quantity": "1",
+      "unit_price": "482.500",
+      "line_amount": "482.500"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

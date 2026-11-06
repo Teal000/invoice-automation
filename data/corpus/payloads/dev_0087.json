@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1086",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-02-26",
+  "due_date": "2026-03-26",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1086",
+  "subtotal": "7324.640",
+  "tax_total": "1391.682",
+  "total": "",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "8",
+      "unit_price": "7.980",
+      "line_amount": "63.840"
+    },
+    {
+      "line_number": 2,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "20",
+      "unit_price": "19.220",
+      "line_amount": "384.400"
+    },
+    {
+      "line_number": 3,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "10",
+      "unit_price": "681.300",
+      "line_amount": "6813.000"
+    },
+    {
+      "line_number": 4,
+      "description": "Lampes de bureau LED",
+      "quantity": "1",
+      "unit_price": "63.400",
+      "line_amount": "63.400"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

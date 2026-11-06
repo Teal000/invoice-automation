@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA002-2026-1172",
+  "supplier_reference": "SUP-002",
+  "supplier_name": "Papeterie Medina SA (synthetic)",
+  "invoice_date": "2026-01-09",
+  "due_date": "2026-02-09",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1172",
+  "subtotal": "722.440",
+  "tax_total": "71.814",
+  "total": "794.254",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Classeurs a levier",
+      "quantity": "8",
+      "unit_price": "14.080",
+      "line_amount": "112.640"
+    },
+    {
+      "line_number": 2,
+      "description": "Chaises de bureau",
+      "quantity": "2",
+      "unit_price": "277.400",
+      "line_amount": "554.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

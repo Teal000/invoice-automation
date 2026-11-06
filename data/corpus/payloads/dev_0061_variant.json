@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1062",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-06-01",
+  "due_date": "2026-07-01",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1062",
+  "subtotal": "159.080",
+  "tax_total": "30.225",
+  "total": "189.305",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles (relance)",
+      "quantity": "6",
+      "unit_price": "7.980",
+      "line_amount": "47.880"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "4",
+      "unit_price": "27.800",
+      "line_amount": "111.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

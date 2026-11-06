@@ -17,6 +17,7 @@ later it has to beat the baseline this produces, measured on the same set.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -30,6 +31,13 @@ from .words import Document, Line, find_table, load_document, trailing_amount
 EXTRACTION_METHOD = "pdf_text:v1"
 
 TOTALS_STOP_LABELS = (
+    # Every layout's totals wording. A label missing here is read as another
+    # table row, which is how the sousse totals line first became a fourth
+    # line item.
+    "Base HT",
+    "Taxes",
+    "Net à régler",
+    "Net a régler",
     "Total HT",
     "Sous-total",
     "Montant hors taxe",
@@ -80,10 +88,19 @@ def detect_document_type(document: Document) -> tuple[str, Line | None]:
     rather than assuming "invoice" is what lets the rules exclude it with an
     explicit code instead of validating it as something it is not.
     """
-    for line in document.lines:
+    heading_lines = document.lines[:6]
+    for line in heading_lines:
         normalised = _fold(line.text)
         for title, document_type in DOCUMENT_TITLES:
             if normalised.startswith(title):
+                return document_type, line
+    # Some layouts bury the kind in a longer heading, such as
+    # "PIECE COMPTABLE - FACTURE". Only the first few lines are considered,
+    # so the word "facture" in a payment term further down cannot decide it.
+    for line in heading_lines:
+        normalised = _fold(line.text)
+        for title, document_type in DOCUMENT_TITLES:
+            if re.search(rf"\b{re.escape(title)}\b", normalised):
                 return document_type, line
     return "unknown", None
 
@@ -167,9 +184,19 @@ def extract_invoice(path: str | Path) -> ExtractionResult:
         header[field_name] = value
         record(field_name, line, value)
 
-    subtotal, _, subtotal_line = _amount_at(document, spec.subtotal_labels)
-    tax_total, _, tax_line = _amount_at(document, spec.tax_labels)
-    total, total_currency, total_line = _amount_at(document, spec.total_labels)
+    def amount(rule, labels):
+        """A layout's own rule when it has one, else the label reading."""
+        if rule is not None:
+            found = rule(document)
+            if found is None:
+                return None, None, None
+            value, line = found
+            return value.strip(), None, line
+        return _amount_at(document, labels)
+
+    subtotal, _, subtotal_line = amount(spec.subtotal_rule, spec.subtotal_labels)
+    tax_total, _, tax_line = amount(spec.tax_rule, spec.tax_labels)
+    total, total_currency, total_line = amount(spec.total_rule, spec.total_labels)
     record("subtotal", subtotal_line, subtotal)
     record("tax_total", tax_line, tax_total)
     record("total", total_line, total)

@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1150",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-08-17",
+  "due_date": "2026-09-17",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1150",
+  "subtotal": "1062.000",
+  "tax_total": "201.780",
+  "total": "",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "5",
+      "unit_price": "212.400",
+      "line_amount": "1062.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

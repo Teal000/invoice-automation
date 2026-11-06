@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA008-2026-1027",
+  "supplier_reference": "SUP-008",
+  "supplier_name": "Equipements Gabes SA (synthetic)",
+  "invoice_date": "2026-04-14",
+  "due_date": "2026-05-14",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1027",
+  "subtotal": "958.000",
+  "tax_total": "182.020",
+  "total": "1140.020",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "5",
+      "unit_price": "191.600",
+      "line_amount": "958.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

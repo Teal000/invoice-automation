@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA009-2026-1160",
+  "supplier_reference": "SUP-009",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2026-06-26",
+  "due_date": "2026-07-26",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1160",
+  "subtotal": "8051.400",
+  "tax_total": "1529.766",
+  "total": "9581.166",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Toner laser monochrome",
+      "quantity": "10",
+      "unit_price": "212.400",
+      "line_amount": "2124.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Ecrans 24 pouces",
+      "quantity": "12",
+      "unit_price": "445.000",
+      "line_amount": "5340.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "12",
+      "unit_price": "48.950",
+      "line_amount": "587.400"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

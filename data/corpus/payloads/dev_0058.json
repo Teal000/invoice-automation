@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA009-2026-1059",
+  "supplier_reference": "SUP-009",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2026-04-04",
+  "due_date": "2026-05-04",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1059",
+  "subtotal": "5470.600",
+  "tax_total": "1039.414",
+  "total": "6510.014",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "8",
+      "unit_price": "452.500",
+      "line_amount": "3620.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "6",
+      "unit_price": "122.400",
+      "line_amount": "734.400"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "20",
+      "unit_price": "46.200",
+      "line_amount": "924.000"
+    },
+    {
+      "line_number": 4,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "10",
+      "unit_price": "19.220",
+      "line_amount": "192.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

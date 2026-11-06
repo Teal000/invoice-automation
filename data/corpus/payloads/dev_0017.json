@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA005-2026-1018",
+  "supplier_reference": "SUP-900",
+  "supplier_name": "Fournisseur Inconnu (synthetic)",
+  "invoice_date": "2026-02-15",
+  "due_date": "2026-03-15",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1018",
+  "subtotal": "602.250",
+  "tax_total": "114.428",
+  "total": "716.678",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "5",
+      "unit_price": "120.450",
+      "line_amount": "602.250"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

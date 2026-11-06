@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1068",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2026-06-15",
+  "due_date": "2026-01-01",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1068",
+  "subtotal": "107.800",
+  "tax_total": "20.482",
+  "total": "128.282",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "1",
+      "unit_price": "60.700",
+      "line_amount": "60.700"
+    },
+    {
+      "line_number": 2,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "3",
+      "unit_price": "15.700",
+      "line_amount": "47.100"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

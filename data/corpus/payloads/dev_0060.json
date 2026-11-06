@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA009-2026-1061",
+  "supplier_reference": "SUP-009",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2026-03-08",
+  "due_date": "2026-04-08",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1061",
+  "subtotal": "4345.900",
+  "tax_total": "825.721",
+  "total": "5209.121",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "4",
+      "unit_price": "475.000",
+      "line_amount": "1900.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "10",
+      "unit_price": "27.250",
+      "line_amount": "272.500"
+    },
+    {
+      "line_number": 3,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "1",
+      "unit_price": "689.000",
+      "line_amount": "689.000"
+    },
+    {
+      "line_number": 4,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "12",
+      "unit_price": "123.700",
+      "line_amount": "1484.400"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

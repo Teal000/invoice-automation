@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA004-2026-1126",
+  "supplier_reference": "SUP-004",
+  "supplier_name": "Bureautique Sahel SA (synthetic)",
+  "invoice_date": "2026-06-18",
+  "due_date": "2026-07-18",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1126",
+  "subtotal": "3593.800",
+  "tax_total": "617.372",
+  "total": "4211.172",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "20",
+      "unit_price": "49.500",
+      "line_amount": "990.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Toner laser monochrome",
+      "quantity": "12",
+      "unit_price": "212.400",
+      "line_amount": "2548.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

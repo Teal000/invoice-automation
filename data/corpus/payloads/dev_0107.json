@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA003-2026-1102",
+  "supplier_reference": "SUP-003",
+  "supplier_name": "Logistique Carthage SARL (synthetic)",
+  "invoice_date": "2026-02-10",
+  "due_date": "2026-03-10",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1102",
+  "subtotal": "140.400",
+  "tax_total": "26.676",
+  "total": "167.076",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Agrafeuses metal",
+      "quantity": "3",
+      "unit_price": "23.400",
+      "line_amount": "70.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "3",
+      "unit_price": "23.400",
+      "line_amount": "70.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

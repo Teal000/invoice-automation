@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA010-2026-1079",
+  "supplier_reference": "SUP-010",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-07-27",
+  "due_date": "2026-08-27",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1079",
+  "subtotal": "50.520",
+  "tax_total": "9.599",
+  "total": "60.119",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "3",
+      "unit_price": "16.840",
+      "line_amount": "50.520"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

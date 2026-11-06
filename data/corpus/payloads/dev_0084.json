@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1083",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2026-01-12",
+  "due_date": "2026-02-12",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1083",
+  "subtotal": "270.600",
+  "tax_total": "51.414",
+  "total": "359.514",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "6",
+      "unit_price": "45.100",
+      "line_amount": "270.600"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

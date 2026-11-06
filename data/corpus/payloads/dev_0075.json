@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1074",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-09-09",
+  "due_date": "2026-10-09",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1074",
+  "subtotal": "355.500",
+  "tax_total": "67.545",
+  "total": "",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "3",
+      "unit_price": "118.500",
+      "line_amount": "355.500"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA007-2026-1182",
+  "supplier_reference": "SUP-007",
+  "supplier_name": "Materiel Sfax SARL (synthetic)",
+  "invoice_date": "2026-06-14",
+  "due_date": "2026-07-14",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1182",
+  "subtotal": "236.500",
+  "tax_total": "44.935",
+  "total": "281.435",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "5",
+      "unit_price": "47.300",
+      "line_amount": "236.500"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

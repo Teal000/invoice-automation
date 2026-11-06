@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA009-2026-1009",
+  "supplier_reference": "SUP-009",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2026-06-17",
+  "due_date": "2026-07-17",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1009",
+  "subtotal": "989.200",
+  "tax_total": "187.948",
+  "total": "1177.148",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "10",
+      "unit_price": "18.200",
+      "line_amount": "182.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "1",
+      "unit_price": "673.600",
+      "line_amount": "673.600"
+    },
+    {
+      "line_number": 3,
+      "description": "Classeurs a levier",
+      "quantity": "10",
+      "unit_price": "13.360",
+      "line_amount": "133.600"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

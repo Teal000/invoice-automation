@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA009-2026-1156",
+  "supplier_reference": "SUP-009",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2027-03-04",
+  "due_date": "2027-04-03",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1156",
+  "subtotal": "3406.500",
+  "tax_total": "647.235",
+  "total": "4053.735",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "5",
+      "unit_price": "681.300",
+      "line_amount": "3406.500"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

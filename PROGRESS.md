@@ -5,6 +5,86 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-06 — A benchmark that can fail
+
+### Built
+
+- `data/generate_corpus.py`: 200 synthetic documents, deterministic from one
+  seed, across five layout families. Splits 120 development / 40 validation /
+  40 frozen test. Duplicate families are assigned together so no split is
+  scored on a document whose twin sat in another.
+- A fifth layout, `kairouan`, drawn by the generator and **never taught to
+  the extractor**. It appears only in the frozen test split.
+- The extractor now reads a fourth layout, `sousse`, which needed two new
+  capabilities: a `>` label separator, and per-layout regex rules for totals,
+  because that layout puts all three amounts on one line and "rightmost
+  number after the label" would read the final total three times.
+- 24 documents carry faults **no rule can catch** — a supplier name that
+  disagrees with a correct code, an invoice dated next year, a zero-quantity
+  line, a line entered twice — each arithmetically consistent and labelled
+  `detectable: false`.
+- `evaluation/run_benchmark.py`: extraction, pipeline conformance and fault
+  detection measured separately, familiar and unseen layouts reported apart,
+  and flags raised only because a document was unreadable counted separately
+  so they cannot be mistaken for detection.
+
+### Measured
+
+Frozen test split, run once: familiar layouts 32/32 on both layout
+identification and critical fields; **unseen layout 0/8 on both, with zero
+values invented**. Conformance 32/40 — the eight unreadable documents do not
+reach their labelled state, and that is reported rather than excluded. Fault
+recall 20/24 overall, 19/19 on faults a rule targets, **1/5 on faults no rule
+targets**, and that single flag came from an unreadable layout rather than
+from noticing the fault.
+
+Development 120/120 and validation 40/40 on everything familiar;
+`sousse` was taught before validation was scored and after development, which
+is what the validation split is for.
+
+### Retired
+
+The old three-document "unseen layout" probe and
+`evaluation/run_extraction_baseline.py`. Teaching `sousse` made the probe
+measure nothing, and keeping a 0/3 result that had become false would have
+been worse than deleting it. The unseen-layout measurement now lives in the
+frozen test split with eight documents instead of three. The unit tests that
+guarded the property were repointed at `kairouan`, so teaching the extractor
+that layout would break them — which is the intended pressure.
+
+### What the work turned up
+
+- **An invisible control character in my own source.** A heredoc turned `\\b`
+  into a literal backspace, so the title-detection regex was
+  `"\\x08facture\\x08"` and never matched. The file *looked* correct when
+  displayed. Found by inspecting the compiled function's constants after
+  source reading, `re` testing and cache clearing all said it should work.
+  The repository was then swept for control characters; this was the only one.
+- A comprehension inside a class body cannot see that class's own names, so
+  `MANIFEST["cases"]` silently resolved to the wrong manifest at module level.
+- The review screen used `st.dataframe`, which pulls in pandas, whose native
+  libraries this machine's Application Control policy blocks intermittently.
+  A review queue needs no dataframe; it now renders Markdown tables and the
+  flakiness is gone.
+- n8n's five-minute notification workflow was **observed firing** (a real
+  `GET /notifications?status=pending` in the API log). The fifteen-minute
+  recovery workflow has still not fired: only "Process a submission" was
+  published in the editor.
+
+### Next, in order
+
+1. Publish "Recover stalled work" in the n8n editor and confirm the sweep
+   fires on its schedule.
+2. Power BI over the reporting views, with the metric definitions, and
+   screenshots for readers without Power BI.
+3. Record the demonstration (`docs/demo_script.md` is written and marks the
+   steps that do not exist yet).
+4. The one-page business case and resume bullets, from measured results only.
+
+Nothing pushed. Nothing on the resume.
+
+---
+
 ## 2026-11-05 (week 3, part 1) — Reviewer corrections, rejection, accepted exceptions
 
 ### Built

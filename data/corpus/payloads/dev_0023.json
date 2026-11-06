@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA009-2026-1024",
+  "supplier_reference": "SUP-009",
+  "supplier_name": "Imprimerie Nabeul SARL (synthetic)",
+  "invoice_date": "2026-07-26",
+  "due_date": "2026-08-26",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1024",
+  "subtotal": "9350.000",
+  "tax_total": "1776.500",
+  "total": "11126.500",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "20",
+      "unit_price": "467.500",
+      "line_amount": "9350.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

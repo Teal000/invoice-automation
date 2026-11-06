@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1021",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-03-26",
+  "due_date": "2026-04-26",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1021",
+  "subtotal": "5234.560",
+  "tax_total": "994.566",
+  "total": "6229.126",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "8",
+      "unit_price": "635.100",
+      "line_amount": "5080.800"
+    },
+    {
+      "line_number": 2,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "8",
+      "unit_price": "19.220",
+      "line_amount": "153.760"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA010-2026-1048",
+  "supplier_reference": "SUP-010",
+  "supplier_name": "Mobilier Sousse SA (synthetic)",
+  "invoice_date": "2026-01-02",
+  "due_date": "2026-02-02",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1048",
+  "subtotal": "875.400",
+  "tax_total": "166.326",
+  "total": "1041.726",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Chaises de bureau",
+      "quantity": "3",
+      "unit_price": "291.800",
+      "line_amount": "875.400"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

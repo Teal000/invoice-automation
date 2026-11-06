@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA012-2026-1161",
+  "supplier_reference": "SUP-012",
+  "supplier_name": "Services Monastir SA (synthetic)",
+  "invoice_date": "2026-04-17",
+  "due_date": "2026-05-17",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1161",
+  "subtotal": "547.800",
+  "tax_total": "104.082",
+  "total": "651.882",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "12",
+      "unit_price": "45.650",
+      "line_amount": "547.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

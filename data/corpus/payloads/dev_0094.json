@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1093",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-08-04",
+  "due_date": "2026-09-04",
+  "currency": "EUR",
+  "purchase_order_number": "PO-2026-1093",
+  "subtotal": "89.300",
+  "tax_total": "16.967",
+  "total": "106.267",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "5",
+      "unit_price": "17.860",
+      "line_amount": "89.300"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

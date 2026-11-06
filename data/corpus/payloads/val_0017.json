@@ -1,0 +1,23 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1130",
+  "supplier_reference": "SUP-900",
+  "supplier_name": "Fournisseur Inconnu (synthetic)",
+  "invoice_date": "2026-09-13",
+  "due_date": "2026-10-13",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1130",
+  "subtotal": "260.800",
+  "tax_total": "49.552",
+  "total": "310.352",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Lampes de bureau LED",
+      "quantity": "4",
+      "unit_price": "65.200",
+      "line_amount": "260.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

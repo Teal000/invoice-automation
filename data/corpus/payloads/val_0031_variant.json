@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA007-2026-1142",
+  "supplier_reference": "SUP-007",
+  "supplier_name": "Materiel Sfax SARL (synthetic)",
+  "invoice_date": "2026-03-21",
+  "due_date": "2026-04-21",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1142",
+  "subtotal": "608.400",
+  "tax_total": "115.596",
+  "total": "723.996",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles (relance)",
+      "quantity": "12",
+      "unit_price": "9.600",
+      "line_amount": "115.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "20",
+      "unit_price": "13.660",
+      "line_amount": "273.200"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "5",
+      "unit_price": "44.000",
+      "line_amount": "220.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

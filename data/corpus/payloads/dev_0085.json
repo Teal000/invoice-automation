@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA003-2026-1084",
+  "supplier_reference": "SUP-003",
+  "supplier_name": "Logistique Carthage SARL (synthetic)",
+  "invoice_date": "2026-07-04",
+  "due_date": "2026-08-04",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1084",
+  "subtotal": "5673.960",
+  "tax_total": "1078.052",
+  "total": "6752.012",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "4",
+      "unit_price": "46.750",
+      "line_amount": "187.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Ecrans 24 pouces",
+      "quantity": "8",
+      "unit_price": "467.500",
+      "line_amount": "3740.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Chaises de bureau",
+      "quantity": "6",
+      "unit_price": "279.800",
+      "line_amount": "1678.800"
+    },
+    {
+      "line_number": 4,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "8",
+      "unit_price": "8.520",
+      "line_amount": "68.160"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

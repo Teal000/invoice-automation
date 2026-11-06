@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA002-2026-1016",
+  "supplier_reference": "SUP-002",
+  "supplier_name": "Papeterie Medina SA (synthetic)",
+  "invoice_date": "2026-05-27",
+  "due_date": "2026-06-27",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1016",
+  "subtotal": "4088.950",
+  "tax_total": "776.901",
+  "total": "4865.851",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Chaises de bureau",
+      "quantity": "6",
+      "unit_price": "284.600",
+      "line_amount": "1707.600"
+    },
+    {
+      "line_number": 2,
+      "description": "Classeurs a levier",
+      "quantity": "6",
+      "unit_price": "13.000",
+      "line_amount": "78.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "5",
+      "unit_price": "119.150",
+      "line_amount": "595.750"
+    },
+    {
+      "line_number": 4,
+      "description": "Chaises de bureau",
+      "quantity": "6",
+      "unit_price": "284.600",
+      "line_amount": "1707.600"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

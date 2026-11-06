@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1047",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-01-09",
+  "due_date": "2026-02-09",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1047",
+  "subtotal": "2537.920",
+  "tax_total": "482.205",
+  "total": "3020.125",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "3",
+      "unit_price": "520.000",
+      "line_amount": "1560.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Classeurs a levier",
+      "quantity": "12",
+      "unit_price": "11.560",
+      "line_amount": "138.720"
+    },
+    {
+      "line_number": 3,
+      "description": "Toner laser monochrome",
+      "quantity": "4",
+      "unit_price": "209.800",
+      "line_amount": "839.200"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

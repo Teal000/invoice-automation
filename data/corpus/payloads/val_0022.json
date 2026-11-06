@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA003-2026-1135",
+  "supplier_reference": "SUP-003",
+  "supplier_name": "Logistique Carthage SARL (synthetic)",
+  "invoice_date": "2026-08-26",
+  "due_date": "2026-09-26",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1135",
+  "subtotal": "7508.000",
+  "tax_total": "1426.520",
+  "total": "8934.520",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "10",
+      "unit_price": "512.500",
+      "line_amount": "5125.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "20",
+      "unit_price": "119.150",
+      "line_amount": "2383.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

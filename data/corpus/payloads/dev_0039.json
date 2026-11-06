@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1040",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-03-18",
+  "due_date": "2026-04-18",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1040",
+  "subtotal": "994.980",
+  "tax_total": "189.046",
+  "total": "",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "3",
+      "unit_price": "18.540",
+      "line_amount": "55.620"
+    },
+    {
+      "line_number": 2,
+      "description": "Cartouches encre noire",
+      "quantity": "20",
+      "unit_price": "46.200",
+      "line_amount": "924.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "1",
+      "unit_price": "15.360",
+      "line_amount": "15.360"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

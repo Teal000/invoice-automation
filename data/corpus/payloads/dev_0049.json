@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1050",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-08-08",
+  "due_date": "2026-09-08",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1050",
+  "subtotal": "1950.200",
+  "tax_total": "370.538",
+  "total": "2320.738",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "1",
+      "unit_price": "658.200",
+      "line_amount": "658.200"
+    },
+    {
+      "line_number": 2,
+      "description": "Ecrans 24 pouces",
+      "quantity": "2",
+      "unit_price": "482.500",
+      "line_amount": "965.000"
+    },
+    {
+      "line_number": 3,
+      "description": "Agrafeuses metal",
+      "quantity": "12",
+      "unit_price": "27.250",
+      "line_amount": "327.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

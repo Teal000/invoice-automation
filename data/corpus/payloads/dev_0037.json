@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA003-2026-1038",
+  "supplier_reference": "SUP-003",
+  "supplier_name": "Logistique Carthage SARL (synthetic)",
+  "invoice_date": "2026-02-23",
+  "due_date": "2026-03-23",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1038",
+  "subtotal": "6323.800",
+  "tax_total": "1201.522",
+  "total": "7525.322",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ecrans 24 pouces",
+      "quantity": "2",
+      "unit_price": "467.500",
+      "line_amount": "935.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "8",
+      "unit_price": "673.600",
+      "line_amount": "5388.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

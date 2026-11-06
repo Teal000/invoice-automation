@@ -6,20 +6,19 @@ and the change will say so.
 
 ## What has been measured, and what it is worth
 
-One thing has been measured: extraction from the 16 synthetic PDFs, with the
-method, denominators and date in `evaluation/methodology.md` and the figures
-in `evaluation/results/`.
+A benchmark over 200 synthetic documents across five layout families, with a
+frozen 40-document test split, is in `evaluation/results/`; the method and
+caveats are in `evaluation/methodology.md`.
 
-It scores 16/16. That number is close to uninformative and should not be
-quoted on its own: the three layouts and the extractor's label sets were
-written side by side, the set is 16 documents, and nothing is held out. It
-says the extractor reads the documents this generator draws.
+On layouts the extractor was taught it recovers every critical field. That is
+a correctness result on documents produced by the same project, not a
+performance claim about real invoices.
 
-The figure worth quoting is the held-out layout: faced with a fourth layout it
-was never taught, the extractor recognised none of the three documents,
-recovered none of their 30 populated fields, and **invented no values** — the
-documents went to review instead. That is a real property, and it is the one
-that would matter on a supplier's unfamiliar template.
+The figures worth quoting are the ones that can fall. On the layout it was
+never taught it identified 0 of 8 documents, recovered nothing, and
+**invented nothing** — they went to review. And of the faults seeded that no
+rule targets, it caught none, which is a measured blind spot rather than an
+assumed one.
 
 No latency, cost, human-handling-time, time-saving or adoption figure is
 reported anywhere in this repository, because none has been measured.
@@ -91,7 +90,7 @@ all.
 
 ## Verification status
 
-328 tests pass, none skipped: 207 that need no database and 121 that do. The
+328 tests pass, none skipped: 209 that need no database and 119 that do. The
 schema has been applied to a live server, the 16 labelled cases produce their
 labelled outcomes through the full pipeline as payloads **and** as PDFs, and
 the reporting views reconcile with direct SQL queries.

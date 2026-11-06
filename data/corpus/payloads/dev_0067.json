@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1066",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-06-26",
+  "due_date": "2026-07-26",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1066",
+  "subtotal": "155.880",
+  "tax_total": "29.617",
+  "total": "185.497",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "4",
+      "unit_price": "15.020",
+      "line_amount": "60.080"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "4",
+      "unit_price": "23.950",
+      "line_amount": "95.800"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA006-2026-1019",
+  "supplier_reference": "SUP-006",
+  "supplier_name": "Distribution Bizerte SA (synthetic)",
+  "invoice_date": "2026-02-04",
+  "due_date": "2026-03-04",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-999999",
+  "subtotal": "1468.420",
+  "tax_total": "279.000",
+  "total": "1747.420",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "1",
+      "unit_price": "9.420",
+      "line_amount": "9.420"
+    },
+    {
+      "line_number": 2,
+      "description": "Chaises de bureau",
+      "quantity": "5",
+      "unit_price": "291.800",
+      "line_amount": "1459.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

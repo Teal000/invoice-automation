@@ -1,0 +1,37 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA001-2026-1162",
+  "supplier_reference": "SUP-001",
+  "supplier_name": "Fournitures Atlas SARL (synthetic)",
+  "invoice_date": "2026-05-02",
+  "due_date": "2026-06-02",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1162",
+  "subtotal": "6012.020",
+  "tax_total": "1142.284",
+  "total": "7154.304",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "1",
+      "unit_price": "17.520",
+      "line_amount": "17.520"
+    },
+    {
+      "line_number": 2,
+      "description": "Agrafeuses metal",
+      "quantity": "1",
+      "unit_price": "24.500",
+      "line_amount": "24.500"
+    },
+    {
+      "line_number": 3,
+      "description": "Ecrans 24 pouces",
+      "quantity": "12",
+      "unit_price": "497.500",
+      "line_amount": "5970.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

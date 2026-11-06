@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA003-2026-1017",
+  "supplier_reference": "SUP-003",
+  "supplier_name": "Logistique Carthage SARL (synthetic)",
+  "invoice_date": "2026-02-05",
+  "due_date": "2026-03-05",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1017",
+  "subtotal": "3434.000",
+  "tax_total": "652.460",
+  "total": "4086.460",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Cartouches encre noire",
+      "quantity": "6",
+      "unit_price": "49.500",
+      "line_amount": "297.000"
+    },
+    {
+      "line_number": 2,
+      "description": "Armoire metallique 2 portes",
+      "quantity": "5",
+      "unit_price": "627.400",
+      "line_amount": "3137.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

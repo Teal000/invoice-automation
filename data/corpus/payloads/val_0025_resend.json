@@ -1,0 +1,30 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA007-2026-1138",
+  "supplier_reference": "SUP-007",
+  "supplier_name": "Materiel Sfax SARL (synthetic)",
+  "invoice_date": "2026-08-12",
+  "due_date": "2026-09-12",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1138",
+  "subtotal": "552.300",
+  "tax_total": "104.937",
+  "total": "657.237",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Ramettes papier A4 80g",
+      "quantity": "3",
+      "unit_price": "121.100",
+      "line_amount": "363.300"
+    },
+    {
+      "line_number": 2,
+      "description": "Toner laser monochrome",
+      "quantity": "1",
+      "unit_price": "189.000",
+      "line_amount": "189.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}

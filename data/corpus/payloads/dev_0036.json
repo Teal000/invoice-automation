@@ -1,0 +1,44 @@
+{
+  "document_type": "invoice",
+  "invoice_number": "FA011-2026-1037",
+  "supplier_reference": "SUP-011",
+  "supplier_name": "Technologies Ariana SARL (synthetic)",
+  "invoice_date": "2026-08-16",
+  "due_date": "2026-09-16",
+  "currency": "TND",
+  "purchase_order_number": "PO-2026-1037",
+  "subtotal": "351.140",
+  "tax_total": "66.717",
+  "total": "417.857",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Blocs-notes quadrilles",
+      "quantity": "6",
+      "unit_price": "9.060",
+      "line_amount": "54.360"
+    },
+    {
+      "line_number": 2,
+      "description": "Stylos bille bleus (boite de 50)",
+      "quantity": "8",
+      "unit_price": "17.860",
+      "line_amount": "142.880"
+    },
+    {
+      "line_number": 3,
+      "description": "Cartouches encre noire",
+      "quantity": "2",
+      "unit_price": "48.950",
+      "line_amount": "97.900"
+    },
+    {
+      "line_number": 4,
+      "description": "Cables reseau RJ45 3m",
+      "quantity": "4",
+      "unit_price": "14.000",
+      "line_amount": "56.000"
+    }
+  ],
+  "extraction_method": "structured_fixture:v1"
+}
