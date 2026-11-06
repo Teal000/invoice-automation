@@ -160,6 +160,12 @@ outcome with its ground truth, exiting non-zero on any mismatch.
 - [docs/decisions.md](docs/decisions.md) — eleven decisions with their reasons,
   including why this runs on local PostgreSQL rather than Docker
 - [docs/limitations.md](docs/limitations.md) — what this does not establish
+- [docs/business_case.md](docs/business_case.md) — the case in one page, from
+  measured results only
+- [docs/resume_bullets.md](docs/resume_bullets.md) — drafts, each with the
+  evidence behind it, and the claims that are **not** supportable
+- [docs/demo_script.md](docs/demo_script.md) — the demonstration, with the
+  steps that do not exist yet marked as such
 - [docs/setup.md](docs/setup.md) — installation and commands
 - [PROGRESS.md](PROGRESS.md) — what is done, what is next
 
