@@ -22,7 +22,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "http://api:8000/submissions/{{ $json.body.submission_id }}/process",
+        "url": "=http://api:8000/submissions/{{ $json.body.submission_id }}/process",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "options": {}

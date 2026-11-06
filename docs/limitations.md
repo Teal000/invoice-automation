@@ -98,10 +98,12 @@ the reporting views reconcile with direct SQL queries.
 
 Two caveats on that, both real:
 
-- **No orchestration actually runs.** The n8n workflows import into a running
-  n8n and do not execute past the webhook; publishing them needs the editor,
-  which needs an account only the owner can create. Nothing drives processing
-  or recovery on a schedule today.
+- **Orchestration has run once, not repeatedly.** An n8n workflow has driven
+  a submission through the API end to end and the outcome was recorded. That
+  is one observed execution of one branch, by hand, on one machine — not a
+  demonstration that the orchestration is reliable. The scheduled recovery
+  and notification workflows have never been seen to fire, and no run has
+  been recorded for the validated or needs-review branches.
 - **Testing happened on one machine, with one user, on synthetic data of a
   known shape.** The concurrency test runs two threads; it is not a load test
   and says nothing about behaviour under real contention or volume.

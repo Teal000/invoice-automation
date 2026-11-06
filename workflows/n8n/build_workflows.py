@@ -66,6 +66,14 @@ def http_node(
     query: dict | None = None,
     retry: bool = False,
 ) -> dict:
+    # A parameter containing an expression must start with "=" or n8n sends
+    # the braces through as literal text. Without it the first live run put
+    # "{{ $json.body.submission_id }}" in the URL path and the API answered
+    # 422 uuid_parsing, which is exactly the sort of thing only a real
+    # execution shows.
+    if "{{" in url and not url.startswith("="):
+        url = "=" + url
+
     parameters: dict = {
         "method": method,
         "url": url,

@@ -11,34 +11,46 @@ and what is not is below; nothing here should be read as working.
 |---|---|
 | Node type versions read from the running n8n, not guessed | Done |
 | Generated and committed, carrying no secret | Done |
-| Imported into n8n 2.46.6 | Done — visible in the editor |
+| Imported into n8n 2.46.6 | Done |
 | Credential seeded inside the container from its own environment | Done |
-| Published (`publish:workflow`) | Works, but see below |
-| Trigger registered, so the webhook answers | **Not done** |
-| Executed end to end | **Not done** |
+| Published from the editor | Done |
+| **Executed end to end against the live API** | **Done, once** |
 
-Posting to `/webhook/invoice-submission` returns:
+### What was observed
 
-> The requested webhook "POST invoice-submission" is not registered. The
-> workflow must be active for a production URL to run successfully. You can
-> activate the workflow using the toggle in the top-right of the editor.
+A PDF was uploaded without being processed, its submission id was posted to
+`/webhook/invoice-submission`, and n8n called
+`POST /submissions/{id}/process` on the API. The workflow returned the
+service's own response and the submission moved from `pending` to a recorded
+outcome:
 
-## The one step left
+```
+webhook HTTP 200
+n8n returned: state = duplicate, failed = ["EXACT_FILE_DUPLICATE"]
+API says:     outcome = duplicate, job = succeeded, attempts = 1
+```
 
-Open http://localhost:5678, open **Process a submission**, and use the
-activate toggle. n8n's own error message names that as the way to do it, and
-it is a single click now that the instance has an owner account.
+`duplicate` because that PDF had already been uploaded during earlier
+testing, so the file-hash check caught it: the correct answer, and a slightly
+unfortunate one to demonstrate with. Runs covering the validated and
+needs-review branches have not been recorded yet.
 
-While there, delete the five duplicate workflows listed below. They are
-leftovers and one of them previously held the webhook path.
-
-Then the verification is: upload a PDF without processing it, POST its
-submission id to the webhook, and check the API reports an outcome rather
-than `pending`.
+**Publishing is per import.** `import:workflow` deactivates the workflow it
+replaces — the import log says `Deactivating workflow` — so the editor's
+Publish button has to be pressed again after every re-import. That is the
+loop: regenerate, import, publish, test.
 
 ## What was learned getting this far
 
 Each of these cost a round trip and is worth not rediscovering.
+
+**An expression in a parameter must start with `=`.** Without it n8n sends
+the braces through as literal text: the first live run put
+`{{ $json.body.submission_id }}` in the URL path and the API answered
+`422 uuid_parsing`. The generator now adds the prefix whenever a value
+contains an expression. This is the kind of fault only a real execution
+finds — the JSON is valid, the import succeeds, and the workflow looks right
+on the canvas.
 
 **An owner account is required before publishing does anything.** Before one
 existed, `publish:workflow` reported success and n8n logged
