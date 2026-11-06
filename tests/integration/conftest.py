@@ -29,6 +29,7 @@ MANIFEST = PROJECT_ROOT / "data" / "ground_truth" / "structured_cases.json"
 
 _TRANSACTIONAL_TABLES = (
     "notification_outbox",
+    "review_actions",
     "validation_results",
     "invoice_lines",
     "processing_jobs",

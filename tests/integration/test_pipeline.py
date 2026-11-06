@@ -388,3 +388,90 @@ class TestReporting:
         for row in rows:
             assert row["failed_checks"] >= row["invoices_affected"]
         assert "PO_AMOUNT_MISMATCH" in by_code
+
+
+class TestTimeSeriesViews:
+    """The two views the dashboard needs that the summary cannot provide."""
+
+    def test_the_daily_view_accounts_for_every_submission(
+        self, seeded, fixtures_dir, manifest
+    ):
+        for case in manifest["cases"]:
+            invoice, submission = load(fixtures_dir / case["file"])
+            process_structured_submission(seeded, invoice, submission)
+
+        total = scalar(
+            seeded, "SELECT coalesce(sum(submissions), 0) AS n FROM v_daily_processing"
+        )
+        assert total == scalar(seeded, "SELECT count(*) AS n FROM submissions")
+
+        duplicates = scalar(
+            seeded,
+            "SELECT coalesce(sum(duplicate_arrivals), 0) AS n FROM v_daily_processing",
+        )
+        assert duplicates == scalar(
+            seeded, "SELECT count(*) AS n FROM submissions WHERE outcome = 'duplicate'"
+        )
+
+    def test_the_daily_view_dates_by_arrival_not_by_invoice_date(
+        self, seeded, fixtures_dir
+    ):
+        """An invoice dated in March can arrive in November."""
+        invoice, submission = load(fixtures_dir / "valid_001.json")
+        result = process_structured_submission(seeded, invoice, submission)
+
+        row = seeded.execute("SELECT * FROM v_daily_processing").fetchone()
+        received = scalar(
+            seeded,
+            "SELECT received_at::date AS d FROM submissions WHERE submission_id = %s",
+            (result.submission_id,),
+        )
+        invoice_date = scalar(
+            seeded,
+            "SELECT invoice_date AS d FROM invoice_revisions WHERE invoice_id = %s",
+            (result.invoice_id,),
+        )
+        assert row["arrival_date"] == received
+        assert row["arrival_date"] != invoice_date
+
+    def test_the_review_queue_holds_exactly_what_needs_review(
+        self, seeded, fixtures_dir, manifest
+    ):
+        for case in manifest["cases"]:
+            invoice, submission = load(fixtures_dir / case["file"])
+            process_structured_submission(seeded, invoice, submission)
+
+        assert scalar(seeded, "SELECT count(*) AS n FROM v_review_queue") == scalar(
+            seeded,
+            "SELECT count(*) AS n FROM invoices WHERE business_state = 'needs_review'",
+        )
+        row = seeded.execute(
+            "SELECT * FROM v_review_queue ORDER BY invoice_number LIMIT 1"
+        ).fetchone()
+        # Every queued item says what is wrong with it and how long it waited.
+        assert row["failed_codes"]
+        assert row["days_waiting"] >= 0
+        assert row["age_band"] in (
+            "under a day",
+            "1 to 3 days",
+            "3 to 7 days",
+            "over a week",
+        )
+
+    def test_queue_age_runs_from_arrival_not_from_the_invoice_row(
+        self, seeded, fixtures_dir
+    ):
+        """Bulk-loaded documents must not all look like they arrived now."""
+        invoice, submission = load(fixtures_dir / "total_mismatch_008.json")
+        result = process_structured_submission(seeded, invoice, submission)
+        seeded.execute(
+            "UPDATE submissions SET received_at = now() - interval '10 days' "
+            "WHERE invoice_id = %s",
+            (result.invoice_id,),
+        )
+        row = seeded.execute(
+            "SELECT days_waiting, age_band FROM v_review_queue WHERE invoice_id = %s",
+            (result.invoice_id,),
+        ).fetchone()
+        assert row["days_waiting"] >= 9
+        assert row["age_band"] == "over a week"

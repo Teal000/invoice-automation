@@ -9,6 +9,10 @@ All figures describe synthetic portfolio data. Amounts are submitted or
 recorded invoice values; this project executes no payments, so nothing here is
 cash.
 
+The dashboard build guide is in [README.md](README.md), and
+`tools/reconcile_dashboard.py` recomputes every figure below from the base
+tables so a report can be checked rather than trusted.
+
 ## Counts
 
 | Measure | Definition | Source |

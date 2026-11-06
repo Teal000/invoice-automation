@@ -5,6 +5,68 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-06 (later) — Everything a dashboard needs except the clicks
+
+### Built
+
+- Migration `0006_reporting_timeseries`: `v_daily_processing` (arrivals per
+  day and their outcomes) and `v_review_queue` (what is waiting, for how
+  long, and which checks failed). The summary view answers "where do things
+  stand"; neither "what has been happening" nor "what is waiting" can be
+  drawn from one row of totals.
+- `tools/load_corpus.py`: pushes all 200 corpus documents through the real
+  path so the views have volume to show. `--spread-days` invents arrival
+  timestamps across a past window so the daily chart has more than one bar,
+  and the guide says on the page that they are invented.
+- `tools/create_reporting_role.py`: creates `invoice_reporting` with `SELECT`
+  on the six reporting views and on **no table**. It then proves the grant by
+  trying to read a table and to write, and reports both refusals rather than
+  asserting the role is read-only.
+- `tools/reconcile_dashboard.py`: recomputes thirteen headline figures from
+  the base tables, independently of the views, compares them, and prints what
+  a correct dashboard must display. Exits non-zero on any disagreement.
+- `dashboard/README.md`: the build guide — connection, the three pages, which
+  view feeds which visual, the DAX for a filtered rate, and what every page
+  must carry.
+
+### Checked
+
+- 200 documents loaded: 94 validated, 90 needing review, 9 unsupported, 7
+  duplicate arrivals; 186 unique invoices.
+- All thirteen reconciliation measures agree between the views and direct SQL.
+- The read-only role reads views, and is refused on both table reads and
+  writes.
+- `pytest -q` → **332 passed, 0 skipped**, including four new tests for the
+  two new views.
+
+### What the data exposed
+
+The review queue initially reported every one of 90 invoices as waiting
+"under a day", because age was measured from `invoices.created_at` rather
+than from when the document arrived. Those differ whenever documents are
+loaded in bulk, and the business waits from the arrival. Fixed before the
+view was committed; a test now backdates an arrival and asserts the age band
+follows it.
+
+### Not done
+
+**The Power BI report itself.** Power BI Desktop is not installed, so the
+`.pbix` and its screenshots do not exist. Everything up to the clicks is
+prepared and reconciled. The README status table says this plainly rather
+than implying a dashboard exists.
+
+### Next, in order
+
+1. Install Power BI Desktop, build the three pages, reconcile, export
+   screenshots.
+2. Publish "Recover stalled work" in n8n and confirm the sweep fires.
+3. Record the demonstration; write the one-page business case and resume
+   bullets from measured results only.
+
+Nothing pushed. Nothing on the resume.
+
+---
+
 ## 2026-11-06 — A benchmark that can fail
 
 ### Built

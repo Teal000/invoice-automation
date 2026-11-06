@@ -58,6 +58,7 @@ DEFAULT_REFERENCE = PROJECT_ROOT / "data" / "fixtures" / "reference"
 #: Tables emptied by `reset`, in dependency order. Reference data is kept.
 _TRANSACTIONAL_TABLES = (
     "notification_outbox",
+    "review_actions",
     "validation_results",
     "invoice_lines",
     "processing_jobs",

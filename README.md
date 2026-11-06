@@ -42,9 +42,11 @@ reported anywhere here, because none has been measured.
 | Container setup: db, api and n8n in compose | Implemented | Built and run; all three containers healthy |
 | The schema on PostgreSQL 18 | Verified | All five migrations applied and the **whole suite passes** against PostgreSQL 18.6 in the container |
 | n8n orchestration: webhook triggers processing through the API | Runs | Observed end to end on both branches: a PDF uploaded unprocessed, its id posted to the webhook, n8n calls the API, the submission reaches `validated` or `needs_review`. The two scheduled workflows are published but have not been seen to fire |
-| Notification *delivery*, OCR, n8n workflows, review **interface**, Power BI | Not built | — |
+| Reporting views for a dashboard, read-only role, reconciliation | Implemented | Six views; the role is granted SELECT on views only and the grant is tested by trying to read a table and write |
+| The Power BI report itself | Not built | Power BI Desktop is not installed; everything up to the clicks is prepared in `dashboard/README.md` |
+| Notification *delivery*, OCR | Not built | — |
 
-**328 tests pass, none skipped**: 207 that need no database and 121 that do — and they pass against **both** PostgreSQL 16.2 (the local dev server) and PostgreSQL 18.6 (the container).
+**332 tests pass, none skipped** — against **both** PostgreSQL 16.2 (the local dev server) and PostgreSQL 18.6 (the container).
 
 ## Measured so far
 
