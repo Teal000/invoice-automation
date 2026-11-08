@@ -29,7 +29,7 @@ reported anywhere here, because none has been measured.
 | Documents stored under their own SHA-256, in one place per content | Implemented | Integration test: an identical file reuses the stored bytes |
 | PDF text extraction across 3 layout families, with field evidence | Implemented | 64 unit tests on the committed documents; measured, see below |
 | An unrecognised layout invents nothing and routes to review | Implemented | Held-out 4th layout the extractor was never taught |
-| 13 deterministic validation rules | Implemented | 207 unit tests, no database needed |
+| 13 deterministic validation rules | Implemented | 209 unit tests, no database needed |
 | Each rule fires on its own case and nothing else | Implemented | One isolated case per code; a test asserts every code is covered |
 | Decimal money handling, explicit precision and rounding | Implemented | Unit tests including tolerance boundaries |
 | Normalisation that records missing and unparseable fields instead of guessing | Implemented | Unit tests |
@@ -43,10 +43,13 @@ reported anywhere here, because none has been measured.
 | The schema on PostgreSQL 18 | Verified | All five migrations applied and the **whole suite passes** against PostgreSQL 18.6 in the container |
 | n8n orchestration: webhook triggers processing through the API | Runs | Observed end to end on both branches: a PDF uploaded unprocessed, its id posted to the webhook, n8n calls the API, the submission reaches `validated` or `needs_review`. The two scheduled workflows are published but have not been seen to fire |
 | Reporting views for a dashboard, read-only role, reconciliation | Implemented | Six views; the role is granted SELECT on views only and the grant is tested by trying to read a table and write |
-| The Power BI report itself | Not built | Power BI Desktop is not installed; everything up to the clicks is prepared in `dashboard/README.md` |
+| The Power BI report itself | In progress | Connected over the read-only role, which sees six views and no tables. Processing overview and exception analysis built; invoice register pending |
 | Notification *delivery*, OCR | Not built | — |
 
-**332 tests pass, none skipped** — against **both** PostgreSQL 16.2 (the local dev server) and PostgreSQL 18.6 (the container).
+**334 tests pass, none skipped**, against PostgreSQL 18.6 in the container.
+The suite also passed against PostgreSQL 16.2 (the local dev server) on
+6 November 2026 at 332 tests; that server would not start on 8 November, so
+the two-version result is from the earlier revision rather than this one.
 
 ## Measured so far
 

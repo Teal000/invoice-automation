@@ -128,15 +128,21 @@ class Registries:
             )
         for entry in orders["purchase_orders"]:
             number = entry["po_number_normalized"]
+            # The order's supplier is attached here so that this in-memory
+            # replay produces the same failed-check text as the database
+            # path, which joins suppliers in the lookup.
+            po_supplier = registries.suppliers[
+                normalize_identifier(entry["supplier_reference"])
+            ]
             registries.orders[number] = PurchaseOrderRecord(
                 purchase_order_id=uuid5(NAMESPACE, number),
                 po_number_normalized=number,
-                supplier_id=registries.suppliers[
-                    normalize_identifier(entry["supplier_reference"])
-                ].supplier_id,
+                supplier_id=po_supplier.supplier_id,
                 currency=entry["currency"],
                 expected_amount=Decimal(entry["expected_amount"]),
                 state=entry.get("state", "open"),
+                supplier_name=po_supplier.name,
+                supplier_reference=po_supplier.reference_normalized,
             )
         return registries
 

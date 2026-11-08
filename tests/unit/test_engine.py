@@ -13,9 +13,9 @@ from decimal import Decimal
 
 import pytest
 from factories import (
-    OTHER_SUPPLIER_ID,
     context,
     duplicate_match,
+    other_supplier_order,
     purchase_order,
     raw_invoice,
     supplier,
@@ -76,7 +76,7 @@ CASES = {
         raw_invoice(purchase_order_number="PO-9999"), with_purchase_order=False
     ),
     "PO_SUPPLIER_MISMATCH": lambda: context(
-        purchase_order_record=purchase_order(supplier_id=OTHER_SUPPLIER_ID)
+        purchase_order_record=other_supplier_order()
     ),
     "PO_AMOUNT_MISMATCH": lambda: context(
         purchase_order_record=purchase_order(expected_amount=Decimal("1200.000"))

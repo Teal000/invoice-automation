@@ -96,12 +96,23 @@ class SupplierRecord:
 
 @dataclass(frozen=True)
 class PurchaseOrderRecord:
+    """A purchase order, with enough of its supplier to describe it.
+
+    ``supplier_name``/``supplier_reference`` are carried so that a rule
+    reporting a supplier disagreement can name both sides. Without them the
+    only identifier available is ``supplier_id``, and a reviewer shown two
+    UUIDs learns nothing about what disagreed. They are optional because a
+    record can be built from a registry that holds ids alone.
+    """
+
     purchase_order_id: UUID
     po_number_normalized: str
     supplier_id: UUID
     currency: str
     expected_amount: Decimal
     state: str
+    supplier_name: str | None = None
+    supplier_reference: str | None = None
 
 
 @dataclass(frozen=True)
@@ -140,3 +151,22 @@ Rule = Callable[[ValidationContext], list[RuleResult]]
 def amount_text(value: Decimal | None) -> str | None:
     """Render an amount for storage in expected/observed, or ``None``."""
     return None if value is None else format(value, "f")
+
+
+def supplier_text(
+    supplier_id: UUID, name: str | None = None, reference: str | None = None
+) -> str:
+    """Name a supplier for a reviewer reading a failed check.
+
+    ``expected`` and ``observed`` exist so a person can see what the rule
+    wanted beside what the document said. A bare UUID satisfies neither, so
+    the name is used whenever it is known, with the supplier reference in
+    brackets because two suppliers may share a name. The id is the last
+    resort rather than the default, and it stays in ``details`` either way
+    for anything reading the record by machine.
+    """
+    if not name:
+        return f"supplier {supplier_id}"
+    if reference:
+        return f"{name} ({reference})"
+    return name

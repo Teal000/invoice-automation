@@ -61,15 +61,16 @@ def _registries() -> tuple[dict[str, SupplierRecord], dict[str, PurchaseOrderRec
     orders = {}
     for entry in orders_raw["purchase_orders"]:
         number = entry["po_number_normalized"]
+        po_supplier = suppliers[normalize_identifier(entry["supplier_reference"])]
         orders[number] = PurchaseOrderRecord(
             purchase_order_id=uuid5(NAMESPACE, number),
             po_number_normalized=number,
-            supplier_id=suppliers[
-                normalize_identifier(entry["supplier_reference"])
-            ].supplier_id,
+            supplier_id=po_supplier.supplier_id,
             currency=entry["currency"],
             expected_amount=Decimal(entry["expected_amount"]),
             state=entry.get("state", "open"),
+            supplier_name=po_supplier.name,
+            supplier_reference=po_supplier.reference_normalized,
         )
     return suppliers, orders
 

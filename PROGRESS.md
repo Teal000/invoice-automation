@@ -5,6 +5,63 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-08 — A failed check a reviewer could not read
+
+### What the dashboard exposed
+
+Building the exception-analysis page put every failed check on screen for the
+first time, and `PO_SUPPLIER_MISMATCH` was unreadable:
+
+    expected: supplier 5c2ef23c-96ee-4e20-82a2-3dd0e17bf9b6
+    observed: supplier 85e68e06-b86c-44ea-96ac-88420236fb39
+
+The reason the engine stores `expected` and `observed` at all is so a person
+can compare them. Two UUIDs serve nobody, and the long strings wrapped to
+three lines and broke the table layout, which is how it was noticed. It was
+the only rule of the thirteen doing this. Nothing failed, no test caught it,
+and it would have survived indefinitely had the values never been displayed —
+the argument for building the view before claiming the model is right.
+
+### Fixed
+
+- `PurchaseOrderRecord` carries `supplier_name` and `supplier_reference`,
+  both optional so a registry holding ids alone still builds a record.
+- `get_purchase_order` LEFT JOINs `suppliers`. Left, not inner: a missing
+  supplier row should degrade the message, not the lookup.
+- `supplier_text()` in `rules/base.py` renders `Name (SUP-00N)`, falling back
+  to the id only when no name is known. The reference is included because two
+  suppliers can share a name.
+- Both supplier ids stay in `details`, so nothing reading by machine lost
+  anything.
+- The two in-memory registries — `evaluation/run_benchmark.py` and
+  `tests/unit/test_fixture_manifest.py` — attach the order's supplier too, so
+  the replay path produces the same text as the database path.
+- `tests/factories.py` gained `other_supplier_order()`. Overriding
+  `supplier_id` alone, as the old test did, left the baseline supplier's name
+  on a different id: a fixture half-changed in a way that makes a message
+  look right while describing nothing real.
+
+### Checked
+
+- 209 unit tests (+2: one asserting both sides are named and the UUID is
+  absent, one asserting the fallback to the id).
+- **334 tests pass against PostgreSQL 18.6 in the container.** Not re-run
+  against 16.2 this session: the local pgserver would not start
+  (`_postmaster_info.status == 'ready'` assertion). The claim of both
+  versions is therefore stale until that is repeated.
+- Corpus reloaded; all five `PO_SUPPLIER_MISMATCH` rows now name both
+  suppliers. `tools/reconcile_dashboard.py` passes all 13 checks.
+
+### Watch out
+
+Reloading re-spread the arrival timestamps from the current date, so the
+daily chart now runs **2026-10-09 to 2026-11-08** rather than 2026-10-07 to
+2026-11-06. The dates move every time the corpus is reloaded, which is what
+inventing them means. Power BI uses Import mode and must be refreshed before
+it shows any of this.
+
+---
+
 ## 2026-11-06 (later) — Everything a dashboard needs except the clicks
 
 ### Built

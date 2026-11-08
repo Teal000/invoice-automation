@@ -22,6 +22,7 @@ from .base import (
     Severity,
     ValidationContext,
     amount_text,
+    supplier_text,
 )
 
 
@@ -98,12 +99,22 @@ def po_supplier_mismatch(ctx: ValidationContext) -> list[RuleResult]:
                 severity=Severity.ERROR,
                 disposition=Disposition.REVIEW,
                 message="The invoice supplier is not the supplier on the purchase order.",
-                expected=f"supplier {ctx.purchase_order.supplier_id}",
-                observed=f"supplier {ctx.supplier.supplier_id}",
+                expected=supplier_text(
+                    ctx.purchase_order.supplier_id,
+                    ctx.purchase_order.supplier_name,
+                    ctx.purchase_order.supplier_reference,
+                ),
+                observed=supplier_text(
+                    ctx.supplier.supplier_id,
+                    ctx.supplier.name,
+                    ctx.supplier.reference_normalized,
+                ),
                 field_name="supplier_reference",
                 details={
                     "purchase_order_number": ctx.purchase_order.po_number_normalized,
                     "invoice_supplier_name": ctx.supplier.name,
+                    "purchase_order_supplier_id": str(ctx.purchase_order.supplier_id),
+                    "invoice_supplier_id": str(ctx.supplier.supplier_id),
                 },
             )
         ]

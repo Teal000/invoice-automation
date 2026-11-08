@@ -36,6 +36,11 @@ SUPPLIER_ID = UUID("11111111-1111-4111-8111-111111111111")
 OTHER_SUPPLIER_ID = UUID("22222222-2222-4222-8222-222222222222")
 PO_ID = UUID("33333333-3333-4333-8333-333333333333")
 
+SUPPLIER_NAME = "Fournitures Atlas SARL (synthetic)"
+SUPPLIER_REFERENCE = "SUP-001"
+OTHER_SUPPLIER_NAME = "Papeterie Medina SA (synthetic)"
+OTHER_SUPPLIER_REFERENCE = "SUP-002"
+
 BASELINE_TOTAL = Decimal("1591.923")
 
 
@@ -93,8 +98,8 @@ def submission(**overrides) -> SubmissionInput:
 def supplier(**overrides) -> SupplierRecord:
     data = dict(
         supplier_id=SUPPLIER_ID,
-        name="Fournitures Atlas SARL (synthetic)",
-        reference_normalized="SUP-001",
+        name=SUPPLIER_NAME,
+        reference_normalized=SUPPLIER_REFERENCE,
         permitted_currency="TND",
         is_active=True,
     )
@@ -110,9 +115,27 @@ def purchase_order(**overrides) -> PurchaseOrderRecord:
         currency="TND",
         expected_amount=BASELINE_TOTAL,
         state="open",
+        supplier_name=SUPPLIER_NAME,
+        supplier_reference=SUPPLIER_REFERENCE,
     )
     data.update(overrides)
     return PurchaseOrderRecord(**data)
+
+
+def other_supplier_order(**overrides) -> PurchaseOrderRecord:
+    """An order belonging to a different supplier, named consistently.
+
+    Overriding ``supplier_id`` alone would leave the baseline supplier's name
+    attached to another id, which is the sort of half-changed fixture that
+    makes a message look right while describing nothing real.
+    """
+    data = dict(
+        supplier_id=OTHER_SUPPLIER_ID,
+        supplier_name=OTHER_SUPPLIER_NAME,
+        supplier_reference=OTHER_SUPPLIER_REFERENCE,
+    )
+    data.update(overrides)
+    return purchase_order(**data)
 
 
 def duplicate_match(**overrides) -> DuplicateMatch:

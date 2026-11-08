@@ -6,7 +6,12 @@ from decimal import Decimal
 
 from factories import (
     OTHER_SUPPLIER_ID,
+    OTHER_SUPPLIER_NAME,
+    OTHER_SUPPLIER_REFERENCE,
+    SUPPLIER_ID,
+    SUPPLIER_NAME,
     context,
+    other_supplier_order,
     purchase_order,
     raw_invoice,
     rule_config,
@@ -45,10 +50,33 @@ class TestPoSupplierMismatch:
         assert result.status is RuleStatus.PASS
 
     def test_fails_when_the_order_belongs_to_another_supplier(self):
-        ctx = context(purchase_order_record=purchase_order(supplier_id=OTHER_SUPPLIER_ID))
+        ctx = context(purchase_order_record=other_supplier_order())
         (result,) = po_supplier_mismatch(ctx)
         assert result.failed
-        assert str(OTHER_SUPPLIER_ID) in result.expected
+        # Both sides are named, because a reviewer reading this row has to be
+        # able to tell which supplier is which.
+        assert result.expected == f"{OTHER_SUPPLIER_NAME} ({OTHER_SUPPLIER_REFERENCE})"
+        assert result.observed == f"{SUPPLIER_NAME} (SUP-001)"
+        assert str(OTHER_SUPPLIER_ID) not in result.expected
+
+    def test_the_ids_stay_available_for_machines(self):
+        ctx = context(purchase_order_record=other_supplier_order())
+        (result,) = po_supplier_mismatch(ctx)
+        assert result.details["purchase_order_supplier_id"] == str(OTHER_SUPPLIER_ID)
+        assert result.details["invoice_supplier_id"] == str(SUPPLIER_ID)
+
+    def test_falls_back_to_the_id_when_the_order_has_no_supplier_name(self):
+        # A registry that holds ids alone still produces a usable record; the
+        # message degrades to the id rather than the lookup failing.
+        ctx = context(
+            purchase_order_record=purchase_order(
+                supplier_id=OTHER_SUPPLIER_ID,
+                supplier_name=None,
+                supplier_reference=None,
+            )
+        )
+        (result,) = po_supplier_mismatch(ctx)
+        assert result.expected == f"supplier {OTHER_SUPPLIER_ID}"
 
     def test_skipped_without_a_resolved_supplier(self):
         ctx = context(with_supplier=False)

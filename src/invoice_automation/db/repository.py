@@ -134,11 +134,20 @@ def get_purchase_order(
 ) -> PurchaseOrderRecord | None:
     if not po_number_normalized:
         return None
+    # The supplier is joined in rather than looked up separately because
+    # PO_SUPPLIER_MISMATCH has to name the order's supplier, and a rule that
+    # could only print its id produced failed checks no reviewer could act on.
+    # LEFT JOIN: a missing supplier row should degrade the message, not the
+    # lookup.
     row = conn.execute(
         """
-        SELECT purchase_order_id, po_number_normalized, supplier_id, currency,
-               expected_amount, state
-        FROM purchase_orders WHERE po_number_normalized = %s
+        SELECT po.purchase_order_id, po.po_number_normalized, po.supplier_id,
+               po.currency, po.expected_amount, po.state,
+               s.name AS supplier_name,
+               s.reference_normalized AS supplier_reference
+        FROM purchase_orders po
+        LEFT JOIN suppliers s ON s.supplier_id = po.supplier_id
+        WHERE po.po_number_normalized = %s
         """,
         (po_number_normalized,),
     ).fetchone()
@@ -151,6 +160,8 @@ def get_purchase_order(
         currency=row["currency"].strip(),
         expected_amount=row["expected_amount"],
         state=row["state"],
+        supplier_name=row["supplier_name"],
+        supplier_reference=row["supplier_reference"],
     )
 
 
