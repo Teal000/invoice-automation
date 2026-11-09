@@ -42,7 +42,7 @@ reported anywhere here, because none has been measured.
 | CLI: init-db, seed, ingest, serve, recover, notifications, both manifests, register, overview, exceptions, show | Implemented | All run against a live database |
 | 16 labelled synthetic cases as payloads **and** as PDFs, with ground truth | Implemented | Every case produces its labelled state and codes three ways: in-memory replay, payloads against the database, PDFs against the database |
 | Container setup: db, api and n8n in compose | Implemented | Built and run; all three containers healthy |
-| The schema on PostgreSQL 18 | Verified | All five migrations applied and the **whole suite passes** against PostgreSQL 18.6 in the container |
+| The schema on PostgreSQL 18 | Verified | All seven migrations applied and the **whole suite passes** against PostgreSQL 18.6 in the container |
 | n8n orchestration: a webhook and two schedules | Runs | Webhook observed end to end on both branches: a PDF uploaded unprocessed, its id posted to the webhook, n8n calls the API, the submission reaches `validated` or `needs_review`. Both schedules observed firing on 9 November: `/notifications` at 15:49:50, 15:54:50 and 15:59:50 UTC, `/jobs/recover` at 15:59:50, each a 200 from the n8n container |
 | Reporting views for a dashboard, read-only role, reconciliation | Implemented | Six views; the role is granted SELECT on views only and the grant is tested by trying to read a table and write |
 | A three-page Power BI report over the read-only role | Built | Processing overview, exception analysis, invoice register. Versioned as a `.pbip` project: the visuals are JSON, not a binary. Every figure checked against the base tables by `tools/reconcile_dashboard.py` |
