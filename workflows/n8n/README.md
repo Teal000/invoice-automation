@@ -170,6 +170,22 @@ the next step becomes `POST /notifications/{id}/sent` naming that channel.
 MSYS_NO_PATHCONV=1 docker compose exec n8n n8n import:workflow --separate --input=/workflows
 ```
 
+Importing overwrites by id, so re-importing updates the three workflows
+rather than adding more. That only holds because `build_workflows.py` writes
+stable ids. An earlier version did not, and every import produced three more
+workflows: nine existed by 9 November, six of them inactive duplicates. Those
+six are **archived, not deleted** — n8n 2.x has no `delete:workflow` command
+and Archive is a soft delete, so the UI shows three while `list:workflow`
+still shows nine. They are inert, but do not take a `list:workflow` count as
+the number of live workflows.
+
+**After importing or publishing a workflow with a schedule trigger, restart
+n8n**, or the schedule will never fire:
+
+```bash
+docker compose restart n8n
+```
+
 The exports carry no secret. The credential is seeded separately, inside the
 container, from the environment compose already gives it:
 
