@@ -5,6 +5,38 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-09 (last) — Published
+
+Pushed to https://github.com/Teal000/invoice-automation, public, on Nidhal's
+explicit go-ahead. 583 files, the full history, default branch `main` (the
+local branch was renamed from `master` on the way out).
+
+Checked before pushing, not after:
+
+- **The secret scan was rewritten, again.** The first version here treated
+  every `.env` value as a secret and flagged `localhost` and the database name
+  in over a hundred files. Noise that large hides the one hit that matters, so
+  it now watches only keys naming a credential — `INVAUT_DB_PASSWORD`,
+  `INVAUT_API_KEY`, `INVAUT_REPORTING_PASSWORD` — and separately checks that
+  `.env.example`'s placeholders are not equal to the real values. It compares
+  in Python rather than shelling out to grep, because the password starts with
+  a character grep reads as an option flag: that is how an earlier scan errored
+  and still printed OK.
+- `.env` is ignored and absent from the remote; `.env.example` is present, as
+  intended. 583 files local, 583 pushed, nothing else.
+- One commit went with it: the PostgreSQL 18 row said five migrations when
+  there are seven.
+
+The résumé now cites the repository — `build_master_resume.py`,
+`build_resume_consulting.py` and `MASTER_TECHNICAL_RESUME.md`, both PDFs still
+one page. **The copy sent to Axe Finance earlier today does not have the link**;
+that application went out before the push.
+
+Not done: `docs/demo_script.md` still describes a system without a dashboard or
+working schedules, and no demonstration has been recorded.
+
+---
+
 ## 2026-11-09 (later still) — The schedules were never scheduled
 
 Two n8n workflows had been published since 6 November and neither had ever
