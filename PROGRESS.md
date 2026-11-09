@@ -5,6 +5,63 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-09 (later still) — The schedules were never scheduled
+
+Two n8n workflows had been published since 6 November and neither had ever
+been seen to run. The caveat was carried in the README, in
+`docs/resume_bullets.md` and in two PROGRESS entries. They were not broken.
+
+`publish:workflow` prints this, and nobody read it:
+
+    Note: Changes will not take effect if n8n is running.
+    Please restart n8n for changes to take effect if n8n is currently running.
+
+Publishing marks a workflow active in the database, and
+`list:workflow --active=true` duly listed all three, so every check that was
+being made said they were running. n8n registers schedule trigger timers only
+when the process starts. Publishing into a live instance creates the row and
+no timer. A webhook is resolved per request, which is why that branch worked
+perfectly throughout and why the difference went unexplained.
+
+### Observed
+
+n8n restarted at 15:44:58 UTC; the log shows `Scheduler started`. The API's
+request log, by source address:
+
+    15:49:50  172.18.0.4  GET  /notifications?status=pending  200
+    15:54:50  172.18.0.4  GET  /notifications?status=pending  200
+    15:59:50  172.18.0.4  POST /jobs/recover?limit=20         200
+    15:59:50  172.18.0.4  GET  /notifications?status=pending  200
+
+`docker inspect` confirms 172.18.0.4 is the n8n container; the `/health`
+lines in the same log come from 127.0.0.1 and are the container's own
+healthcheck. Three notification runs exactly five minutes apart and the
+recovery sweep at exactly fifteen: a repeating schedule, not a single action
+at startup.
+
+The evidence is deliberately the API's log and not n8n's execution list,
+because the question was whether the orchestrator actually called the
+service. Nothing was recovered and nothing was notified — there was no
+stalled work and no pending notification — and a sweep that finds nothing is
+the right result on a healthy queue.
+
+### Also
+
+- The six duplicate workflows from earlier imports were archived through the
+  UI. n8n 2.x has no `delete:workflow` CLI command, and Archive is a soft
+  delete: the UI shows three, `list:workflow` still shows nine. Permanent
+  deletion is a separate action from the archived view.
+- Both schedules now carry evidence, so the "say webhook-triggered rather
+  than implying the schedules run" caveat is gone from the résumé drafts.
+
+### Still not done
+
+- No report page states when its data was pulled.
+- Power BI auto-detected two relationships between the views, one
+  bidirectional. Inherited, not chosen.
+
+---
+
 ## 2026-11-09 (later) — The database that was never broken
 
 `tools/pg_dev_server.py` had reported a `subprocess.TimeoutExpired` traceback
@@ -40,7 +97,6 @@ was weakened on the strength of it.
 
 ### Still not done
 
-- The n8n scheduled workflows have still not been observed firing.
 - No report page states when its data was pulled.
 
 ---
@@ -115,7 +171,6 @@ because the published schema URL in the files 404s:
 - Power BI auto-detected two relationships between the views, one of them
   bidirectional. They were inherited, not chosen.
 - Screenshots not exported to `dashboard/screenshots/`.
-- The n8n scheduled workflows have still not been observed firing.
 
 ---
 

@@ -5,7 +5,7 @@ live in one place. They are imported into the running n8n and **their
 triggers are not yet registered**, so they do not run. Precisely what is done
 and what is not is below; nothing here should be read as working.
 
-## State, as of 6 November 2026
+## State, as of 9 November 2026
 
 | Step | State |
 |---|---|
@@ -15,7 +15,29 @@ and what is not is below; nothing here should be read as working.
 | Credential seeded inside the container from its own environment | Done |
 | Published from the editor | Done |
 | **Webhook workflow executed end to end against the live API** | **Done, both branches** |
-| Scheduled workflows observed firing | Not yet |
+| **Both scheduled workflows observed firing** | **Done, 9 November** |
+
+### The schedules, observed 9 November 2026
+
+n8n restarted at 15:44:58 UTC. The API's own request log, with the source
+address of the n8n container:
+
+```
+15:49:50  172.18.0.4  GET  /notifications?status=pending  200
+15:54:50  172.18.0.4  GET  /notifications?status=pending  200
+15:59:50  172.18.0.4  POST /jobs/recover?limit=20         200
+15:59:50  172.18.0.4  GET  /notifications?status=pending  200
+```
+
+Three notification runs five minutes apart and the recovery sweep at fifteen,
+each matching its configured interval. The evidence is the API's log rather
+than n8n's execution list, so it does not depend on n8n reporting its own
+success: the request arrived, from the orchestrator, and was answered.
+
+Nothing was recovered and nothing was notified, because there was no stalled
+work and no pending notification. A sweep that finds nothing is the expected
+result on a healthy queue; it is the call being made on time that was in
+question.
 
 ### What was observed
 
@@ -63,6 +85,24 @@ the braces through as literal text: the first live run put
 contains an expression. This is the kind of fault only a real execution
 finds — the JSON is valid, the import succeeds, and the workflow looks right
 on the canvas.
+
+**Publishing a schedule into a running n8n does not schedule it.** This is
+why the two scheduled workflows sat silent for three days while the webhook
+worked perfectly. `publish:workflow` marks the workflow active in the
+database, and `list:workflow --active=true` then lists it, so by every check
+that was being made it was running. But n8n registers schedule trigger timers
+**when the process starts**. Publishing into a live instance creates the row
+and no timer.
+
+The CLI says so and it was not read:
+
+    Note: Changes will not take effect if n8n is running.
+    Please restart n8n for changes to take effect if n8n is currently running.
+
+A webhook is resolved per request, which is exactly why that branch was
+unaffected and why the difference went unexplained for so long. After
+`docker compose restart n8n`, the log shows `Scheduler started` and the
+triggers fire.
 
 **An owner account is required before publishing does anything.** Before one
 existed, `publish:workflow` reported success and n8n logged

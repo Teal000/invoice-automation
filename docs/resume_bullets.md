@@ -58,8 +58,10 @@ gets a retryable job, restores it and retries to a correct outcome.
 > de-duplicated notification outbox.
 
 *Backed by:* `workflows/n8n/`, and observed runs reaching `validated` and
-`needs_review`. **Caveat:** the scheduled recovery workflow has not been seen
-to fire. Say "webhook-triggered" rather than implying the schedules run.
+`needs_review`, and both schedules observed firing on 9 November 2026 at
+exactly their intervals, five and fifteen minutes, each returning 200. The
+API's own request log is the evidence, so it does not rest on n8n reporting
+its own success.
 
 ## Bullets you cannot defend yet
 
@@ -106,6 +108,5 @@ claim about effort to make.
 
 - The dashboard shows an imported snapshot and no page states when the data
   was pulled.
-- The n8n scheduled workflows have not been observed firing.
 - Reviewer actions record an actor from a header, not an authenticated
   identity: the trail answers *what* and *why* but not *who*.
