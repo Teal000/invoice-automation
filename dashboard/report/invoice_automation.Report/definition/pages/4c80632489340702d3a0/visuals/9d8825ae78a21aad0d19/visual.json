@@ -1,0 +1,209 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "9d8825ae78a21aad0d19",
+  "position": {
+    "x": 960,
+    "y": 104,
+    "z": 1,
+    "height": 916,
+    "width": 920,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_rule_failures"
+                    }
+                  },
+                  "Property": "field_name"
+                }
+              },
+              "queryRef": "public v_rule_failures.field_name",
+              "nativeQueryRef": "Field",
+              "displayName": "Field"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_rule_failures"
+                    }
+                  },
+                  "Property": "expected_value"
+                }
+              },
+              "queryRef": "public v_rule_failures.expected_value",
+              "nativeQueryRef": "Expected value",
+              "displayName": "Expected value"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_rule_failures"
+                    }
+                  },
+                  "Property": "observed_value"
+                }
+              },
+              "queryRef": "public v_rule_failures.observed_value",
+              "nativeQueryRef": "Observed value",
+              "displayName": "Observed value"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_rule_failures"
+                    }
+                  },
+                  "Property": "supplier_name"
+                }
+              },
+              "queryRef": "public v_rule_failures.supplier_name",
+              "nativeQueryRef": "Supplier",
+              "displayName": "Supplier"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "140D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_rule_failures.field_name"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "290D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_rule_failures.expected_value"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "170D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_rule_failures.observed_value"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "255D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_rule_failures.supplier_name"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "3d98e47598077c125a05",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "public v_rule_failures"
+              }
+            },
+            "Property": "field_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "34e1570a05454406603d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "public v_rule_failures"
+              }
+            },
+            "Property": "expected_value"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "ecb6fdafc901c5270626",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "public v_rule_failures"
+              }
+            },
+            "Property": "observed_value"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "52a970d570b0522125ad",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "public v_rule_failures"
+              }
+            },
+            "Property": "supplier_name"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

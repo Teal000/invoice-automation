@@ -44,7 +44,7 @@ Where each stands today:
 | 4 | A reviewer can correct, explain and revalidate | Met in the API and CLI; there is no review *interface* yet |
 | 5 | Repeats and retries create no duplicate records or notifications | Met: idempotency keys, duplicate guards and a de-duplicated outbox, all enforced by database constraints |
 | 6 | Interrupted processing recovers without losing the document or history | Met for processing: a failure leaves the stored document, the event trail and a retryable job, and a sweep finishes stalled work |
-| 7 | SQL reports and a dashboard reconcile with the records | Half met: the reporting views reconcile and a test proves it; there is no dashboard |
+| 7 | SQL reports and a dashboard reconcile with the records | Met: six reporting views, a three-page Power BI report reading them through a read-only role, and `tools/reconcile_dashboard.py` checking all 13 figures against the base tables |
 | 8 | Reproducible evaluation | Half met: the extraction baseline runs from a documented command; the wider benchmark the plan describes does not exist |
 
 The README states what is built and how it was checked.

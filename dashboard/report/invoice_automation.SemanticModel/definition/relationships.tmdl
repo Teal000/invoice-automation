@@ -1,0 +1,10 @@
+relationship AutoDetected_ea1cc5ee-55c6-4c2f-b15e-7335833ca07f
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'public v_review_queue'.invoice_id
+	toColumn: 'public v_invoice_register'.invoice_id
+
+relationship AutoDetected_ff4b2225-b600-4c78-9caa-2caf64ed0b4e
+	fromColumn: 'public v_rule_failures'.invoice_id
+	toColumn: 'public v_invoice_register'.invoice_id
+

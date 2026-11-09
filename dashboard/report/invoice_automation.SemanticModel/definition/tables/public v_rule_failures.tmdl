@@ -1,0 +1,111 @@
+table 'public v_rule_failures'
+	lineageTag: ac0accb5-5234-4582-b552-f2f545924a57
+
+	column validation_result_id
+		dataType: string
+		lineageTag: 4820ed0c-fbae-4485-8e6c-d3b10f5e2d13
+		summarizeBy: none
+		sourceColumn: validation_result_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column code
+		dataType: string
+		lineageTag: b86bfab0-774e-4860-a6b5-2af2d9b0ae84
+		summarizeBy: none
+		sourceColumn: code
+
+		annotation SummarizationSetBy = Automatic
+
+	column severity
+		dataType: string
+		lineageTag: 31cccc34-fd91-4c95-ada4-e13da238627a
+		summarizeBy: none
+		sourceColumn: severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column disposition
+		dataType: string
+		lineageTag: ec8eb23e-1efe-44ed-9535-3b604307ecad
+		summarizeBy: none
+		sourceColumn: disposition
+
+		annotation SummarizationSetBy = Automatic
+
+	column field_name
+		dataType: string
+		lineageTag: 0c888322-ed63-4b01-a826-d016b0b2358e
+		summarizeBy: none
+		sourceColumn: field_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_value
+		dataType: string
+		lineageTag: 429c5703-16f8-48cc-a679-85f98a67eeb4
+		summarizeBy: none
+		sourceColumn: expected_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column observed_value
+		dataType: string
+		lineageTag: aac50cd1-76c0-4ff2-8563-abb4742e25df
+		summarizeBy: none
+		sourceColumn: observed_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column evaluated_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 685ee06f-4173-4d3b-a0be-c39b50d0324d
+		summarizeBy: none
+		sourceColumn: evaluated_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_id
+		dataType: string
+		lineageTag: d973d22f-cad8-4f87-b28b-de82600df00f
+		summarizeBy: none
+		sourceColumn: invoice_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_state
+		dataType: string
+		lineageTag: ce3973f8-430d-439d-b8fd-70bca169b5c3
+		summarizeBy: none
+		sourceColumn: business_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier_id
+		dataType: string
+		lineageTag: ad43ca3f-e079-4773-957e-7ec7b2cef452
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier_name
+		dataType: string
+		lineageTag: dccb1412-3bda-4b65-8c6c-fd6601e72450
+		summarizeBy: none
+		sourceColumn: supplier_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public v_rule_failures' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5432", "invoice_automation"),
+				    public_v_rule_failures = Source{[Schema="public",Item="v_rule_failures"]}[Data]
+				in
+				    public_v_rule_failures
+
+	annotation PBI_ResultType = Table
+

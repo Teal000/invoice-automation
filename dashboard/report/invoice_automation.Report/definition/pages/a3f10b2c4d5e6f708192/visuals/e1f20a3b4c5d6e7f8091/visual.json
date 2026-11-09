@@ -1,0 +1,36 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "e1f20a3b4c5d6e7f8091",
+  "position": {
+    "x": 40,
+    "y": 16,
+    "z": 0,
+    "width": 1840,
+    "height": 100,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Synthetic portfolio data. One row per canonical invoice, showing its current revision: 186 invoices from 200 arrivals, because a repeat arrival is linked to the invoice it duplicates rather than creating a new one. Waiting time is measured from the artificial arrival timestamps described on the processing overview page and does not represent time any person actually waited. Amounts are recorded invoice values in TND; this project executes no payments.",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

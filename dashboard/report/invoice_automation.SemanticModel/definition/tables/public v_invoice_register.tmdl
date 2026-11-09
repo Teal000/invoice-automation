@@ -1,0 +1,213 @@
+table 'public v_invoice_register'
+	lineageTag: 9690e07f-a2bb-4271-9818-e47ad0d8732b
+
+	column invoice_id
+		dataType: string
+		lineageTag: f08a6d68-f587-4068-b445-81cd7fe96c49
+		summarizeBy: none
+		sourceColumn: invoice_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_state
+		dataType: string
+		lineageTag: 0a3a197d-8023-4f9a-b25c-87ec23280d51
+		summarizeBy: none
+		sourceColumn: business_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier_id
+		dataType: string
+		lineageTag: 1105dc98-45f8-4a98-8648-a60182d84ef6
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier_name
+		dataType: string
+		lineageTag: a315e845-a9b4-4d91-b36c-4180d1b2215a
+		summarizeBy: none
+		sourceColumn: supplier_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier_reference
+		dataType: string
+		lineageTag: ea80518d-5085-4192-a2dc-2847f68f61aa
+		summarizeBy: none
+		sourceColumn: supplier_reference
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_number
+		dataType: string
+		lineageTag: 491ec057-47a3-431f-b5b4-170c595e9fce
+		summarizeBy: none
+		sourceColumn: invoice_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: b241ca01-4288-4904-b99f-24a98cb97e98
+		summarizeBy: none
+		sourceColumn: invoice_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column due_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 130856a3-646d-4a24-9b00-78be657cefc2
+		summarizeBy: none
+		sourceColumn: due_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column currency
+		dataType: string
+		lineageTag: 6ab19575-e16e-4f2d-8f69-fcfaac78116a
+		summarizeBy: none
+		sourceColumn: currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column subtotal
+		dataType: double
+		formatString: #,##0.000
+		lineageTag: a9a31e2b-151f-42ee-a996-f85933f76e30
+		summarizeBy: sum
+		sourceColumn: subtotal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tax_total
+		dataType: double
+		formatString: #,##0.000
+		lineageTag: 7ddef995-c88e-46b0-b863-425c2fdc8857
+		summarizeBy: sum
+		sourceColumn: tax_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total
+		dataType: double
+		formatString: #,##0.000
+		lineageTag: d7154805-3aae-47d2-8235-0e8760d6aa4b
+		summarizeBy: sum
+		sourceColumn: total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column purchase_order_number
+		dataType: string
+		lineageTag: c0a49f45-3aa4-475a-9d37-00ba6442efeb
+		summarizeBy: none
+		sourceColumn: purchase_order_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_revision_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 86b5f481-867d-418e-bd5c-cf67a264afdb
+		summarizeBy: sum
+		sourceColumn: current_revision_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_revision_source
+		dataType: string
+		lineageTag: 4aa90389-2438-49e8-96e8-d4667efcce49
+		summarizeBy: none
+		sourceColumn: current_revision_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_recorded_at
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 3c5c1c46-db43-4193-87a5-3818598f6b7e
+		summarizeBy: none
+		sourceColumn: first_recorded_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_changed_at
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 3928843c-4096-4fcf-8136-063f5dc62e11
+		summarizeBy: none
+		sourceColumn: last_changed_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column failed_rule_codes
+		dataType: int64
+		formatString: 0
+		lineageTag: 3970df33-688c-431d-9ac4-05ea89f0ff30
+		summarizeBy: sum
+		sourceColumn: failed_rule_codes
+
+		annotation SummarizationSetBy = Automatic
+
+	column failed_checks
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ec13942-5657-4148-982e-7dcd5cd3fdd1
+		summarizeBy: sum
+		sourceColumn: failed_checks
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_reviewer_edit
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a585df0a-7304-4b47-b543-fc495419ddec
+		summarizeBy: none
+		sourceColumn: has_reviewer_edit
+
+		annotation SummarizationSetBy = Automatic
+
+	column accepted_with_exception
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: bd73cc88-477d-45ae-9a6b-137ab2129835
+		summarizeBy: none
+		sourceColumn: accepted_with_exception
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_action_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 929a90cf-bad0-4d91-9d03-5549896489cf
+		summarizeBy: sum
+		sourceColumn: review_action_count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public v_invoice_register' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5432", "invoice_automation"),
+				    public_v_invoice_register = Source{[Schema="public",Item="v_invoice_register"]}[Data]
+				in
+				    public_v_invoice_register
+
+	annotation PBI_ResultType = Table
+

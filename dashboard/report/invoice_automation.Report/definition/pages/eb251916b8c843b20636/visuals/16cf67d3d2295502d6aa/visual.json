@@ -1,0 +1,90 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "16cf67d3d2295502d6aa",
+  "position": {
+    "x": 60,
+    "y": 132,
+    "z": 0,
+    "width": 340,
+    "height": 230,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public v_processing_overview"
+                        }
+                      },
+                      "Property": "submissions_received"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(public v_processing_overview.submissions_received)",
+              "nativeQueryRef": "Submissions received",
+              "displayName": "Submissions received"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "public v_processing_overview"
+                      }
+                    },
+                    "Property": "submissions_received"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7b0824b770a5676d0114",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "public v_processing_overview"
+                  }
+                },
+                "Property": "submissions_received"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

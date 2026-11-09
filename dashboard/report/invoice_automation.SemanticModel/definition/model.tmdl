@@ -1,0 +1,24 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["public v_daily_processing","public v_exception_summary","public v_invoice_register","public v_processing_overview","public v_review_queue","public v_rule_failures"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'public v_daily_processing'
+ref table 'public v_exception_summary'
+ref table 'public v_invoice_register'
+ref table 'public v_processing_overview'
+ref table 'public v_review_queue'
+ref table 'public v_rule_failures'
+
+ref cultureInfo en-US
+

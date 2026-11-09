@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "4c80632489340702d3a0",
+  "displayName": "Exception analysis",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "pageBinding": {
+    "name": "d832e52d79829bb1e253",
+    "type": "Default",
+    "parameters": []
+  }
+}

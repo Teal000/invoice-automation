@@ -153,3 +153,60 @@ Save the `.pbix` into this directory and export screenshots of each page into
 `dashboard/screenshots/`, so the work can be seen by someone without Power BI.
 The `.pbix` itself holds imported data; since everything here is synthetic,
 that is fine to commit.
+
+---
+
+## 7. The report is a .pbip project, not a .pbix
+
+The report lives in `dashboard/report/` as a **Power BI project** rather than
+a binary `.pbix`. Microsoft's PBIR format stores each page and each visual as
+its own JSON file with a published schema, and
+[documents it as editable from outside Power BI](https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-report).
+
+This is the same argument the reporting views make. `0006_reporting_timeseries.sql`
+says a figure on a chart should be traceable to a view, "not to a formula
+buried in a report file that nobody can diff". A `.pbix` is exactly that file.
+A `.pbip` is a diff.
+
+```
+dashboard/report/
+  invoice_automation.pbip
+  invoice_automation.Report/definition/
+    pages/pages.json                 page order and active page
+    pages/<id>/page.json             name, size
+    pages/<id>/visuals/<id>/visual.json
+  invoice_automation.SemanticModel/definition/
+    tables/*.tmdl                    one per view, with its M query
+```
+
+Turn on **Options → Preview features → Detect and reload external PBIP
+changes** before editing the files. Power BI then offers to reload whenever
+the JSON changes on disk, and validates it on load: a malformed file is
+rejected rather than silently ignored.
+
+Do not edit the files and the open report at the same time. Whichever saves
+last wins, and neither is merged.
+
+### What is deliberately not in the repository
+
+`.gitignore` excludes `*.pbix`, `**/.pbi/cache.abf` and
+`**/.pbi/localSettings.json`. `cache.abf` is the imported data itself, and
+`localSettings.json` records absolute paths on one machine. The connection is
+stored in the TMDL as host, port and database only — no username, no
+password. Credentials stay in the Windows credential store, so a fresh clone
+prompts for them.
+
+### Two values to verify after any structural edit
+
+The visuals Power BI wrote itself confirm that aggregation `Function: 0` is
+Sum. Two further codes used on the invoice register page were inferred rather
+than observed, so check them instead of trusting them:
+
+| Visual | Expected | If wrong |
+|---|---|---|
+| Review queue by age, bar heights | 4 / 8 / 13 / 65, summing to 90 | `CountNonNull` is not function 5 |
+| Review queue by age, axis order | under a day, 1 to 3 days, 3 to 7 days, over a week | `Min` is not function 3 |
+
+Both figures come from `tools/reconcile_dashboard.py`. If the axis is
+alphabetical, the sort fell back to the category and the ordering is wrong
+even though the counts are right.

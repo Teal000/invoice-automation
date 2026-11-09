@@ -1,0 +1,294 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "1b2c3d4e5f6071829304",
+  "position": {
+    "x": 40,
+    "y": 540,
+    "z": 3,
+    "height": 480,
+    "width": 1840,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_invoice_register"
+                    }
+                  },
+                  "Property": "invoice_number"
+                }
+              },
+              "queryRef": "public v_invoice_register.invoice_number",
+              "nativeQueryRef": "Invoice number",
+              "displayName": "Invoice number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_invoice_register"
+                    }
+                  },
+                  "Property": "supplier_name"
+                }
+              },
+              "queryRef": "public v_invoice_register.supplier_name",
+              "nativeQueryRef": "Supplier",
+              "displayName": "Supplier"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_invoice_register"
+                    }
+                  },
+                  "Property": "invoice_date"
+                }
+              },
+              "queryRef": "public v_invoice_register.invoice_date",
+              "nativeQueryRef": "Invoice date",
+              "displayName": "Invoice date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_invoice_register"
+                    }
+                  },
+                  "Property": "total"
+                }
+              },
+              "queryRef": "public v_invoice_register.total",
+              "nativeQueryRef": "Total",
+              "displayName": "Total"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_invoice_register"
+                    }
+                  },
+                  "Property": "currency"
+                }
+              },
+              "queryRef": "public v_invoice_register.currency",
+              "nativeQueryRef": "Currency",
+              "displayName": "Currency"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_invoice_register"
+                    }
+                  },
+                  "Property": "business_state"
+                }
+              },
+              "queryRef": "public v_invoice_register.business_state",
+              "nativeQueryRef": "State",
+              "displayName": "State"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_invoice_register"
+                    }
+                  },
+                  "Property": "failed_rule_codes"
+                }
+              },
+              "queryRef": "public v_invoice_register.failed_rule_codes",
+              "nativeQueryRef": "Failed codes",
+              "displayName": "Failed codes"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_invoice_register"
+                    }
+                  },
+                  "Property": "has_reviewer_edit"
+                }
+              },
+              "queryRef": "public v_invoice_register.has_reviewer_edit",
+              "nativeQueryRef": "Reviewer edit",
+              "displayName": "Reviewer edit"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_invoice_register"
+                    }
+                  },
+                  "Property": "invoice_id"
+                }
+              },
+              "queryRef": "public v_invoice_register.invoice_id",
+              "nativeQueryRef": "Invoice id",
+              "displayName": "Invoice id"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "180D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_invoice_register.invoice_number"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "280D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_invoice_register.supplier_name"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "150D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_invoice_register.invoice_date"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "140D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_invoice_register.total"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "110D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_invoice_register.currency"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "170D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_invoice_register.business_state"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "160D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_invoice_register.failed_rule_codes"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "170D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_invoice_register.has_reviewer_edit"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "300D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "public v_invoice_register.invoice_id"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

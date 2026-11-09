@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "1ef5d53f79dec17400a7",
+  "position": {
+    "x": 40,
+    "y": 104,
+    "z": 0,
+    "height": 916,
+    "width": 880,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_exception_summary"
+                    }
+                  },
+                  "Property": "code"
+                }
+              },
+              "queryRef": "public v_exception_summary.code",
+              "nativeQueryRef": "Rule code",
+              "active": true,
+              "displayName": "Rule code"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public v_exception_summary"
+                        }
+                      },
+                      "Property": "invoices_affected"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(public v_exception_summary.invoices_affected)",
+              "nativeQueryRef": "Invoices affected",
+              "displayName": "Invoices affected"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public v_exception_summary"
+                        }
+                      },
+                      "Property": "failed_checks"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(public v_exception_summary.failed_checks)",
+              "nativeQueryRef": "Failed checks",
+              "displayName": "Failed checks"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "public v_exception_summary"
+                      }
+                    },
+                    "Property": "invoices_affected"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

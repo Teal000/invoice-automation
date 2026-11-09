@@ -1,0 +1,347 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "public_v_daily_processing.arrival_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_daily_processing",
+			          "ConceptualProperty": "arrival_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Arrival date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_exception_summary.code": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_exception_summary",
+			          "ConceptualProperty": "code"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Rule code": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_rule_failures.field_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_rule_failures",
+			          "ConceptualProperty": "field_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Field": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_rule_failures.expected_value": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_rule_failures",
+			          "ConceptualProperty": "expected_value"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Expected value": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_rule_failures.observed_value": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_rule_failures",
+			          "ConceptualProperty": "observed_value"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Observed value": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_rule_failures.supplier_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_rule_failures",
+			          "ConceptualProperty": "supplier_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Supplier": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_review_queue.age_band": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_review_queue",
+			          "ConceptualProperty": "age_band"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Waiting": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_invoice_register.invoice_number": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_invoice_register",
+			          "ConceptualProperty": "invoice_number"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Invoice number": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_invoice_register.supplier_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_invoice_register",
+			          "ConceptualProperty": "supplier_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Supplier": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_invoice_register.invoice_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_invoice_register",
+			          "ConceptualProperty": "invoice_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Invoice date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_invoice_register.total": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_invoice_register",
+			          "ConceptualProperty": "total"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_invoice_register.currency": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_invoice_register",
+			          "ConceptualProperty": "currency"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Currency": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_invoice_register.business_state": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_invoice_register",
+			          "ConceptualProperty": "business_state"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "State": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_invoice_register.failed_rule_codes": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_invoice_register",
+			          "ConceptualProperty": "failed_rule_codes"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failed codes": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_invoice_register.has_reviewer_edit": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_invoice_register",
+			          "ConceptualProperty": "has_reviewer_edit"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Reviewer edit": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "public_v_invoice_register.invoice_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "public v_invoice_register",
+			          "ConceptualProperty": "invoice_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Invoice id": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

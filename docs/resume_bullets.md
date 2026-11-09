@@ -4,9 +4,10 @@
 checked each line against the evidence named beside it. Some of these will be
 wrong again the moment the project changes.*
 
-The project is **not finished**: there is no dashboard yet, no OCR, nothing is
-actually delivered by the notification outbox, and no work has been timed. The
-bullets below are written to be true today.
+The project is **not finished**: there is no OCR, nothing is actually
+delivered by the notification outbox, and no work has been timed. The
+dashboard now exists, which changes one line in the table below. The bullets
+here are written to be true today.
 
 ## Bullets you can defend
 
@@ -71,7 +72,7 @@ Do not use these. They are listed so you recognise them if they tempt you.
 | "Processes invoices for a client / in production" | It has never run outside your machine, and every document is synthetic. |
 | "Detects fraudulent or duplicate invoices" | It detects repeats. It says nothing about intent, and the code deliberately avoids the word fraud. |
 | "Handles scanned invoices" | There is no OCR. A scan has no text layer and yields nothing. |
-| "Built a Power BI dashboard" | Not yet built. The views, the read-only role and the reconciliation exist; the report does not. |
+| "Built a Power BI dashboard" | True, but worth almost nothing said that way. Say what makes it unusual: every figure is defined in a SQL view with its denominator written down, the report reads through a role granted SELECT on six views and no tables, `tools/reconcile_dashboard.py` recomputes all 13 figures from the base tables and fails on disagreement, and the report is versioned as a `.pbip` project so the visuals are diffable JSON rather than an opaque binary. |
 | "Ensures tax compliance" | The 19% rate is a fictional test configuration. No rule asserts tax correctness. |
 
 ## Questions to expect, and the honest answer
@@ -103,7 +104,8 @@ claim about effort to make.
 
 ## Where it is not ready to be shown
 
-- No dashboard, so requirement 7 of the plan is half met.
+- The dashboard shows an imported snapshot and no page states when the data
+  was pulled.
 - The n8n scheduled workflows have not been observed firing.
 - Reviewer actions record an actor from a header, not an authenticated
   identity: the trail answers *what* and *why* but not *who*.

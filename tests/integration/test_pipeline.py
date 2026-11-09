@@ -475,3 +475,30 @@ class TestTimeSeriesViews:
         ).fetchone()
         assert row["days_waiting"] >= 9
         assert row["age_band"] == "over a week"
+
+    def test_each_age_band_has_exactly_one_order_value(self, seeded, fixtures_dir):
+        """The two CASE expressions in v_review_queue must agree.
+
+        `age_band` and `age_band_order` repeat the same boundaries, because a
+        view cannot reference its own output column. If one is edited and the
+        other is not, a band gets two orders or two bands share one, and a
+        chart sorted by the order column silently misplaces a bar.
+        """
+        for name in ("total_mismatch_008.json", "unknown_supplier_005.json"):
+            invoice, submission = load(fixtures_dir / name)
+            process_structured_submission(seeded, invoice, submission)
+        seeded.execute("UPDATE submissions SET received_at = now() - interval '10 days'")
+
+        pairs = seeded.execute(
+            "SELECT DISTINCT age_band, age_band_order FROM v_review_queue"
+        ).fetchall()
+        assert pairs, "no invoices in the review queue to check"
+        bands = [p["age_band"] for p in pairs]
+        orders = [p["age_band_order"] for p in pairs]
+        assert len(set(bands)) == len(bands)
+        assert len(set(orders)) == len(orders)
+
+        # Ordering the bands by the column must put the newest first.
+        expected = ["under a day", "1 to 3 days", "3 to 7 days", "over a week"]
+        ranked = [p["age_band"] for p in sorted(pairs, key=lambda p: p["age_band_order"])]
+        assert ranked == [b for b in expected if b in ranked]

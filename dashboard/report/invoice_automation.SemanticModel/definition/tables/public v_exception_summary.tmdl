@@ -1,0 +1,40 @@
+table 'public v_exception_summary'
+	lineageTag: 77e28b3a-921c-4a0c-8481-bd382fa22304
+
+	column code
+		dataType: string
+		lineageTag: 2dc4cf9f-3b7a-4f68-a44d-b247f62803d1
+		summarizeBy: none
+		sourceColumn: code
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoices_affected
+		dataType: int64
+		formatString: 0
+		lineageTag: a63f2a50-5ec6-424f-a10f-35034ac5ee43
+		summarizeBy: sum
+		sourceColumn: invoices_affected
+
+		annotation SummarizationSetBy = Automatic
+
+	column failed_checks
+		dataType: int64
+		formatString: 0
+		lineageTag: 647521b9-f7f9-497e-a3d6-89dc8480cbca
+		summarizeBy: sum
+		sourceColumn: failed_checks
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public v_exception_summary' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5432", "invoice_automation"),
+				    public_v_exception_summary = Source{[Schema="public",Item="v_exception_summary"]}[Data]
+				in
+				    public_v_exception_summary
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "c1a2b3d4e5f607182930",
+  "position": {
+    "x": 40,
+    "y": 16,
+    "z": 2,
+    "width": 1840,
+    "height": 80,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Synthetic portfolio data. Failed checks on each invoice's current revision only; a problem a reviewer has since corrected leaves this view and remains in validation_results. Invoices affected counts distinct invoices with at least one failure of that code. Failed checks counts individual failures, so one invoice missing four required fields is four failed checks. The two are never summed.",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

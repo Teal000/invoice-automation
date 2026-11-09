@@ -1,0 +1,100 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 852.36163941535983,
+            "y": 27
+          },
+          "nodeIndex": "public v_daily_processing",
+          "nodeLineageTag": "0e703dce-81b7-4392-89d3-cc2c9a629fd2",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1136.3616394153598,
+            "y": 99
+          },
+          "nodeIndex": "public v_exception_summary",
+          "nodeLineageTag": "77e28b3a-921c-4a0c-8481-bd382fa22304",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 334.1847511806298,
+            "y": -22.195050904890223
+          },
+          "nodeIndex": "public v_invoice_register",
+          "nodeLineageTag": "9690e07f-a2bb-4271-9818-e47ad0d8732b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1420.3616394153598,
+            "y": 25
+          },
+          "nodeIndex": "public v_processing_overview",
+          "nodeLineageTag": "2bdcd6a1-ee0c-49de-88cb-5706d622a368",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 618.36163941535983,
+            "y": -8.8700582724539743
+          },
+          "nodeIndex": "public v_review_queue",
+          "nodeLineageTag": "1da2c159-bfcd-4933-9027-93ee0ce98e22",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": -41.129941727546026
+          },
+          "nodeIndex": "public v_rule_failures",
+          "nodeLineageTag": "ac0accb5-5234-4582-b552-f2f545924a57",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

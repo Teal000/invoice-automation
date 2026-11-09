@@ -1,0 +1,97 @@
+table 'public v_daily_processing'
+	lineageTag: 0e703dce-81b7-4392-89d3-cc2c9a629fd2
+
+	column arrival_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5efa4804-559d-41fe-ad56-d771171cc53c
+		summarizeBy: none
+		sourceColumn: arrival_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column submissions
+		dataType: int64
+		formatString: 0
+		lineageTag: a433fadc-c6dd-47f9-90c2-92c0d27b12d0
+		summarizeBy: sum
+		sourceColumn: submissions
+
+		annotation SummarizationSetBy = Automatic
+
+	column validated
+		dataType: int64
+		formatString: 0
+		lineageTag: 982bbcdb-ee36-4e5d-b341-e4fea1bd4ce0
+		summarizeBy: sum
+		sourceColumn: validated
+
+		annotation SummarizationSetBy = Automatic
+
+	column needs_review
+		dataType: int64
+		formatString: 0
+		lineageTag: 89285a86-bfc2-4001-922f-e75d3dfb50ea
+		summarizeBy: sum
+		sourceColumn: needs_review
+
+		annotation SummarizationSetBy = Automatic
+
+	column duplicate_arrivals
+		dataType: int64
+		formatString: 0
+		lineageTag: 758a18a0-1ac1-4743-be1a-f711ca4b381a
+		summarizeBy: sum
+		sourceColumn: duplicate_arrivals
+
+		annotation SummarizationSetBy = Automatic
+
+	column unsupported
+		dataType: int64
+		formatString: 0
+		lineageTag: e7e0afed-96ac-4440-8dbf-4100280ee971
+		summarizeBy: sum
+		sourceColumn: unsupported
+
+		annotation SummarizationSetBy = Automatic
+
+	column failed
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a6f6618-62bc-4d2b-b2d2-b7395bcb9a67
+		summarizeBy: sum
+		sourceColumn: failed
+
+		annotation SummarizationSetBy = Automatic
+
+	column still_pending
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e9a50d8-4889-4bd2-85c4-1d0eec6ad31b
+		summarizeBy: sum
+		sourceColumn: still_pending
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoices_touched
+		dataType: int64
+		formatString: 0
+		lineageTag: e4376ffe-d6b3-431c-9652-62b5e209d094
+		summarizeBy: sum
+		sourceColumn: invoices_touched
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public v_daily_processing' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5432", "invoice_automation"),
+				    public_v_daily_processing = Source{[Schema="public",Item="v_daily_processing"]}[Data]
+				in
+				    public_v_daily_processing
+
+	annotation PBI_ResultType = Table
+

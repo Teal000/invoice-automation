@@ -1,0 +1,36 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "b2c3d4e5f60718293a4b",
+  "position": {
+    "x": 40,
+    "y": 16,
+    "z": 10,
+    "width": 1840,
+    "height": 100,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Synthetic portfolio data: the distributor, its suppliers, its purchase orders and every invoice are invented. Arrival timestamps were spread artificially over 30 days so the daily chart has more than one point; they are not observed arrival times and they move whenever the corpus is reloaded. Review rate and straight-through rate both divide by eligible invoices, which excludes duplicates and unsupported documents.",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

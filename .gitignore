@@ -29,3 +29,13 @@ n8n_data/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Power BI
+# The report is versioned as a .pbip project: plain JSON that can be diffed
+# and reviewed. The binary .pbix is not, because it carries an opaque copy of
+# the imported rows and nothing about it is reviewable.
+*.pbix
+# cache.abf is the imported data itself, and localSettings.json records this
+# machine's paths. Neither belongs in the repository.
+**/.pbi/cache.abf
+**/.pbi/localSettings.json

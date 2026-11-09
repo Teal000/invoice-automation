@@ -11,8 +11,10 @@ test configuration, not tax guidance.
 **Status: in progress.** A synthetic invoice PDF can be uploaded over HTTP
 and comes out as a recorded, validated or flagged invoice with its rule
 outcomes, revision history and event trail — and a technical failure part way
-through leaves a retryable job rather than a mess. n8n orchestration, the
-review interface and the dashboard are not built yet. There is no OCR:
+through leaves a retryable job rather than a mess. n8n triggers processing over a
+webhook, a Streamlit review queue exists, and a three-page Power BI report
+reads the database through a role that can see six views and no tables.
+There is no OCR:
 scanned documents are not handled. No time-saving or human-effort figure is
 reported anywhere here, because none has been measured.
 
@@ -43,13 +45,13 @@ reported anywhere here, because none has been measured.
 | The schema on PostgreSQL 18 | Verified | All five migrations applied and the **whole suite passes** against PostgreSQL 18.6 in the container |
 | n8n orchestration: webhook triggers processing through the API | Runs | Observed end to end on both branches: a PDF uploaded unprocessed, its id posted to the webhook, n8n calls the API, the submission reaches `validated` or `needs_review`. The two scheduled workflows are published but have not been seen to fire |
 | Reporting views for a dashboard, read-only role, reconciliation | Implemented | Six views; the role is granted SELECT on views only and the grant is tested by trying to read a table and write |
-| The Power BI report itself | In progress | Connected over the read-only role, which sees six views and no tables. Processing overview and exception analysis built; invoice register pending |
+| A three-page Power BI report over the read-only role | Built | Processing overview, exception analysis, invoice register. Versioned as a `.pbip` project: the visuals are JSON, not a binary. Every figure checked against the base tables by `tools/reconcile_dashboard.py` |
 | Notification *delivery*, OCR | Not built | — |
 
-**334 tests pass, none skipped**, against PostgreSQL 18.6 in the container.
+**335 tests pass, none skipped**, against PostgreSQL 18.6 in the container.
 The suite also passed against PostgreSQL 16.2 (the local dev server) on
-6 November 2026 at 332 tests; that server would not start on 8 November, so
-the two-version result is from the earlier revision rather than this one.
+6 November 2026 at 332 tests; that server has not started since, so the
+two-version result is from an earlier revision rather than this one.
 
 ## Measured so far
 

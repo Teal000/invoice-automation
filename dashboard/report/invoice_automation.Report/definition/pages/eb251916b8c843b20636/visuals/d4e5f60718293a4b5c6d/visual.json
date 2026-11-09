@@ -1,0 +1,44 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "d4e5f60718293a4b5c6d",
+  "position": {
+    "x": 1520,
+    "y": 132,
+    "z": 4,
+    "width": 340,
+    "height": 230,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public v_processing_overview"
+                        }
+                      },
+                      "Property": "straight_through_rate"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(public v_processing_overview.straight_through_rate)",
+              "nativeQueryRef": "Straight-through rate",
+              "displayName": "Straight-through rate"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -56,8 +56,14 @@ reported next to it rather than on its own.
   integration. `status = 'sent'` records what a caller claims. Nobody is
   actually told anything.
 - **No review interface.** Reviewer corrections, rejections and accepted
-  exceptions work through the API and the CLI; there is no screen a reviewer
-  could sit in front of. No dashboard either.
+  exceptions work through the API and the CLI, and a Streamlit queue shows
+  what is waiting; neither has been used by anyone but its author.
+- **The dashboard shows a snapshot and does not say so.** The Power BI
+  report imports its data, so every page shows the state at the last refresh
+  with nothing on screen naming that moment. During this project's own build
+  it displayed pre-reload figures for some time before the discrepancy was
+  noticed. The review-queue age bands are computed from `now()` in the view,
+  so that page also changes between screenshots with no data having changed.
 - **The API has one service credential, not users.** Reviewer actions record
   an actor taken from an `X-Actor` header, which is a label the caller
   chooses, not an authenticated identity. The audit trail therefore answers

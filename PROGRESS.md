@@ -5,6 +5,80 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-09 — The dashboard, and the three defects it exposed
+
+### Built
+
+- A three-page Power BI report over the read-only `invoice_reporting` role:
+  processing overview, exception analysis, invoice register.
+- Saved as a **.pbip project**, not a .pbix. The visuals are JSON with a
+  published schema, so the report is diffable and reviewable like the rest of
+  the repository. `dashboard/README.md` section 7 covers the layout, the
+  ignore rules and the editing loop.
+- `.gitignore` excludes `*.pbix`, `.pbi/cache.abf` (the imported data) and
+  `.pbi/localSettings.json` (one machine's paths). The connection is stored
+  as host, port and database only; no username, no password.
+- Migration **0007** adds `age_band_order` to `v_review_queue`.
+
+### What putting the data on screen exposed
+
+Three defects, none of which any test caught, all found by looking at values
+rather than at code:
+
+1. **Money rendered at two decimals.** TND carries three and the pipeline
+   rounds half-up at three, but Power BI defaulted to two: `97.96` for a
+   value stored as `97.961`. Fixed with `formatString` on every money column
+   and checked against the database for seven invoices, including `471.240`
+   where the trailing zero matters.
+2. **The register silently merged invoices.** A table visual groups rows
+   identical across every displayed column, and two invoices whose number,
+   supplier, date and total were all unreadable are identical on screen. The
+   page claimed one row per invoice while showing 3 where there were 4.
+   Fixed by displaying `invoice_id`.
+3. **The age axis sorted alphabetically**, putting "under a day" after "over
+   a week". Hence migration 0007.
+
+A fourth was not a defect but a lesson: the report showed pre-reload figures
+for some time, and the only visual capable of revealing it was the age chart,
+because every other number is identical across reloads of a seeded corpus.
+
+### The pattern worth keeping
+
+Every piece of logic put in the report was wrong or fragile; everything put
+in SQL held. The age-band order could have been faked by sorting the chart on
+its own measure — band sizes happen to run in time order today and would stop
+doing so the moment the backlog changed shape. It went into the view instead,
+with a test that the two `CASE` expressions agree.
+
+Two Power BI properties were discovered by probe rather than documentation,
+because the published schema URL in the files 404s:
+
+- Renaming a field needs `displayName`, not `nativeQueryRef`. Confirmed by
+  renaming one card in the UI and diffing.
+- `sortByColumn` must follow `sourceColumn` in TMDL. Placed after `dataType`
+  it was silently dropped on save, with no error.
+
+### Checked
+
+- **335 tests pass against PostgreSQL 18.6** in the container, including a
+  new one asserting each age band maps to exactly one order value.
+- `tools/reconcile_dashboard.py`: all 13 checks agree.
+- Report verified visually: chronological axis, 4 rows where it previously
+  showed 3, three-decimal totals matching the database exactly.
+
+### Still not done
+
+- **Not re-run against PostgreSQL 16.2.** The local pgserver has not started
+  since 8 November. The README says so rather than repeating the old claim.
+- **No page states when the data was pulled.** Import mode means every page
+  is a snapshot and none of them says so.
+- Power BI auto-detected two relationships between the views, one of them
+  bidirectional. They were inherited, not chosen.
+- Screenshots not exported to `dashboard/screenshots/`.
+- The n8n scheduled workflows have still not been observed firing.
+
+---
+
 ## 2026-11-08 — A failed check a reviewer could not read
 
 ### What the dashboard exposed

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "44084ac67dbe07141140",
+  "position": {
+    "x": 60,
+    "y": 404,
+    "z": 9,
+    "height": 600,
+    "width": 1800,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public v_daily_processing"
+                    }
+                  },
+                  "Property": "arrival_date"
+                }
+              },
+              "queryRef": "public v_daily_processing.arrival_date",
+              "nativeQueryRef": "Arrival date",
+              "active": true,
+              "displayName": "Arrival date"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public v_daily_processing"
+                        }
+                      },
+                      "Property": "submissions"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(public v_daily_processing.submissions)",
+              "nativeQueryRef": "Submissions",
+              "displayName": "Submissions"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public v_daily_processing"
+                        }
+                      },
+                      "Property": "needs_review"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(public v_daily_processing.needs_review)",
+              "nativeQueryRef": "Needs review",
+              "displayName": "Needs review"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,160 @@
+table 'public v_processing_overview'
+	lineageTag: 2bdcd6a1-ee0c-49de-88cb-5706d622a368
+
+	column submissions_received
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e97dc9d-d14b-4efc-9453-3640bd35d8dd
+		summarizeBy: sum
+		sourceColumn: submissions_received
+
+		annotation SummarizationSetBy = Automatic
+
+	column duplicate_arrivals
+		dataType: int64
+		formatString: 0
+		lineageTag: ce43b2e5-1cd7-498c-a77c-d07b24569413
+		summarizeBy: sum
+		sourceColumn: duplicate_arrivals
+
+		annotation SummarizationSetBy = Automatic
+
+	column failed_submissions
+		dataType: int64
+		formatString: 0
+		lineageTag: ced802f8-89f7-4b42-a6f3-b16ed51dcc13
+		summarizeBy: sum
+		sourceColumn: failed_submissions
+
+		annotation SummarizationSetBy = Automatic
+
+	column pending_submissions
+		dataType: int64
+		formatString: 0
+		lineageTag: 8fb74efa-84b5-4afd-98de-ababa61e01f5
+		summarizeBy: sum
+		sourceColumn: pending_submissions
+
+		annotation SummarizationSetBy = Automatic
+
+	column unique_invoices
+		dataType: int64
+		formatString: 0
+		lineageTag: a300ced9-7c36-4c43-8ea8-8a1fed069a40
+		summarizeBy: sum
+		sourceColumn: unique_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	column eligible_invoices
+		dataType: int64
+		formatString: 0
+		lineageTag: 26310228-4323-45e9-89e7-5250fda65232
+		summarizeBy: sum
+		sourceColumn: eligible_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	column validated_invoices
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a9d6261-bd70-47ac-b278-a9919027c167
+		summarizeBy: sum
+		sourceColumn: validated_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	column needs_review_invoices
+		dataType: int64
+		formatString: 0
+		lineageTag: dbc08b77-dd99-420c-93d9-91c9c98354aa
+		summarizeBy: sum
+		sourceColumn: needs_review_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	column unsupported_invoices
+		dataType: int64
+		formatString: 0
+		lineageTag: 64e31639-1675-46fd-8f3a-3b02b130f0ec
+		summarizeBy: sum
+		sourceColumn: unsupported_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	column rejected_invoices
+		dataType: int64
+		formatString: 0
+		lineageTag: 0669a0af-a1cf-4be2-bb2c-2319b6aed027
+		summarizeBy: sum
+		sourceColumn: rejected_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	column duplicate_invoices
+		dataType: int64
+		formatString: 0
+		lineageTag: 8825d4f7-f28e-445a-b2de-b0f07a2c0ad0
+		summarizeBy: sum
+		sourceColumn: duplicate_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	column validated_without_edit
+		dataType: int64
+		formatString: 0
+		lineageTag: afcc2ca2-293d-4185-9120-796a717283f5
+		summarizeBy: sum
+		sourceColumn: validated_without_edit
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_rate
+		dataType: double
+		lineageTag: ade5fb9e-bb7a-47e8-8974-39d42dadc0c7
+		summarizeBy: sum
+		sourceColumn: review_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column straight_through_rate
+		dataType: double
+		lineageTag: 9934ed46-24c5-4c84-8b8d-37645bb6e7b6
+		summarizeBy: sum
+		sourceColumn: straight_through_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column accepted_with_exception_invoices
+		dataType: int64
+		formatString: 0
+		lineageTag: 82b3d471-192f-4e86-9fd2-c329da83f4d0
+		summarizeBy: sum
+		sourceColumn: accepted_with_exception_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	column corrected_invoices
+		dataType: int64
+		formatString: 0
+		lineageTag: cd78ae80-c75b-463e-8274-c57afeed1fd3
+		summarizeBy: sum
+		sourceColumn: corrected_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public v_processing_overview' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5432", "invoice_automation"),
+				    public_v_processing_overview = Source{[Schema="public",Item="v_processing_overview"]}[Data]
+				in
+				    public_v_processing_overview
+
+	annotation PBI_ResultType = Table
+
