@@ -5,6 +5,46 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-09 (later) — The database that was never broken
+
+`tools/pg_dev_server.py` had reported a `subprocess.TimeoutExpired` traceback
+for three sessions, and the conclusion drawn each time was that the local
+PostgreSQL 16.2 server would not start. It started every time.
+
+`pgdata/log` says what actually happens. After an unclean shutdown - the
+machine powered off with the server running - PostgreSQL fsyncs the whole
+data directory during recovery. Its own log file is inside that directory and
+held open, so the fsync hits:
+
+    could not open file "./log": sharing violation
+    Continuing to retry for 30 seconds.
+
+It retries, continues, and reaches "database system is ready to accept
+connections" about thirty-three seconds after start. pgserver gives pg_ctl
+ten. `cmd_start` already had a readiness poll for this; `cmd_status` did not,
+and called `pgserver.get_server` directly, so the command used to check
+whether the server was alive was the one that crashed. Both go through the
+poll now, and the cause is recorded in the code rather than rediscovered.
+
+Worth keeping as a lesson about tooling: a diagnostic that fails in the same
+way as the thing it diagnoses will be believed. Three sessions of "the server
+won't start" were really "the status command times out", and a README claim
+was weakened on the strength of it.
+
+### Checked
+
+- **335 tests pass against PostgreSQL 16.2**, the same count as 18.6. The
+  two-version claim in the README is current again, dated 9 November.
+- Migrations 0006 and 0007 applied to 16.2; `age_band_order` behaves
+  identically on both versions.
+
+### Still not done
+
+- The n8n scheduled workflows have still not been observed firing.
+- No report page states when its data was pulled.
+
+---
+
 ## 2026-11-09 — The dashboard, and the three defects it exposed
 
 ### Built
@@ -68,8 +108,8 @@ because the published schema URL in the files 404s:
 
 ### Still not done
 
-- **Not re-run against PostgreSQL 16.2.** The local pgserver has not started
-  since 8 November. The README says so rather than repeating the old claim.
+- ~~Not re-run against PostgreSQL 16.2.~~ Done on 9 November: 335 pass there
+  too. The server had been starting correctly all along; see below.
 - **No page states when the data was pulled.** Import mode means every page
   is a snapshot and none of them says so.
 - Power BI auto-detected two relationships between the views, one of them

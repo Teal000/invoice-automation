@@ -48,10 +48,8 @@ reported anywhere here, because none has been measured.
 | A three-page Power BI report over the read-only role | Built | Processing overview, exception analysis, invoice register. Versioned as a `.pbip` project: the visuals are JSON, not a binary. Every figure checked against the base tables by `tools/reconcile_dashboard.py` |
 | Notification *delivery*, OCR | Not built | — |
 
-**335 tests pass, none skipped**, against PostgreSQL 18.6 in the container.
-The suite also passed against PostgreSQL 16.2 (the local dev server) on
-6 November 2026 at 332 tests; that server has not started since, so the
-two-version result is from an earlier revision rather than this one.
+**335 tests pass, none skipped** — against **both** PostgreSQL 16.2 (the
+local dev server) and PostgreSQL 18.6 (the container), on 9 November 2026.
 
 ## Measured so far
 

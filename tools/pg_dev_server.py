@@ -77,11 +77,18 @@ def server():
     try:
         return pgserver.get_server(PGDATA, cleanup_mode=None)
     except subprocess.TimeoutExpired:
-        # pgserver gives pg_ctl ten seconds. A cold start on this machine can
-        # take longer and still succeed: the postmaster comes up moments after
-        # pg_ctl has been given up on. Treating that as a failure made `start`
-        # report an error about a server that was in fact running, so poll for
-        # readiness instead of trusting the timeout.
+        # pgserver gives pg_ctl ten seconds, and a cold start here takes about
+        # thirty-three. The postmaster comes up well after pg_ctl has been
+        # given up on, so poll for readiness instead of trusting the timeout.
+        #
+        # The cause is in pgdata/log. After an unclean shutdown - the machine
+        # powered off with the server running - PostgreSQL fsyncs the whole
+        # data directory during recovery. The server's own log file lives in
+        # that directory and is held open, so the fsync hits "could not open
+        # file ./log: sharing violation" and retries for thirty seconds before
+        # continuing. Nothing is wrong and the server starts normally; it is
+        # just slower than pg_ctl's patience. Calling `stop` before shutting
+        # the machine down avoids the recovery pass entirely.
         print("pg_ctl timed out; waiting for the postmaster to answer...")
         deadline = time.monotonic() + 60
         last_error: Exception | None = None
@@ -151,7 +158,10 @@ def cmd_status() -> int:
     if not PGDATA.exists():
         print("no pgdata directory; the server has never been started here")
         return 1
-    srv = pgserver.get_server(PGDATA, cleanup_mode=None)
+    # server(), not pgserver.get_server: status hit the same ten-second
+    # timeout and reported a traceback for a server that was starting
+    # normally, which is a worse answer than waiting.
+    srv = server()
     info = srv.get_postmaster_info()
     if info is None:
         print("server is not running")
