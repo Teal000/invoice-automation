@@ -65,9 +65,10 @@ testing, which is the file-hash check working as intended.
 The review case produced exactly one `review_required` notification in the
 outbox, and nothing was delivered.
 
-The two **scheduled** workflows are published but have not been observed
-firing: the recovery sweep runs every fifteen minutes and the notification
-read every five, and no run of either has been recorded here yet.
+This webhook section was written before the schedules were ever seen to run,
+and said so. That is no longer true: both were observed firing on 9 November,
+and the evidence is in **The schedules** above. The recovery sweep runs every
+fifteen minutes and the notification read every five.
 
 **Publishing is per import.** `import:workflow` deactivates the workflow it
 replaces — the import log says `Deactivating workflow` — so the editor's

@@ -167,8 +167,9 @@ outcome with its ground truth, exiting non-zero on any mismatch.
   measured results only
 - [docs/resume_bullets.md](docs/resume_bullets.md) — drafts, each with the
   evidence behind it, and the claims that are **not** supportable
-- [docs/demo_script.md](docs/demo_script.md) — the demonstration, with the
-  steps that do not exist yet marked as such
+- [docs/demo_script.md](docs/demo_script.md) — the demonstration; a checker
+  verifies that each path, CLI command and API route it names is real. Not yet
+  rehearsed end to end
 - [docs/setup.md](docs/setup.md) — installation and commands
 - [PROGRESS.md](PROGRESS.md) — what is done, what is next
 

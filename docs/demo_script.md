@@ -1,15 +1,20 @@
 # Demonstration script
 
 A run-through of what the project does, in the order that explains it. Written
-for a three-to-five minute recording, with the commands to type.
+for a five-to-seven minute recording, with the commands to type.
 
 Two rules for the recording. Say "synthetic" once at the start and let the
-visible notices carry it afterwards. Never say a number that is not on the
-screen.
+visible notices carry it afterwards. **Never say a number that is not on the
+screen.** The figures below are there so you know what to expect, not so they
+can be read out from memory — the review-queue bands in particular change with
+the clock.
 
-**Steps 7 and 8 do not exist yet.** The dashboard is not built and the wider
-benchmark is not run. They are listed so the script is complete when they are,
-and so the recording does not accidentally imply they already exist.
+Every path, CLI command and API route named here exists
+(`tools/check_demo_script.py` checks them), but the script has not been
+rehearsed end to end since this rewrite. An earlier version carried
+two steps marked NOT BUILT YET; both are now built, and the file it cited for
+the extraction baseline no longer exists. If a step here ever stops being
+true, mark it, do not quietly leave it.
 
 ## Before recording
 
@@ -26,6 +31,17 @@ and so the recording does not accidentally imply they already exist.
 ```
 
 Have a second terminal ready, and `http://127.0.0.1:8000/docs` open.
+
+For step 8 you need the dashboard populated and Power BI open. The load below
+resets the data, so pause the recording after step 7 and run it then, not
+before step 2:
+
+```powershell
+.\.venv\Scripts\python.exe tools\load_corpus.py --reset --spread-days 30
+```
+
+Then refresh the report in Power BI Desktop. The report imports its data, so
+an unrefreshed report shows the previous load and nothing on screen says so.
 
 ## 1. The problem, in 20–30 seconds
 
@@ -131,36 +147,96 @@ curl -s -X POST -H "X-API-Key: $env:INVAUT_API_KEY" http://127.0.0.1:8000/jobs/r
 The sweep finishes it on attempt 2. The document was never uploaded again,
 because the bytes were already stored.
 
-## 7. The dashboard — NOT BUILT YET
+## 7. Nobody is typing these commands
 
-When it exists: two metrics only, with their denominators read out. Until
-then, the nearest honest substitute is:
+Everything so far was driven by hand. Show that it does not have to be:
+`workflows/n8n/` holds three workflows against the same HTTP API — a webhook
+that processes an arriving submission, a recovery sweep every fifteen minutes,
+and a notification read every five.
+
+Show the n8n executions list. All three have been observed running against the
+live service, the two scheduled ones on 9 November; the evidence, including
+how it was confirmed from the API's own request log rather than from n8n's
+word for it, is in `workflows/n8n/README.md`.
+
+The one sentence worth saying here: publishing a schedule into a running n8n
+**does not schedule it** — the timers are registered when the process starts.
+Two workflows sat silent for three days looking active by every check that was
+being made. It is a good example of what "verified" has to mean.
+
+## 8. The dashboard
+
+Three pages in Power BI, over a role that has `SELECT` on the reporting views
+and nothing else — not on the base tables. Say that: the report cannot read a
+raw invoice even if someone pointed it at one.
+
+- **Processing overview** — submissions received against unique invoices, and
+  the review and straight-through rates. Read the denominators off the screen.
+  Both rates are shares of *eligible* invoices, which excludes duplicates and
+  unsupported documents, and duplicate arrivals are counted separately so they
+  cannot inflate throughput.
+- **Exception analysis** — failures per rule code. Two bars per code,
+  invoices affected and failed checks; they are different counts and are never
+  summed. The engine has thirteen codes and twelve appear: `EXACT_FILE_DUPLICATE`
+  is absent by design, because an identical-file arrival creates no revision
+  and is counted as a duplicate arrival on page 1 instead.
+- **Invoice register** — the queue by age band. The bands are computed from
+  `now()`, so they age between any two runs; only the total is stable, and it
+  matches the "Needs review" card on page 1.
+
+Then show that the numbers are not taken on trust:
+
+```powershell
+.\.venv\Scripts\python.exe tools\reconcile_dashboard.py
+```
+
+It recomputes all 13 published figures from the base tables and exits non-zero
+on any disagreement.
+
+If Power BI is not available when recording, the honest substitute is:
 
 ```powershell
 .\.venv\Scripts\python.exe -m invoice_automation.cli overview
+.\.venv\Scripts\python.exe -m invoice_automation.cli exceptions
 ```
 
-and saying that the review rate and straight-through rate are shares of
-*eligible* invoices, which excludes duplicates and unsupported documents, and
-that duplicate arrivals are counted separately so they cannot inflate
-throughput.
+and the rendered pages in `dashboard/screenshots/`, whose README records the
+figures each image was taken with.
 
-## 8. Results and limits — PARTLY AVAILABLE
+## 9. Results and limits
 
-What can be shown today is the extraction baseline
-(`evaluation/results/extraction_baseline.md`): 16 of 16 on the documents the
-extractor was built for, and **0 of 3** on a fourth layout it was never
-taught, with **zero invented values**.
+The frozen 40-document test split, run once
+(`evaluation/results/benchmark_test.md`):
 
-Say both numbers together, and say which one means more: the first is the
-extractor marking its own homework, because the layouts and its label sets
-were written side by side. The second is the informative one — faced with an
+| | Familiar layouts (32) | Unseen layout (8) |
+|---|---|---|
+| Layout identified | 32/32 | **0/8** |
+| Critical-field accuracy | 32/32 | **0/8** |
+| **Values invented** | — | **0** |
+
+Say both columns together, and say which one means more. The first is the
+extractor marking its own homework: the layouts and its label sets were
+written side by side. The second is the informative one — faced with an
 unfamiliar template it reads nothing and routes the document to a person,
 rather than reading the wrong label into a total.
 
-Then the one improvement to name next: more layouts, with some genuinely held
-out, and a timed comparison against doing it by hand. Until that timing
-exists, there is no claim about time saved.
+Then the number that is least flattering and most worth saying:
+
+| Fault recall | |
+|---|---|
+| All seeded faults | 20/24 |
+| Faults a rule targets | 19/19 |
+| **Faults no rule targets** | **1/5** |
+
+The corpus seeds faults no rule was written to catch, and the system misses
+four of the five. The one that was flagged was flagged only because its layout
+could not be read, not because the fault was noticed. That is a measured blind
+spot rather than an assumed one: this enforces the controls that were written
+down, and nothing else.
+
+Close on the improvement to name next: more layouts, some genuinely held out,
+and a timed comparison against doing the work by hand. Until that timing
+exists there is no claim about time saved.
 
 ## What not to say
 
@@ -170,3 +246,5 @@ exists, there is no claim about time saved.
 - Not "compliant" with anything. The tax rate is a fictional test
   configuration.
 - Not "production ready". It runs on one machine against synthetic data.
+- Not "AI" or "machine learning". The extractor is text parsing and the rules
+  are deterministic. Nothing here learns.

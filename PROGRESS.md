@@ -5,6 +5,44 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-09 (after publishing) — The demo script, checked rather than trusted
+
+`docs/demo_script.md` was written in week 2 and had not been revisited. It
+marked steps 7 and 8 as NOT BUILT YET — both have existed for days — and
+pointed at `evaluation/results/extraction_baseline.md`, which was replaced by
+the benchmark splits and no longer exists. A demo script that cites a deleted
+file is worse than no script, because it is discovered on camera.
+
+Rewritten against what is actually here. Nine steps now: the dashboard is
+step 8, with the reporting role, the three pages and
+`tools/reconcile_dashboard.py` recomputing all 13 published figures; a new
+step 7 covers n8n, including the lesson that publishing a schedule into a
+running instance does not schedule it. Step 9 carries the frozen 40-document
+split (32/32 familiar, 0/8 unseen, 0 invented) and the figure worth saying out
+loud: faults no rule targets, **1/5**.
+
+`tools/check_demo_script.py` is new and verifies every path, CLI command and
+API route the script names. It found nothing after the rewrite, so it was
+tested against a deliberately broken copy first — a missing file, an invented
+CLI command and an undefined route — and it reported all three and exited 1.
+A checker that has only ever printed OK has not been checked.
+
+Verified by hand, not assumed: the 13 reconciliation labels were read out of
+the source, and the one hard-coded number pair in the script (expected
+1591.923 against observed 1600.000) was confirmed from the fixture —
+1337.750 + 254.173 = 1591.923 against a stated total of 1600.000.
+
+Also corrected: `workflows/n8n/README.md` still said in its webhook section
+that the scheduled workflows "have not been observed firing", three sections
+below the table recording that both had. The repository is public now, so a
+stale caveat understates the work to anyone reading it.
+
+Still not done: the rewritten script has not been rehearsed end to end, and no
+demonstration has been recorded. That needs a person, a screen recorder and
+Power BI open.
+
+---
+
 ## 2026-11-09 (last) — Published
 
 Pushed to https://github.com/Teal000/invoice-automation, public, on Nidhal's
@@ -19,9 +57,8 @@ Checked before pushing, not after:
   it now watches only keys naming a credential — `INVAUT_DB_PASSWORD`,
   `INVAUT_API_KEY`, `INVAUT_REPORTING_PASSWORD` — and separately checks that
   `.env.example`'s placeholders are not equal to the real values. It compares
-  in Python rather than shelling out to grep, because the password starts with
-  a character grep reads as an option flag: that is how an earlier scan errored
-  and still printed OK.
+  in Python rather than shelling out to grep, because an earlier grep-based
+  scan errored on its input and still printed OK.
 - `.env` is ignored and absent from the remote; `.env.example` is present, as
   intended. 583 files local, 583 pushed, nothing else.
 - One commit went with it: the PostgreSQL 18 row said five migrations when
