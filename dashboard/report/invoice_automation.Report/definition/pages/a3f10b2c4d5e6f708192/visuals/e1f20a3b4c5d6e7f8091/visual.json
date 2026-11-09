@@ -6,7 +6,7 @@
     "y": 16,
     "z": 0,
     "width": 1840,
-    "height": 100,
+    "height": 120,
     "tabOrder": 0
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Synthetic portfolio data. One row per canonical invoice, showing its current revision: 186 invoices from 200 arrivals, because a repeat arrival is linked to the invoice it duplicates rather than creating a new one. Waiting time is measured from the artificial arrival timestamps described on the processing overview page and does not represent time any person actually waited. Amounts are recorded invoice values in TND; this project executes no payments.",
+                    "value": "Synthetic portfolio data. One row per canonical invoice, showing its current revision: 186 invoices from 200 arrivals, because a repeat arrival is linked to the invoice it duplicates rather than creating a new one. Waiting time is measured from the artificial arrival timestamps described on the processing overview page and does not represent time any person actually waited. Amounts are recorded invoice values in TND; this project executes no payments. Rows reading \"(absent)\" are documents whose invoice number could not be read. Each is still a separate invoice, keyed to its own submission rather than merged with every other unidentified document (ADR-005); Invoice id is shown because without it the table collapses them into one row.",
                     "textStyle": {
                       "fontSize": "10pt"
                     }

@@ -21,3 +21,9 @@ reportlab==5.1.0
 # deprecation warning with httpx; the client works either way, and moving to
 # httpx2 is a small change for a later pass.
 httpx==0.28.1
+
+# pymupdf renders the Power BI report's exported PDF to page images in
+# tools/export_report_images.py. Power BI Desktop has no headless export, so
+# the PDF still comes from a human clicking File > Export; everything after
+# that is scripted so the images are reproducible.
+pymupdf==2.1
