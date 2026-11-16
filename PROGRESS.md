@@ -5,6 +5,62 @@ Keep it factual: what was built, how it was checked, what is unverified.
 
 ---
 
+## 2026-11-16 — Business analysis artefacts: process maps and user stories
+
+The repository already had a requirements document. It did not have the two
+things a business-analysis reader asks to see first, so they were added, each
+generated or checked rather than hand-kept:
+
+- **Process maps, BPMN 2.0.** `docs/process/as_is.bpmn` and `to_be.bpmn`, built
+  by `tools/build_process_maps.py` from one spec each and rendered to SVG by
+  bpmn-js 17.11.1 through headless Edge (`--render`). bpmn-js imported both with
+  zero warnings. `docs/process_map.md` explains them.
+- **User stories.** `docs/user_stories.md`: 22 stories, acceptance criteria in
+  Given/When/Then, each naming the tests that verify it, a "not built" table,
+  and a traceability table. `tools/check_user_stories.py` fails if a named test
+  or file no longer exists, a requirement has no story, or the traceability
+  table disagrees with the stories. It reports OK on the real document.
+
+**The to-be map was drawn wrong first and corrected from the code.** The first
+version stopped an identical file on arrival, before extraction. That is not
+what `pipeline.process_submission` does: it extracts, runs all thirteen rules
+together with `EXACT_FILE_DUPLICATE` among them, and then links the duplicate.
+`test_the_to_be_map_extracts_before_it_checks_for_a_duplicate_file` now pins
+the order.
+
+Tests: `tests/unit/test_process_maps.py` (17) and `tests/unit/test_user_stories.py`
+(8). Unit suite 234 passed. Both new test files were checked against broken
+copies: a hand-edited .bpmn, a diagonal connector, a stranded step, an
+unlabelled branch, an SVG missing an element, a test name that does not exist,
+a missing file, a disagreeing traceability row, an uncovered requirement,
+out-of-order ids and a story with no evidence. All are reported. The first
+diagonal-connector mutation targeted a waypoint that did not exist, so it
+changed nothing and was not caught; redone on a real waypoint, it was.
+
+Also corrected:
+
+- `docs/business_requirements.md` rows 4 and 8 were stale. Row 4 said there was
+  no review interface, but the Streamlit queue exists and is tested. Row 8 said
+  the wider benchmark did not exist, but the 200-document corpus and frozen
+  split do. Reviewer time is still unmeasured, and the row says so.
+- `docs/resume_bullets.md` still gave untargeted-fault recall as 0/4. The frozen
+  test split says 1/5, and the one flagged was flagged for an unreadable layout,
+  not because the fault was noticed. Both facts are now in the draft.
+
+**Not verified today:** the integration tests and the CLI. On this machine
+`psycopg`'s binary DLL is now refused by a Windows Application Control policy
+("An Application Control policy has blocked this file") and there is no libpq
+for the pure-Python fallback, so `invoice_automation.cli --help` fails and
+`tools/check_demo_script.py` reports every CLI command as missing. Nothing in
+this change touches the CLI or the database layer; the stories name
+integration tests by existence, which the checker confirms with `ast`, and
+those tests last passed on 2026-11-09. They need re-running once the policy
+allows the driver.
+
+Committed and pushed on Nidhal's go-ahead, 2026-11-16.
+
+---
+
 ## 2026-11-09 (after publishing) — The demo script, checked rather than trusted
 
 `docs/demo_script.md` was written in week 2 and had not been revisited. It

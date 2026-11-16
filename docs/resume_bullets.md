@@ -33,10 +33,14 @@ the part that shows you understand what the number is worth.
 > Seeded faults no rule was designed to catch — a supplier name disagreeing
 > with a correct code, a future-dated invoice, a zero-quantity line — so that
 > exception recall measured a real blind spot (19/19 on targeted faults,
-> 0/4 on untargeted ones) rather than restating the rule table.
+> 1/5 on untargeted ones) rather than restating the rule table.
 
 *Backed by:* the corpus generator and the same results file. This is the
 strongest bullet here: it shows evaluation design, not just implementation.
+The figure was 0/4 in an earlier run; the frozen test split says 1/5, and the
+one it flagged was flagged because its layout was unreadable, not because the
+fault was noticed. Be ready to say that if asked, because it is the honest
+reading of the 1.
 
 > Designed the data model so a submission is distinct from a canonical
 > invoice, with duplicate detection enforced by database constraints

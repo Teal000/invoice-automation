@@ -158,6 +158,10 @@ outcome with its ground truth, exiting non-zero on any mismatch.
 
 - [docs/business_requirements.md](docs/business_requirements.md) — the process,
   the rules, the configuration, what is out of scope
+- [docs/user_stories.md](docs/user_stories.md) — 22 user stories with acceptance
+  criteria, each tied to the tests that verify it; a checker keeps the names real
+- [docs/process_map.md](docs/process_map.md) — as-is and to-be process maps in
+  BPMN 2.0, generated from a spec and rendered by bpmn-js
 - [docs/architecture.md](docs/architecture.md) — layout, flow, and the two
   seams where extraction and orchestration attach
 - [docs/decisions.md](docs/decisions.md) — eleven decisions with their reasons,

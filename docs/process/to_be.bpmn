@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_to_be" targetNamespace="https://github.com/Teal000/invoice-automation" exporter="tools/build_process_maps.py" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_to_be">
+    <bpmn:documentation>Supplier invoices with the service (to-be, as built). Generated from tools/build_process_maps.py; edit the spec there, not this file.</bpmn:documentation>
+    <bpmn:participant id="P_supplier" name="Supplier" />
+    <bpmn:participant id="P_distributor" name="Distributor" processRef="Process_to_be" />
+    <bpmn:messageFlow id="M_invoice" name="Invoice PDF" sourceRef="P_supplier" targetRef="s_up" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_to_be" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_to_be">
+      <bpmn:lane id="L_service" name="Invoice service (API + n8n)">
+        <bpmn:flowNodeRef>s_up</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_store</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_extract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>b_fail</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_rules</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_dup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_sup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_pass</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e_valid</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_link</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e_dup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e_unsup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_retry</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_reviewer" name="Reviewer">
+        <bpmn:flowNodeRef>t_review</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_dec</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_correct</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_accept</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e_acc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_reject</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e_rej</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_finance" name="Finance manager">
+        <bpmn:flowNodeRef>s_fin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_dash</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e_fin</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s_up" name="Invoice PDF uploaded">
+      <bpmn:outgoing>f_up</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="s_up_def" />
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="t_store" name="Store the file and record the arrival">
+      <bpmn:incoming>f_up</bpmn:incoming>
+      <bpmn:outgoing>f_store</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="t_extract" name="Extract header and line values">
+      <bpmn:incoming>f_store</bpmn:incoming>
+      <bpmn:incoming>f_retry</bpmn:incoming>
+      <bpmn:outgoing>f_extract</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="b_fail" name="Technical failure" attachedToRef="t_extract">
+      <bpmn:outgoing>f_fail</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="b_fail_def" />
+    </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="t_rules" name="Run the 13 validation rules">
+      <bpmn:incoming>f_extract</bpmn:incoming>
+      <bpmn:incoming>f_recheck</bpmn:incoming>
+      <bpmn:outgoing>f_rules</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="g_dup" name="Exact copy of a file already received?">
+      <bpmn:incoming>f_rules</bpmn:incoming>
+      <bpmn:outgoing>f_dup_yes</bpmn:outgoing>
+      <bpmn:outgoing>f_dup_no</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="g_sup" name="Supported document?">
+      <bpmn:incoming>f_dup_no</bpmn:incoming>
+      <bpmn:outgoing>f_sup_no</bpmn:outgoing>
+      <bpmn:outgoing>f_sup_yes</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="g_pass" name="Every check passed?">
+      <bpmn:incoming>f_sup_yes</bpmn:incoming>
+      <bpmn:outgoing>f_pass_yes</bpmn:outgoing>
+      <bpmn:outgoing>f_pass_no</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="e_valid" name="Validated, in the register">
+      <bpmn:incoming>f_pass_yes</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="t_link" name="Link to the earlier invoice">
+      <bpmn:incoming>f_dup_yes</bpmn:incoming>
+      <bpmn:outgoing>f_link</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="e_dup" name="No second invoice created">
+      <bpmn:incoming>f_link</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="e_unsup" name="Recorded as unsupported">
+      <bpmn:incoming>f_sup_no</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="t_retry" name="Keep the job; the recovery sweep retries it">
+      <bpmn:incoming>f_fail</bpmn:incoming>
+      <bpmn:outgoing>f_retry</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="t_review" name="Review the failed checks">
+      <bpmn:incoming>f_pass_no</bpmn:incoming>
+      <bpmn:outgoing>f_review</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="g_dec" name="Decision">
+      <bpmn:incoming>f_review</bpmn:incoming>
+      <bpmn:outgoing>f_correct</bpmn:outgoing>
+      <bpmn:outgoing>f_accept</bpmn:outgoing>
+      <bpmn:outgoing>f_reject</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="t_correct" name="Enter the corrected values and a reason">
+      <bpmn:incoming>f_correct</bpmn:incoming>
+      <bpmn:outgoing>f_recheck</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="t_accept" name="Accept as an exception, with a reason">
+      <bpmn:incoming>f_accept</bpmn:incoming>
+      <bpmn:outgoing>f_accepted</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="e_acc" name="In the register, marked as an exception">
+      <bpmn:incoming>f_accepted</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="t_reject" name="Reject, with a reason">
+      <bpmn:incoming>f_reject</bpmn:incoming>
+      <bpmn:outgoing>f_rejected</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="e_rej" name="Rejected; the invoice number is released">
+      <bpmn:incoming>f_rejected</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="s_fin" name="Figures needed">
+      <bpmn:outgoing>f_fin</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="t_dash" name="Read the Power BI dashboard">
+      <bpmn:incoming>f_fin</bpmn:incoming>
+      <bpmn:outgoing>f_dash</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="e_fin" name="Figures that reconcile to the records">
+      <bpmn:incoming>f_dash</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="f_up" sourceRef="s_up" targetRef="t_store" />
+    <bpmn:sequenceFlow id="f_store" sourceRef="t_store" targetRef="t_extract" />
+    <bpmn:sequenceFlow id="f_extract" sourceRef="t_extract" targetRef="t_rules" />
+    <bpmn:sequenceFlow id="f_rules" sourceRef="t_rules" targetRef="g_dup" />
+    <bpmn:sequenceFlow id="f_dup_yes" name="Yes" sourceRef="g_dup" targetRef="t_link" />
+    <bpmn:sequenceFlow id="f_dup_no" name="No" sourceRef="g_dup" targetRef="g_sup" />
+    <bpmn:sequenceFlow id="f_link" sourceRef="t_link" targetRef="e_dup" />
+    <bpmn:sequenceFlow id="f_sup_no" name="No" sourceRef="g_sup" targetRef="e_unsup" />
+    <bpmn:sequenceFlow id="f_sup_yes" name="Yes" sourceRef="g_sup" targetRef="g_pass" />
+    <bpmn:sequenceFlow id="f_pass_yes" name="Yes" sourceRef="g_pass" targetRef="e_valid" />
+    <bpmn:sequenceFlow id="f_pass_no" name="No" sourceRef="g_pass" targetRef="t_review" />
+    <bpmn:sequenceFlow id="f_fail" sourceRef="b_fail" targetRef="t_retry" />
+    <bpmn:sequenceFlow id="f_retry" name="Retried" sourceRef="t_retry" targetRef="t_extract" />
+    <bpmn:sequenceFlow id="f_review" sourceRef="t_review" targetRef="g_dec" />
+    <bpmn:sequenceFlow id="f_correct" name="Correct" sourceRef="g_dec" targetRef="t_correct" />
+    <bpmn:sequenceFlow id="f_recheck" name="Checked again by the same rules" sourceRef="t_correct" targetRef="t_rules" />
+    <bpmn:sequenceFlow id="f_accept" name="Accept" sourceRef="g_dec" targetRef="t_accept" />
+    <bpmn:sequenceFlow id="f_accepted" sourceRef="t_accept" targetRef="e_acc" />
+    <bpmn:sequenceFlow id="f_reject" name="Reject" sourceRef="g_dec" targetRef="t_reject" />
+    <bpmn:sequenceFlow id="f_rejected" sourceRef="t_reject" targetRef="e_rej" />
+    <bpmn:sequenceFlow id="f_fin" sourceRef="s_fin" targetRef="t_dash" />
+    <bpmn:sequenceFlow id="f_dash" sourceRef="t_dash" targetRef="e_fin" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_to_be">
+    <bpmndi:BPMNPlane id="Plane_to_be" bpmnElement="Collaboration_to_be">
+      <bpmndi:BPMNShape id="P_supplier_di" bpmnElement="P_supplier" isHorizontal="true">
+        <dc:Bounds x="150" y="30" width="1845" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="P_distributor_di" bpmnElement="P_distributor" isHorizontal="true">
+        <dc:Bounds x="150" y="140" width="1845" height="925" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_service_di" bpmnElement="L_service" isHorizontal="true">
+        <dc:Bounds x="180" y="140" width="1815" height="390" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_reviewer_di" bpmnElement="L_reviewer" isHorizontal="true">
+        <dc:Bounds x="180" y="530" width="1815" height="395" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_finance_di" bpmnElement="L_finance" isHorizontal="true">
+        <dc:Bounds x="180" y="925" width="1815" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s_up_di" bpmnElement="s_up">
+        <dc:Bounds x="277" y="227" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="235" y="269" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_store_di" bpmnElement="t_store">
+        <dc:Bounds x="405" y="205" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_extract_di" bpmnElement="t_extract">
+        <dc:Bounds x="580" y="205" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="b_fail_di" bpmnElement="b_fail">
+        <dc:Bounds x="592" y="267" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="500" y="287" width="90" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_rules_di" bpmnElement="t_rules">
+        <dc:Bounds x="755" y="205" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_dup_di" bpmnElement="g_dup" isMarkerVisible="true">
+        <dc:Bounds x="970" y="220" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="930" y="180" width="130" height="34" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_sup_di" bpmnElement="g_sup" isMarkerVisible="true">
+        <dc:Bounds x="1145" y="220" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1105" y="180" width="130" height="34" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_pass_di" bpmnElement="g_pass" isMarkerVisible="true">
+        <dc:Bounds x="1320" y="220" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1280" y="180" width="130" height="34" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_valid_di" bpmnElement="e_valid">
+        <dc:Bounds x="1502" y="227" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1460" y="269" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_link_di" bpmnElement="t_link">
+        <dc:Bounds x="930" y="325" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_dup_di" bpmnElement="e_dup">
+        <dc:Bounds x="977" y="457" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="935" y="499" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_unsup_di" bpmnElement="e_unsup">
+        <dc:Bounds x="1152" y="347" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1110" y="389" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_retry_di" bpmnElement="t_retry">
+        <dc:Bounds x="755" y="435" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_review_di" bpmnElement="t_review">
+        <dc:Bounds x="1280" y="575" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_dec_di" bpmnElement="g_dec" isMarkerVisible="true">
+        <dc:Bounds x="1495" y="590" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1455" y="550" width="130" height="34" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_correct_di" bpmnElement="t_correct">
+        <dc:Bounds x="1630" y="575" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_accept_di" bpmnElement="t_accept">
+        <dc:Bounds x="1630" y="695" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_acc_di" bpmnElement="e_acc">
+        <dc:Bounds x="1852" y="717" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1810" y="759" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_reject_di" bpmnElement="t_reject">
+        <dc:Bounds x="1455" y="818" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_rej_di" bpmnElement="e_rej">
+        <dc:Bounds x="1677" y="840" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1635" y="882" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s_fin_di" bpmnElement="s_fin">
+        <dc:Bounds x="452" y="977" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="410" y="1019" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_dash_di" bpmnElement="t_dash">
+        <dc:Bounds x="580" y="955" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_fin_di" bpmnElement="e_fin">
+        <dc:Bounds x="802" y="977" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="760" y="1019" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="f_up_di" bpmnElement="f_up">
+        <di:waypoint x="313" y="245" />
+        <di:waypoint x="405" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_store_di" bpmnElement="f_store">
+        <di:waypoint x="535" y="245" />
+        <di:waypoint x="580" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_extract_di" bpmnElement="f_extract">
+        <di:waypoint x="710" y="245" />
+        <di:waypoint x="755" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_rules_di" bpmnElement="f_rules">
+        <di:waypoint x="885" y="245" />
+        <di:waypoint x="970" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_dup_yes_di" bpmnElement="f_dup_yes">
+        <di:waypoint x="995" y="270" />
+        <di:waypoint x="995" y="325" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1001" y="274" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_dup_no_di" bpmnElement="f_dup_no">
+        <di:waypoint x="1020" y="245" />
+        <di:waypoint x="1145" y="245" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1026" y="227" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_link_di" bpmnElement="f_link">
+        <di:waypoint x="995" y="405" />
+        <di:waypoint x="995" y="457" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_sup_no_di" bpmnElement="f_sup_no">
+        <di:waypoint x="1170" y="270" />
+        <di:waypoint x="1170" y="347" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1176" y="274" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_sup_yes_di" bpmnElement="f_sup_yes">
+        <di:waypoint x="1195" y="245" />
+        <di:waypoint x="1320" y="245" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1201" y="227" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_pass_yes_di" bpmnElement="f_pass_yes">
+        <di:waypoint x="1370" y="245" />
+        <di:waypoint x="1502" y="245" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1376" y="227" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_pass_no_di" bpmnElement="f_pass_no">
+        <di:waypoint x="1345" y="270" />
+        <di:waypoint x="1345" y="575" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1351" y="274" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_fail_di" bpmnElement="f_fail">
+        <di:waypoint x="610" y="303" />
+        <di:waypoint x="610" y="475" />
+        <di:waypoint x="755" y="475" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_retry_di" bpmnElement="f_retry">
+        <di:waypoint x="820" y="435" />
+        <di:waypoint x="820" y="310" />
+        <di:waypoint x="680" y="310" />
+        <di:waypoint x="680" y="285" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="826" y="417" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_review_di" bpmnElement="f_review">
+        <di:waypoint x="1410" y="615" />
+        <di:waypoint x="1495" y="615" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_correct_di" bpmnElement="f_correct">
+        <di:waypoint x="1545" y="615" />
+        <di:waypoint x="1630" y="615" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1551" y="597" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_recheck_di" bpmnElement="f_recheck">
+        <di:waypoint x="1695" y="575" />
+        <di:waypoint x="1695" y="160" />
+        <di:waypoint x="820" y="160" />
+        <di:waypoint x="820" y="205" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1212" y="128" width="90" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_accept_di" bpmnElement="f_accept">
+        <di:waypoint x="1520" y="640" />
+        <di:waypoint x="1520" y="735" />
+        <di:waypoint x="1630" y="735" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1530" y="717" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_accepted_di" bpmnElement="f_accepted">
+        <di:waypoint x="1760" y="735" />
+        <di:waypoint x="1852" y="735" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_reject_di" bpmnElement="f_reject">
+        <di:waypoint x="1520" y="640" />
+        <di:waypoint x="1520" y="818" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1526" y="773" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_rejected_di" bpmnElement="f_rejected">
+        <di:waypoint x="1585" y="858" />
+        <di:waypoint x="1677" y="858" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_fin_di" bpmnElement="f_fin">
+        <di:waypoint x="488" y="995" />
+        <di:waypoint x="580" y="995" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_dash_di" bpmnElement="f_dash">
+        <di:waypoint x="710" y="995" />
+        <di:waypoint x="802" y="995" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="M_invoice_di" bpmnElement="M_invoice">
+        <di:waypoint x="295" y="100" />
+        <di:waypoint x="295" y="227" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="301" y="108" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

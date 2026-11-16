@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_as_is" targetNamespace="https://github.com/Teal000/invoice-automation" exporter="tools/build_process_maps.py" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_as_is">
+    <bpmn:documentation>Supplier invoices today (as-is). Generated from tools/build_process_maps.py; edit the spec there, not this file.</bpmn:documentation>
+    <bpmn:participant id="P_supplier" name="Supplier" />
+    <bpmn:participant id="P_distributor" name="Distributor" processRef="Process_as_is" />
+    <bpmn:messageFlow id="M_invoice" name="Invoice PDF" sourceRef="P_supplier" targetRef="s_in" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_as_is" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_as_is">
+      <bpmn:lane id="L_analyst" name="Operations analyst">
+        <bpmn:flowNodeRef>s_in</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_key</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_arith</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_dup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_po</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_ok</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_record</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e_done</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_follow</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_fix</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_finance" name="Finance manager">
+        <bpmn:flowNodeRef>s_month</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t_sheet</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e_rep</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s_in" name="Invoice PDF received by email">
+      <bpmn:outgoing>f_in</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="s_in_def" />
+    </bpmn:startEvent>
+    <bpmn:manualTask id="t_key" name="Re-key the invoice into the system">
+      <bpmn:incoming>f_in</bpmn:incoming>
+      <bpmn:outgoing>f_key</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="t_arith" name="Check the line and total arithmetic">
+      <bpmn:incoming>f_key</bpmn:incoming>
+      <bpmn:outgoing>f_arith</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="t_dup" name="Search for an earlier copy">
+      <bpmn:incoming>f_arith</bpmn:incoming>
+      <bpmn:outgoing>f_dup</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="t_po" name="Find the purchase order and compare">
+      <bpmn:incoming>f_dup</bpmn:incoming>
+      <bpmn:outgoing>f_po</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:exclusiveGateway id="g_ok" name="Everything agrees?">
+      <bpmn:incoming>f_po</bpmn:incoming>
+      <bpmn:outgoing>f_yes</bpmn:outgoing>
+      <bpmn:outgoing>f_no</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:manualTask id="t_record" name="Mark the invoice as checked">
+      <bpmn:incoming>f_yes</bpmn:incoming>
+      <bpmn:incoming>f_fixed</bpmn:incoming>
+      <bpmn:outgoing>f_done</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="e_done" name="Invoice in the register">
+      <bpmn:incoming>f_done</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:manualTask id="t_follow" name="Chase the supplier or a colleague">
+      <bpmn:incoming>f_no</bpmn:incoming>
+      <bpmn:outgoing>f_follow</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="t_fix" name="Correct the record">
+      <bpmn:incoming>f_follow</bpmn:incoming>
+      <bpmn:outgoing>f_fixed</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:startEvent id="s_month" name="Report due">
+      <bpmn:outgoing>f_month</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="s_month_def" />
+    </bpmn:startEvent>
+    <bpmn:manualTask id="t_sheet" name="Rebuild the figures in a spreadsheet">
+      <bpmn:incoming>f_month</bpmn:incoming>
+      <bpmn:outgoing>f_sheet</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="e_rep" name="Report sent">
+      <bpmn:incoming>f_sheet</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="f_in" sourceRef="s_in" targetRef="t_key" />
+    <bpmn:sequenceFlow id="f_key" sourceRef="t_key" targetRef="t_arith" />
+    <bpmn:sequenceFlow id="f_arith" sourceRef="t_arith" targetRef="t_dup" />
+    <bpmn:sequenceFlow id="f_dup" sourceRef="t_dup" targetRef="t_po" />
+    <bpmn:sequenceFlow id="f_po" sourceRef="t_po" targetRef="g_ok" />
+    <bpmn:sequenceFlow id="f_yes" name="Yes" sourceRef="g_ok" targetRef="t_record" />
+    <bpmn:sequenceFlow id="f_no" name="No" sourceRef="g_ok" targetRef="t_follow" />
+    <bpmn:sequenceFlow id="f_follow" sourceRef="t_follow" targetRef="t_fix" />
+    <bpmn:sequenceFlow id="f_fixed" sourceRef="t_fix" targetRef="t_record" />
+    <bpmn:sequenceFlow id="f_done" sourceRef="t_record" targetRef="e_done" />
+    <bpmn:sequenceFlow id="f_month" sourceRef="s_month" targetRef="t_sheet" />
+    <bpmn:sequenceFlow id="f_sheet" sourceRef="t_sheet" targetRef="e_rep" />
+    <bpmn:textAnnotation id="n_key">
+      <bpmn:text>Every value typed by hand</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="n_key_link" sourceRef="t_key" targetRef="n_key" />
+    <bpmn:textAnnotation id="n_dup">
+      <bpmn:text>Depends on someone finding the earlier copy</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="n_dup_link" sourceRef="t_dup" targetRef="n_dup" />
+    <bpmn:textAnnotation id="n_fix">
+      <bpmn:text>No re-check of the corrected values, and no record of why</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="n_fix_link" sourceRef="t_fix" targetRef="n_fix" />
+    <bpmn:textAnnotation id="n_sheet">
+      <bpmn:text>Rebuilt by hand each time it is needed</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="n_sheet_link" sourceRef="t_sheet" targetRef="n_sheet" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_as_is">
+    <bpmndi:BPMNPlane id="Plane_as_is" bpmnElement="Collaboration_as_is">
+      <bpmndi:BPMNShape id="P_supplier_di" bpmnElement="P_supplier" isHorizontal="true">
+        <dc:Bounds x="150" y="30" width="1530" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="P_distributor_di" bpmnElement="P_distributor" isHorizontal="true">
+        <dc:Bounds x="150" y="140" width="1530" height="540" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_analyst_di" bpmnElement="L_analyst" isHorizontal="true">
+        <dc:Bounds x="180" y="140" width="1500" height="330" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_finance_di" bpmnElement="L_finance" isHorizontal="true">
+        <dc:Bounds x="180" y="470" width="1500" height="210" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s_in_di" bpmnElement="s_in">
+        <dc:Bounds x="277" y="267" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="235" y="309" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_key_di" bpmnElement="t_key">
+        <dc:Bounds x="405" y="245" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_arith_di" bpmnElement="t_arith">
+        <dc:Bounds x="580" y="245" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_dup_di" bpmnElement="t_dup">
+        <dc:Bounds x="755" y="245" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_po_di" bpmnElement="t_po">
+        <dc:Bounds x="930" y="245" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_ok_di" bpmnElement="g_ok" isMarkerVisible="true">
+        <dc:Bounds x="1145" y="260" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1105" y="220" width="130" height="34" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_record_di" bpmnElement="t_record">
+        <dc:Bounds x="1280" y="245" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_done_di" bpmnElement="e_done">
+        <dc:Bounds x="1502" y="267" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1460" y="309" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_follow_di" bpmnElement="t_follow">
+        <dc:Bounds x="1105" y="370" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_fix_di" bpmnElement="t_fix">
+        <dc:Bounds x="1280" y="370" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s_month_di" bpmnElement="s_month">
+        <dc:Bounds x="802" y="517" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="760" y="559" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t_sheet_di" bpmnElement="t_sheet">
+        <dc:Bounds x="930" y="495" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_rep_di" bpmnElement="e_rep">
+        <dc:Bounds x="1152" y="517" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1110" y="559" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="f_in_di" bpmnElement="f_in">
+        <di:waypoint x="313" y="285" />
+        <di:waypoint x="405" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_key_di" bpmnElement="f_key">
+        <di:waypoint x="535" y="285" />
+        <di:waypoint x="580" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_arith_di" bpmnElement="f_arith">
+        <di:waypoint x="710" y="285" />
+        <di:waypoint x="755" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_dup_di" bpmnElement="f_dup">
+        <di:waypoint x="885" y="285" />
+        <di:waypoint x="930" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_po_di" bpmnElement="f_po">
+        <di:waypoint x="1060" y="285" />
+        <di:waypoint x="1145" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_yes_di" bpmnElement="f_yes">
+        <di:waypoint x="1195" y="285" />
+        <di:waypoint x="1280" y="285" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1201" y="267" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_no_di" bpmnElement="f_no">
+        <di:waypoint x="1170" y="310" />
+        <di:waypoint x="1170" y="370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1176" y="314" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_follow_di" bpmnElement="f_follow">
+        <di:waypoint x="1235" y="410" />
+        <di:waypoint x="1280" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_fixed_di" bpmnElement="f_fixed">
+        <di:waypoint x="1345" y="370" />
+        <di:waypoint x="1345" y="325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_done_di" bpmnElement="f_done">
+        <di:waypoint x="1410" y="285" />
+        <di:waypoint x="1502" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_month_di" bpmnElement="f_month">
+        <di:waypoint x="838" y="535" />
+        <di:waypoint x="930" y="535" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f_sheet_di" bpmnElement="f_sheet">
+        <di:waypoint x="1060" y="535" />
+        <di:waypoint x="1152" y="535" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="M_invoice_di" bpmnElement="M_invoice">
+        <di:waypoint x="295" y="100" />
+        <di:waypoint x="295" y="267" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="301" y="108" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="n_key_di" bpmnElement="n_key">
+        <dc:Bounds x="390" y="154" width="160" height="52" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="n_key_link_di" bpmnElement="n_key_link">
+        <di:waypoint x="470" y="245" />
+        <di:waypoint x="470" y="206" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="n_dup_di" bpmnElement="n_dup">
+        <dc:Bounds x="740" y="154" width="160" height="52" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="n_dup_link_di" bpmnElement="n_dup_link">
+        <di:waypoint x="820" y="245" />
+        <di:waypoint x="820" y="206" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="n_fix_di" bpmnElement="n_fix">
+        <dc:Bounds x="1475" y="384" width="160" height="52" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="n_fix_link_di" bpmnElement="n_fix_link">
+        <di:waypoint x="1410" y="410" />
+        <di:waypoint x="1475" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="n_sheet_di" bpmnElement="n_sheet">
+        <dc:Bounds x="915" y="614" width="160" height="52" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="n_sheet_link_di" bpmnElement="n_sheet_link">
+        <di:waypoint x="995" y="575" />
+        <di:waypoint x="995" y="614" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

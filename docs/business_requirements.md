@@ -41,13 +41,16 @@ Where each stands today:
 | 1 | A document reaches a recorded outcome | Met, for PDFs and structured payloads, through the CLI and over HTTP |
 | 2 | Extracted values stay connected to their source | Met: the document is stored under its hash, and each value records the page, source line and bounding box it came from |
 | 3 | Deterministic detection of the listed problems | Met: 13 rules, each with an isolated test case |
-| 4 | A reviewer can correct, explain and revalidate | Met in the API and CLI; there is no review *interface* yet |
+| 4 | A reviewer can correct, explain and revalidate | Met in the API, the CLI and a Streamlit review queue, which asks for the reviewer's name before it offers a decision |
 | 5 | Repeats and retries create no duplicate records or notifications | Met: idempotency keys, duplicate guards and a de-duplicated outbox, all enforced by database constraints |
 | 6 | Interrupted processing recovers without losing the document or history | Met for processing: a failure leaves the stored document, the event trail and a retryable job, and a sweep finishes stalled work |
 | 7 | SQL reports and a dashboard reconcile with the records | Met: six reporting views, a three-page Power BI report reading them through a read-only role, and `tools/reconcile_dashboard.py` checking all 13 figures against the base tables |
-| 8 | Reproducible evaluation | Half met: the extraction baseline runs from a documented command; the wider benchmark the plan describes does not exist |
+| 8 | Reproducible evaluation | Met for extraction and exception detection: a 200-document synthetic corpus regenerated from one seed, with a frozen 40-document test split, run from the commands in `evaluation/methodology.md`. Reviewer time has not been measured |
 
-The README states what is built and how it was checked.
+The README states what is built and how it was checked. Each requirement is
+broken into user stories, with acceptance criteria and the tests that verify
+them, in [user_stories.md](user_stories.md); the process before and after is
+drawn in BPMN in [process_map.md](process_map.md).
 
 ## Validation rules
 
